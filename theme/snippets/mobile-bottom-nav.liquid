@@ -1,0 +1,28 @@
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_url = 'https://wa.me/' | append: wa_number
+-%}
+<nav class="nt-mobile-nav pb-safe" aria-label="{{ 'nav.mobile' | t }}">
+  <div class="nt-mobile-nav__inner">
+    <a href="{{ routes.root_url }}" class="nt-mobile-nav__link{% if template.name == 'index' %} is-active{% endif %}">
+      {% render 'icon', name: 'home', size: 20 %}
+      <span>{{ 'nav.home' | t }}</span>
+    </a>
+    <a href="{{ routes.collections_url }}" class="nt-mobile-nav__link{% if template.name == 'collection' %} is-active{% endif %}">
+      {% render 'icon', name: 'grid', size: 20 %}
+      <span>{{ 'general.categories' | t }}</span>
+    </a>
+    <a href="{{ routes.search_url }}" class="nt-mobile-nav__link{% if template.name == 'search' %} is-active{% endif %}">
+      {% render 'icon', name: 'search', size: 20 %}
+      <span>{{ 'nav.search' | t }}</span>
+    </a>
+    <button type="button" class="nt-mobile-nav__link" @click="cartOpen = true" aria-label="{{ 'general.cart' | t }}">
+      {% render 'icon', name: 'cart', size: 20 %}
+      <span>{{ 'general.cart' | t }}</span>
+    </button>
+    <a href="{{ wa_url }}" class="nt-mobile-nav__link text-[#25D366]" target="_blank" rel="noopener">
+      {% render 'icon', name: 'whatsapp', size: 20 %}
+      <span>WA</span>
+    </a>
+  </div>
+</nav>

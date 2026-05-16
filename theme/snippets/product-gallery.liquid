@@ -1,0 +1,49 @@
+<div class="nt-pdp-gallery" x-data="{ active: 0 }">
+  <div class="nt-pdp-gallery__main">
+    {%- for image in product.images -%}
+      {%- if forloop.first -%}
+        {%- assign img_loading = 'eager' -%}
+      {%- else -%}
+        {%- assign img_loading = 'lazy' -%}
+      {%- endif -%}
+      <div x-show="active === {{ forloop.index0 }}" {% unless forloop.first %}x-cloak{% endunless %}>
+        {{
+          image
+          | image_url: width: 1200
+          | image_tag:
+            loading: img_loading,
+            widths: '400,800,1200',
+            sizes: '(max-width: 1024px) 100vw, 50vw',
+            class: 'w-full h-full object-contain',
+            alt: product.title
+        }}
+      </div>
+    {%- else -%}
+      {%- if product.featured_image -%}
+        {{
+          product.featured_image
+          | image_url: width: 1200
+          | image_tag: loading: 'eager', class: 'w-full h-full object-contain', alt: product.title
+        }}
+      {%- else -%}
+        <div class="w-full h-full flex items-center justify-center text-ink-muted p-8">{{ product.title }}</div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if product.images.size > 1 -%}
+    <div class="nt-pdp-gallery__thumbs">
+      {%- for image in product.images -%}
+        <button
+          type="button"
+          class="nt-pdp-gallery__thumb"
+          :class="{ 'is-active': active === {{ forloop.index0 }} }"
+          @click="active = {{ forloop.index0 }}"
+          aria-label="Imagen {{ forloop.index }}"
+        >
+          {{ image | image_url: width: 128 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: '' }}
+        </button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>

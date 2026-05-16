@@ -1,0 +1,23 @@
+{%- comment -%}
+  {% render 'badge', variant: 'oferta', label: '-20%' %}
+  Variants: oferta | nuevo | stock-bajo | garantia | envio-gratis
+{%- endcomment -%}
+{%- liquid
+  assign badge_variant = variant | default: 'oferta'
+  assign badge_label = label
+  if badge_label == blank
+    case badge_variant
+      when 'oferta'
+        assign badge_label = 'Oferta'
+      when 'nuevo'
+        assign badge_label = 'Nuevo'
+      when 'stock-bajo'
+        assign badge_label = 'Últimas'
+      when 'garantia'
+        assign badge_label = 'Garantía'
+      when 'envio-gratis'
+        assign badge_label = 'Envío gratis'
+    endcase
+  endif
+-%}
+<span class="nt-badge nt-badge--{{ badge_variant }}">{{ badge_label }}</span>

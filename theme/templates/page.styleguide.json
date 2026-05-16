@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "hero": {
+      "type": "styleguide-hero",
+      "settings": {}
+    },
+    "colors": {
+      "type": "styleguide-colors",
+      "settings": {}
+    },
+    "typography": {
+      "type": "styleguide-typography",
+      "settings": {}
+    },
+    "buttons": {
+      "type": "styleguide-buttons",
+      "settings": {}
+    },
+    "cards": {
+      "type": "styleguide-cards",
+      "settings": {}
+    },
+    "forms": {
+      "type": "styleguide-forms",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "colors", "typography", "buttons", "cards", "forms"]
+}

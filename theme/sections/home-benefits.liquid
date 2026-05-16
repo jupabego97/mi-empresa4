@@ -1,0 +1,52 @@
+<section class="nt-section bg-surface-2">
+  <div class="nt-container">
+    <h2 class="nt-section-title text-center">{{ section.settings.title }}</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          {% render 'benefit-item', icon: block.settings.icon, title: block.settings.title, text: block.settings.text %}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Beneficios",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "¿Por qué comprar en NANOTRONICS?" }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Ícono", "options": [
+          { "value": "truck", "label": "Envío" },
+          { "value": "shield", "label": "Garantía" },
+          { "value": "check", "label": "Pagos" },
+          { "value": "user", "label": "Asesoría" },
+          { "value": "map-pin", "label": "Tienda física" },
+          { "value": "star", "label": "Calidad" }
+        ], "default": "shield" },
+        { "type": "text", "id": "title", "label": "Título", "default": "Beneficio" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Descripción breve" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home — Beneficios",
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "truck", "title": "Envíos Colombia", "text": "Entrega rápida y segura" } },
+        { "type": "benefit", "settings": { "icon": "shield", "title": "Garantía real", "text": "Respaldo oficial" } },
+        { "type": "benefit", "settings": { "icon": "check", "title": "Pagos seguros", "text": "Múltiples métodos" } },
+        { "type": "benefit", "settings": { "icon": "user", "title": "Asesoría", "text": "Expertos en tecnología" } },
+        { "type": "benefit", "settings": { "icon": "map-pin", "title": "Tienda física", "text": "Viboral, Antioquia" } },
+        { "type": "benefit", "settings": { "icon": "star", "title": "Calidad premium", "text": "Marcas seleccionadas" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,7 @@
+{%- comment -%} Outputs WhatsApp URL to capture in variable {%- endcomment -%}
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_msg = message | default: settings.whatsapp_message
+  assign wa_text = wa_msg | url_encode
+-%}
+https://wa.me/{{ wa_number }}?text={{ wa_text }}

@@ -1,0 +1,21 @@
+<article class="nt-review">
+  <div class="flex items-center gap-1 mb-3">
+    {%- for i in (1..rating) -%}
+      {% render 'icon', name: 'star', size: 14, class: 'text-warning fill-warning' %}
+    {%- endfor -%}
+  </div>
+  <p class="text-sm text-ink flex-1 mb-4">"{{ quote }}"</p>
+  <div class="flex items-center gap-3 mt-auto">
+    {%- if avatar != blank -%}
+      {{ avatar | image_url: width: 80 | image_tag: class: 'w-10 h-10 rounded-full object-cover', alt: author, loading: 'lazy' }}
+    {%- else -%}
+      <div class="w-10 h-10 rounded-full bg-brand-royal/10 flex items-center justify-center text-brand-royal font-semibold text-sm">
+        {{ author | slice: 0 }}
+      </div>
+    {%- endif -%}
+    <div>
+      <p class="text-sm font-semibold text-ink">{{ author }}</p>
+      <p class="text-xs text-ink-muted">{{ location }}</p>
+    </div>
+  </div>
+</article>

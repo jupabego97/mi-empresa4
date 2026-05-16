@@ -1,0 +1,34 @@
+{
+  "sections": {
+    "hero": {
+      "type": "home-hero",
+      "settings": {
+        "cta_primary_url": "/collections/all"
+      }
+    },
+    "benefits": {
+      "type": "home-benefits",
+      "settings": {}
+    },
+    "categories": {
+      "type": "home-categories",
+      "settings": {}
+    },
+    "featured": {
+      "type": "home-featured-collection",
+      "settings": {
+        "collection": "",
+        "products_to_show": 8
+      }
+    },
+    "reviews": {
+      "type": "home-reviews",
+      "settings": {}
+    },
+    "service": {
+      "type": "home-service-banner",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "benefits", "categories", "featured", "reviews", "service"]
+}

@@ -1,0 +1,50 @@
+<section class="nt-section">
+  <div class="nt-container">
+    <div class="flex items-end justify-between gap-4 mb-8">
+      <h2 class="nt-section-title mb-0">{{ section.settings.title }}</h2>
+      <a href="{{ routes.collections_url }}" class="text-sm font-medium text-brand-royal hover:underline shrink-0">
+        {{ 'home.view_all_categories' | t }}
+      </a>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          {% render 'category-card', title: block.settings.title, url: block.settings.url, image: block.settings.image %}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Categorías",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Categorías destacadas" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoría",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Nombre", "default": "Categoría" },
+        { "type": "url", "id": "url", "label": "Enlace" },
+        { "type": "image_picker", "id": "image", "label": "Imagen" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home — Categorías",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Portátiles" } },
+        { "type": "category", "settings": { "title": "PC Gamer" } },
+        { "type": "category", "settings": { "title": "Monitores" } },
+        { "type": "category", "settings": { "title": "Componentes" } },
+        { "type": "category", "settings": { "title": "Redes" } },
+        { "type": "category", "settings": { "title": "Accesorios" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

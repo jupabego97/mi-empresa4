@@ -1,0 +1,29 @@
+<div class="flex gap-4 py-4 border-b border-line" data-line-key="{{ item.key }}">
+  <a href="{{ item.url }}" class="shrink-0 w-20 h-20 rounded-md overflow-hidden bg-surface-2 border border-line">
+    {%- if item.image -%}
+      {{ item.image | image_url: width: 160 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: item.title }}
+    {%- endif -%}
+  </a>
+  <div class="flex-1 min-w-0">
+    <a href="{{ item.url }}" class="text-sm font-medium text-ink hover:text-brand-royal line-clamp-2">{{ item.product.title }}</a>
+    {%- unless item.variant.title == 'Default Title' -%}
+      <p class="text-xs text-ink-muted mt-0.5">{{ item.variant.title }}</p>
+    {%- endunless -%}
+    <p class="text-sm font-semibold text-ink mt-2">{{ item.final_line_price | money }}</p>
+    <div class="flex items-center gap-2 mt-2">
+      <label class="nt-sr-only" for="qty-{{ item.key }}">Cantidad</label>
+      <input
+        type="number"
+        id="qty-{{ item.key }}"
+        name="updates[]"
+        value="{{ item.quantity }}"
+        min="0"
+        class="nt-input w-16 text-center min-h-9 py-1 cart-qty-input"
+        data-line-key="{{ item.key }}"
+      >
+      <a href="{{ item.url_to_remove }}" class="text-xs text-danger hover:underline cart-remove" data-line-key="{{ item.key }}">
+        {{ 'cart.remove' | t }}
+      </a>
+    </div>
+  </div>
+</div>

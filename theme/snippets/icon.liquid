@@ -1,0 +1,17 @@
+{%- comment -%}
+  Usage: {% render 'icon', name: 'cart', size: 20, class: 'text-brand-royal' %}
+{%- endcomment -%}
+{%- liquid
+  assign icon_name = name | default: 'search'
+  assign icon_size = size | default: 20
+  assign icon_class = class | default: ''
+-%}
+<svg
+  class="inline-block shrink-0 {{ icon_class }}"
+  width="{{ icon_size }}"
+  height="{{ icon_size }}"
+  aria-hidden="true"
+  focusable="false"
+>
+  <use href="#icon-{{ icon_name }}" xlink:href="#icon-{{ icon_name }}"></use>
+</svg>

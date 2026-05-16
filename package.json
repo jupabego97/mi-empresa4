@@ -1,0 +1,22 @@
+{
+  "name": "nanotronics-theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NANOTRONICS — Shopify theme design system (Fase 1)",
+  "scripts": {
+    "dev": "tailwindcss -i src/tailwind.css -o theme/assets/theme.css --watch",
+    "build": "node tools/build-icons.mjs && tailwindcss -i src/tailwind.css -o theme/assets/theme.css --minify",
+    "build:css": "tailwindcss -i src/tailwind.css -o theme/assets/theme.css --minify",
+    "build:icons": "node tools/build-icons.mjs",
+    "theme:dev": "shopify theme dev --path theme",
+    "theme:push": "shopify theme push --path theme",
+    "postinstall": "node tools/copy-alpine.mjs"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.8",
+    "tailwindcss": "^4.1.8"
+  },
+  "dependencies": {
+    "alpinejs": "^3.14.9"
+  }
+}

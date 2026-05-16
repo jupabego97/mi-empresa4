@@ -1,0 +1,71 @@
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_text = 'Hola, quiero contactar a NANOTRONICS' | url_encode
+  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+-%}
+
+{% render 'breadcrumbs' %}
+
+<section class="nt-section pt-0">
+  <div class="nt-container">
+    <div class="max-w-3xl mb-10">
+      <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight text-brand-deep mb-4">
+        {{ section.settings.heading | default: page.title }}
+      </h1>
+      <p class="text-ink-muted">{{ section.settings.intro }}</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12">
+      <div class="space-y-6">
+        <div class="flex items-start gap-4 p-4 rounded-lg border border-line">
+          {% render 'icon', name: 'map-pin', size: 24, class: 'text-brand-royal shrink-0' %}
+          <div>
+            <p class="font-semibold">{{ 'contact.address' | t }}</p>
+            <p class="text-sm text-ink-muted">{{ settings.store_address }}</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4 rounded-lg border border-line">
+          {% render 'icon', name: 'phone', size: 24, class: 'text-brand-royal shrink-0' %}
+          <div>
+            <p class="font-semibold">{{ 'contact.phone' | t }}</p>
+            <a href="tel:{{ settings.store_phone }}" class="text-sm text-brand-royal hover:underline">{{ settings.store_phone }}</a>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4 rounded-lg border border-line">
+          {% render 'icon', name: 'mail', size: 24, class: 'text-brand-royal shrink-0' %}
+          <div>
+            <p class="font-semibold">{{ 'contact.email' | t }}</p>
+            <a href="mailto:{{ settings.store_email }}" class="text-sm text-brand-royal hover:underline">{{ settings.store_email }}</a>
+          </div>
+        </div>
+        {% render 'btn', variant: 'whatsapp', size: 'lg', label: section.settings.whatsapp_cta, icon: 'whatsapp', href: wa_url, target: '_blank', full: true %}
+      </div>
+
+      <div class="p-6 rounded-lg border border-line bg-surface-2">
+        <h2 class="font-semibold text-lg mb-6">{{ 'contact.form_title' | t }}</h2>
+        {%- form 'contact' -%}
+          {% render 'input', type: 'text', name: 'contact[name]', id: 'contact-name', label: 'Nombre', placeholder: 'Tu nombre' %}
+          {% render 'input', type: 'text', name: 'contact[email]', id: 'contact-email', label: 'Email', placeholder: 'correo@ejemplo.com' %}
+          {% render 'input', type: 'text', name: 'contact[phone]', id: 'contact-phone', label: 'Teléfono', placeholder: '+57 300 000 0000' %}
+          <div class="nt-input-wrap">
+            <label class="nt-label" for="contact-message">Mensaje</label>
+            <textarea id="contact-message" name="contact[body]" class="nt-input min-h-[120px] py-3" rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+          </div>
+          <button type="submit" class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full mt-4">{{ 'contact.submit' | t }}</button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contacto",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Contáctanos" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Estamos en El Carmen de Viboral. Escríbenos o visítanos — te respondemos rápido." },
+    { "type": "text", "id": "whatsapp_cta", "label": "CTA WhatsApp", "default": "Escribir por WhatsApp" }
+  ],
+  "presets": [{ "name": "Contacto" }]
+}
+{% endschema %}

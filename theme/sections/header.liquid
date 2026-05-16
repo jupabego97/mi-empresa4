@@ -1,0 +1,180 @@
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_text = settings.whatsapp_message | url_encode
+  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+-%}
+
+<header class="nt-header" x-data="{ mobileOpen: false, megaOpen: false }">
+  <div class="nt-container nt-header__inner">
+    <div class="nt-header__row">
+      <a href="{{ routes.root_url }}" class="nt-header__logo" aria-label="{{ shop.name }}">
+        {%- if settings.logo != blank -%}
+          {{
+            settings.logo
+            | image_url: width: settings.logo_width
+            | image_tag:
+              loading: 'eager',
+              width: settings.logo_width,
+              alt: shop.name,
+              class: 'h-8 w-auto'
+          }}
+        {%- else -%}
+          <img
+            src="{{ 'nano-logo.png' | asset_url }}"
+            alt="NANOTRONICS"
+            width="{{ settings.logo_width | default: 140 }}"
+            height="40"
+            class="h-9 w-auto object-contain"
+            loading="eager"
+          >
+        {%- endif -%}
+      </a>
+
+      <a
+        href="tel:+573236826910"
+        class="hidden md:flex items-center gap-1.5 text-sm font-medium text-brand-royal hover:underline shrink-0"
+      >
+        {% render 'icon', name: 'phone', size: 16 %}
+        <span>323 682 6910</span>
+      </a>
+
+      <div class="nt-header__search hidden sm:block">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="relative">
+          <input type="hidden" name="type" value="product">
+          <label for="header-search" class="nt-sr-only">{{ 'general.search' | t }}</label>
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none">
+            {% render 'icon', name: 'search', size: 20 %}
+          </span>
+          <input
+            type="search"
+            id="header-search"
+            name="q"
+            class="nt-input w-full pl-11 pr-24 min-h-12 text-base border-brand-electric/30 focus:border-brand-royal"
+            placeholder="{{ 'general.search' | t }}"
+            value="{{ search.terms | escape }}"
+            autocomplete="off"
+          >
+          <button
+            type="submit"
+            class="absolute right-1 top-1/2 -translate-y-1/2 nt-btn nt-btn--primary nt-btn--sm"
+          >
+            {{ 'general.search_submit' | t }}
+          </button>
+        </form>
+      </div>
+
+      <div class="nt-header__actions">
+        <a
+          href="{{ wa_url }}"
+          class="nt-header__icon-btn text-[#25D366] hidden md:flex"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="{{ 'general.whatsapp' | t }}"
+        >
+          {% render 'icon', name: 'whatsapp', size: 22 %}
+        </a>
+        <a href="{{ routes.account_url }}" class="nt-header__icon-btn hidden md:flex" aria-label="{{ 'general.account' | t }}">
+          {% render 'icon', name: 'user', size: 22 %}
+        </a>
+        <button
+          type="button"
+          class="nt-header__icon-btn"
+          @click="cartOpen = true"
+          aria-label="{{ 'general.cart' | t }}"
+        >
+          {% render 'icon', name: 'cart', size: 22 %}
+          <span
+            class="absolute -top-0.5 -right-0.5 flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold bg-brand-royal text-white rounded-full cart-count-badge"
+            {% if cart.item_count == 0 %}style="display:none"{% endif %}
+          >
+            {{ cart.item_count }}
+          </span>
+        </button>
+        <button
+          type="button"
+          class="nt-header__icon-btn lg:hidden"
+          @click="mobileOpen = !mobileOpen"
+          :aria-expanded="mobileOpen"
+          aria-controls="mobile-nav"
+          aria-label="{{ 'accessibility.menu_toggle' | t }}"
+        >
+          {% render 'icon', name: 'menu', size: 22 %}
+        </button>
+      </div>
+    </div>
+
+    <nav class="nt-header__nav" aria-label="Principal">
+      <div class="relative" @mouseenter="megaOpen = true" @mouseleave="megaOpen = false">
+        <a href="{{ routes.collections_url }}" class="nt-header__nav-link">{{ 'general.categories' | t }}</a>
+        <div
+          x-show="megaOpen"
+          x-cloak
+          class="absolute top-full left-0 mt-1 w-64 p-4 rounded-lg border border-line bg-surface shadow-modal z-50"
+        >
+          <p class="text-xs font-semibold text-ink-muted uppercase mb-2">{{ 'general.categories' | t }}</p>
+          <ul class="space-y-1">
+            {%- for collection in collections limit: 8 -%}
+              {%- unless collection.handle == 'frontpage' -%}
+                <li>
+                  <a href="{{ collection.url }}" class="block text-sm py-1.5 px-2 rounded hover:bg-surface-2 hover:text-brand-royal">
+                    {{ collection.title }}
+                  </a>
+                </li>
+              {%- endunless -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+      <a href="{{ routes.all_products_collection_url }}?sort_by=price-ascending" class="nt-header__nav-link">{{ 'general.offers' | t }}</a>
+      <a href="/pages/servicio-tecnico" class="nt-header__nav-link">{{ 'general.technical_service' | t }}</a>
+      <a href="/pages/nosotros" class="nt-header__nav-link">{{ 'footer.about' | t }}</a>
+      <a href="/pages/contacto" class="nt-header__nav-link">{{ 'general.support' | t }}</a>
+    </nav>
+
+    <div class="sm:hidden">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="relative">
+        <input type="hidden" name="type" value="product">
+        <input
+          type="search"
+          name="q"
+          class="nt-input w-full pl-10 min-h-11"
+          placeholder="{{ 'general.search' | t }}"
+        >
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted">
+          {% render 'icon', name: 'search', size: 18 %}
+        </span>
+      </form>
+    </div>
+  </div>
+
+  <div
+    id="mobile-nav"
+    class="lg:hidden border-t border-line bg-surface max-h-[70vh] overflow-y-auto"
+    x-show="mobileOpen"
+    x-cloak
+    @click.outside="mobileOpen = false"
+  >
+    <nav class="nt-container py-4 flex flex-col gap-1" aria-label="Móvil">
+      <a href="{{ routes.root_url }}" class="nt-header__nav-link">{{ 'nav.home' | t }}</a>
+      <a href="{{ routes.collections_url }}" class="nt-header__nav-link">{{ 'general.categories' | t }}</a>
+      {%- for collection in collections limit: 6 -%}
+        {%- unless collection.handle == 'frontpage' -%}
+          <a href="{{ collection.url }}" class="nt-header__nav-link pl-6 text-ink-muted">{{ collection.title }}</a>
+        {%- endunless -%}
+      {%- endfor -%}
+      <a href="{{ routes.all_products_collection_url }}" class="nt-header__nav-link">{{ 'general.offers' | t }}</a>
+      <a href="/pages/servicio-tecnico" class="nt-header__nav-link">{{ 'general.technical_service' | t }}</a>
+      <a href="/pages/nosotros" class="nt-header__nav-link">{{ 'footer.about' | t }}</a>
+      <a href="/pages/contacto" class="nt-header__nav-link">{{ 'general.support' | t }}</a>
+      <a href="{{ wa_url }}" class="nt-header__nav-link text-[#25D366]" target="_blank" rel="noopener">{{ 'general.whatsapp' | t }}</a>
+      <a href="{{ routes.account_url }}" class="nt-header__nav-link">{{ 'general.account' | t }}</a>
+    </nav>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}

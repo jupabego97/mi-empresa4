@@ -1,0 +1,51 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_msg = 'Hola, me interesa: ' | append: product.title
+  assign wa_text = wa_msg | url_encode
+  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+-%}
+
+{%- form 'product', product, id: 'product-form', class: 'space-y-4 ajax-cart' -%}
+  {%- if product.variants.size > 1 -%}
+    <div>
+      <label class="nt-label" for="product-variant-id">{{ 'product.variant' | t }}</label>
+      <select id="product-variant-id" name="id" class="nt-input">
+        {%- for variant in product.variants -%}
+          <option
+            value="{{ variant.id }}"
+            {% if variant == current_variant %}selected{% endif %}
+            {% unless variant.available %}disabled{% endunless %}
+          >
+            {{ variant.title }}{% unless variant.available %} — {{ 'general.out_of_stock' | t }}{% endunless %}
+          </option>
+        {%- endfor -%}
+      </select>
+    </div>
+  {%- else -%}
+    <input type="hidden" name="id" value="{{ current_variant.id }}">
+  {%- endif -%}
+
+  <div class="max-w-[140px]">
+    {% render 'input', type: 'qty', name: 'quantity', id: 'product-qty', label: 'Cantidad', value: 1, min: 1, max: 99 %}
+  </div>
+
+  {%- capture add_label -%}{{ 'general.add_to_cart' | t }}{%- endcapture -%}
+  {%- capture wa_label -%}{{ 'general.talk_advisor' | t }}{%- endcapture -%}
+
+  <div class="flex flex-col gap-3">
+    <button
+      type="submit"
+      name="add"
+      class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full product-add-btn"
+      {% unless current_variant.available %}disabled{% endunless %}
+    >
+      {{ add_label }}
+    </button>
+    {% render 'btn', variant: 'whatsapp', size: 'lg', label: wa_label, icon: 'whatsapp', href: wa_url, target: '_blank', rel: 'noopener', full: true %}
+  </div>
+{%- endform -%}
+
+<script type="application/json" id="product-json">
+  {{ product | json }}
+</script>

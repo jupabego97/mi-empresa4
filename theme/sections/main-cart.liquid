@@ -1,0 +1,92 @@
+{%- capture cart_wa_label -%}{{ 'cart.help_whatsapp' | t }}{%- endcapture -%}
+{%- capture shop_label -%}{{ 'cart.continue_shopping' | t }}{%- endcapture -%}
+
+{% render 'breadcrumbs' %}
+
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_msg = 'Hola, tengo una consulta sobre mi carrito de compras'
+  assign wa_text = wa_msg | url_encode
+  assign wa_cart_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+-%}
+
+<section class="nt-section pt-0">
+  <div class="nt-container">
+    <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight mb-8">{{ 'cart.title' | t }}</h1>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" id="cart-form" class="grid lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-0 border border-line rounded-lg overflow-hidden bg-surface">
+          {%- for item in cart.items -%}
+            <div class="px-4">
+              {% render 'cart-line-item', item: item %}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="space-y-6">
+          <div class="p-6 rounded-lg border border-line bg-surface-2 sticky top-24">
+            <h2 class="font-semibold text-lg mb-4">{{ 'cart.summary' | t }}</h2>
+            <div class="flex justify-between text-sm mb-2">
+              <span class="text-ink-muted">{{ 'cart.subtotal' | t }}</span>
+              <span>{{ cart.total_price | money }}</span>
+            </div>
+            <p class="text-xs text-ink-muted mb-4">{{ 'cart.shipping_note' | t }}</p>
+            {% render 'payment-icons' %}
+
+            <div class="space-y-3 mt-6">
+              <button type="submit" name="checkout" class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full">
+                {{ 'cart.checkout' | t }}
+              </button>
+              {% render 'btn', variant: 'whatsapp', size: 'md', label: cart_wa_label, icon: 'whatsapp', href: wa_cart_url, target: '_blank', full: true %}
+            </div>
+
+            <div class="nt-checkout-trust mt-6">
+              <div class="text-center">
+                {% render 'icon', name: 'shield', size: 24, class: 'mx-auto text-brand-royal mb-2' %}
+                <p class="text-xs font-medium">{{ 'cart.secure' | t }}</p>
+              </div>
+              <div class="text-center">
+                {% render 'icon', name: 'truck', size: 24, class: 'mx-auto text-brand-royal mb-2' %}
+                <p class="text-xs font-medium">{{ 'product.shipping_colombia' | t }}</p>
+              </div>
+              <div class="text-center">
+                {% render 'icon', name: 'check', size: 24, class: 'mx-auto text-brand-royal mb-2' %}
+                <p class="text-xs font-medium">{{ 'cart.help_whatsapp' | t }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      {%- if section.settings.show_recommendations -%}
+        <div class="mt-16">
+          <h2 class="nt-section-title">{{ 'cart.recommended' | t }}</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {%- assign rec_col = collections[section.settings.recommendation_collection] -%}
+            {%- if rec_col != blank -%}
+              {%- for product in rec_col.products limit: 4 -%}
+                {% render 'product-card', product: product %}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="text-center py-16 max-w-md mx-auto">
+        <p class="text-ink-muted mb-6">{{ 'cart.empty' | t }}</p>
+        {% render 'btn', variant: 'primary', size: 'lg', label: shop_label, href: routes.all_products_collection_url %}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Carrito",
+  "settings": [
+    { "type": "checkbox", "id": "show_recommendations", "label": "Mostrar recomendados", "default": true },
+    { "type": "collection", "id": "recommendation_collection", "label": "Colección recomendados" }
+  ]
+}
+{% endschema %}

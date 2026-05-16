@@ -1,0 +1,46 @@
+<section class="nt-section" id="styleguide-colors">
+  <div class="nt-container">
+    <h2 class="nt-section-title">{{ section.settings.title }}</h2>
+    <p class="text-ink-muted mb-8 max-w-2xl">{{ section.settings.description }}</p>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      {%- assign swatches = 'brand-royal:#0B3FFF:Principal CTA|brand-electric:#2D7CFF:Acento links|brand-deep:#051640:Footer fondos|ink:#0A0F1C:Texto principal|ink-muted:#4B5566:Texto secundario|surface:#FFFFFF:Fondos|surface-2:#F5F7FB:Fondos alternos|line:#E5E9F2:Bordes|success:#0E9F6E:Stock/pago|danger:#E11D48:Descuentos|warning:#F59E0B:Urgencia' | split: '|' -%}
+
+      {%- for swatch in swatches -%}
+        {%- assign parts = swatch | split: ':' -%}
+        {%- assign token = parts[0] -%}
+        {%- assign hex = parts[1] -%}
+        {%- assign usage = parts[2] -%}
+        <div class="nt-swatch">
+          <div class="nt-swatch__color" style="background-color: {{ hex }}"></div>
+          <div class="nt-swatch__meta">
+            <p class="font-semibold text-sm">{{ usage }}</p>
+            <p class="nt-swatch__token">--color-{{ token }}</p>
+            <p class="nt-swatch__hex">{{ hex }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Styleguide — Colores",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Paleta de colores"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción",
+      "default": "Tokens de marca NANOTRONICS. Evitar saturación y neón excesivo."
+    }
+  ],
+  "presets": [{ "name": "Styleguide — Colores" }]
+}
+{% endschema %}

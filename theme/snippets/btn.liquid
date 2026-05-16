@@ -1,0 +1,48 @@
+{%- comment -%}
+  {% render 'btn',
+    variant: 'primary' | 'secondary' | 'ghost' | 'whatsapp',
+    size: 'sm' | 'md' | 'lg',
+    label: 'Texto',
+    href: '/collections/all',
+    type: 'button',
+    full: false,
+    class: '',
+    disabled: false,
+    icon: 'whatsapp'
+  %}
+{%- endcomment -%}
+{%- liquid
+  assign btn_variant = variant | default: 'primary'
+  assign btn_size = size | default: 'md'
+  assign btn_label = label | default: 'Button'
+  assign btn_type = type | default: 'button'
+  assign btn_full = full | default: false
+  assign btn_disabled = disabled | default: false
+  assign btn_class = 'nt-btn nt-btn--' | append: btn_variant | append: ' nt-btn--' | append: btn_size
+  if btn_full
+    assign btn_class = btn_class | append: ' nt-btn--full'
+  endif
+  if class != blank
+    assign btn_class = btn_class | append: ' ' | append: class
+  endif
+-%}
+
+{%- if href != blank and btn_disabled == false -%}
+  <a href="{{ href }}" class="{{ btn_class }}"{% if target != blank %} target="{{ target }}"{% endif %}{% if rel != blank %} rel="{{ rel }}"{% endif %}>
+    {%- if icon != blank -%}
+      {% render 'icon', name: icon, size: 18 %}
+    {%- endif -%}
+    {{ btn_label }}
+  </a>
+{%- else -%}
+  <button
+    type="{{ btn_type }}"
+    class="{{ btn_class }}"
+    {% if btn_disabled %}disabled aria-disabled="true"{% endif %}
+  >
+    {%- if icon != blank -%}
+      {% render 'icon', name: icon, size: 18 %}
+    {%- endif -%}
+    {{ btn_label }}
+  </button>
+{%- endif -%}

@@ -1,0 +1,65 @@
+{% render 'breadcrumbs' %}
+
+<section class="nt-section pt-0">
+  <div class="nt-container">
+    <div class="mb-8">
+      <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight text-brand-deep">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="text-ink-muted mt-2 max-w-3xl rte">{{ collection.description }}</div>
+      {%- endif -%}
+      <p class="text-sm text-ink-muted mt-2">{{ collection.products_count }} {{ 'collection.products_count' | t }}</p>
+    </div>
+
+    <form id="collection-filters-form" action="{{ collection.url }}" method="get" class="nt-collection-layout">
+      {% render 'collection-filters' %}
+
+      <div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div class="flex items-center gap-2">
+            <label for="sort-by" class="text-sm font-medium">{{ 'collection.sort' | t }}</label>
+            <select id="sort-by" name="sort_by" class="nt-input w-auto min-h-9" form="collection-filters-form" onchange="this.form.submit()">
+              {%- for option in collection.sort_options -%}
+                <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>
+                  {{ option.name }}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        </div>
+
+        {%- paginate collection.products by section.settings.products_per_page -%}
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {%- for product in collection.products -%}
+              {% render 'product-card', product: product %}
+            {%- else -%}
+              <p class="col-span-full text-center py-12 text-ink-muted">{{ 'collection.empty' | t }}</p>
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="flex justify-center gap-2 mt-10" aria-label="Paginación">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="nt-btn nt-btn--secondary nt-btn--sm">←</a>
+              {%- endif -%}
+              <span class="flex items-center px-4 text-sm text-ink-muted">
+                {{ paginate.current_page }} / {{ paginate.pages }}
+              </span>
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="nt-btn nt-btn--secondary nt-btn--sm">→</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    </form>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Colección",
+  "settings": [
+    { "type": "range", "id": "products_per_page", "min": 12, "max": 48, "step": 12, "default": 24, "label": "Productos por página" }
+  ]
+}
+{% endschema %}

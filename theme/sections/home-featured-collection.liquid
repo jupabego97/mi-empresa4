@@ -1,0 +1,47 @@
+{%- assign collection = collections[section.settings.collection] -%}
+<section class="nt-section bg-surface-2">
+  <div class="nt-container">
+    <div class="flex items-end justify-between gap-4 mb-8">
+      <div>
+        <h2 class="nt-section-title mb-2">{{ section.settings.title }}</h2>
+        {%- if section.settings.description != blank -%}
+          <p class="text-ink-muted">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+      {%- if collection != blank -%}
+        <a href="{{ collection.url }}" class="text-sm font-medium text-brand-royal hover:underline shrink-0">
+          {{ 'home.view_all' | t }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+      {%- if collection != blank -%}
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        {% render 'product-card', demo: true, title: 'Laptop ASUS VivoBook', price: 2499000, compare_at: 2899000, badge: 'oferta' %}
+        {% render 'product-card', demo: true, title: 'PC Gamer RTX 4060', price: 4599000, badge: 'nuevo' %}
+        {% render 'product-card', demo: true, title: 'Monitor LG 27"', price: 899000, badge: 'oferta' %}
+        {% render 'product-card', demo: true, title: 'Teclado mecánico', price: 189900, badge: 'stock-bajo', low_stock: true %}
+        <p class="col-span-full text-sm text-ink-muted text-center">
+          {{ 'home.select_collection' | t }}
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Destacados",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Productos destacados" },
+    { "type": "textarea", "id": "description", "label": "Descripción", "default": "Lo más vendido esta semana" },
+    { "type": "collection", "id": "collection", "label": "Colección" },
+    { "type": "range", "id": "products_to_show", "min": 4, "max": 12, "step": 2, "default": 8, "label": "Productos a mostrar" }
+  ],
+  "presets": [{ "name": "Home — Productos destacados" }]
+}
+{% endschema %}

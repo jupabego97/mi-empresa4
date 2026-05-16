@@ -1,0 +1,52 @@
+<section class="nt-section" id="styleguide-buttons">
+  <div class="nt-container">
+    <h2 class="nt-section-title">{{ section.settings.title }}</h2>
+
+    {%- assign variants = 'primary,secondary,ghost,whatsapp' | split: ',' -%}
+    {%- assign sizes = 'sm,md,lg' | split: ',' -%}
+
+    {%- for variant in variants -%}
+      <div class="mb-10">
+        <h3 class="text-h4 font-semibold mb-4 capitalize">{{ variant }}</h3>
+        <div class="flex flex-wrap items-center gap-4">
+          {%- for size in sizes -%}
+            {%- assign btn_demo_label = variant | append: ' ' | append: size -%}
+            {% render 'btn',
+              variant: variant,
+              size: size,
+              label: btn_demo_label,
+              type: 'button'
+            %}
+          {%- endfor -%}
+          {%- if variant == 'whatsapp' -%}
+            {% render 'btn', variant: 'whatsapp', size: 'lg', label: 'Hablar con asesor', icon: 'whatsapp', href: '#', target: '_blank' %}
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+
+    <div class="mt-8 p-6 rounded-lg bg-surface-2 border border-line">
+      <p class="text-sm font-medium mb-4">Estados</p>
+      <div class="flex flex-wrap gap-4">
+        {% render 'btn', variant: 'primary', size: 'md', label: 'Normal', type: 'button' %}
+        {% render 'btn', variant: 'primary', size: 'md', label: 'Deshabilitado', type: 'button', disabled: true %}
+        {% render 'btn', variant: 'primary', size: 'lg', label: 'Ancho completo', type: 'button', full: true %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Styleguide — Botones",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Botones"
+    }
+  ],
+  "presets": [{ "name": "Styleguide — Botones" }]
+}
+{% endschema %}

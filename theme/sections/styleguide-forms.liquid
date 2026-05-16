@@ -1,0 +1,44 @@
+<section class="nt-section" id="styleguide-forms">
+  <div class="nt-container">
+    <h2 class="nt-section-title">{{ section.settings.title }}</h2>
+
+    <div class="grid md:grid-cols-2 gap-10 max-w-4xl">
+      <div class="space-y-6">
+        <h3 class="text-h4 font-semibold">Inputs</h3>
+        {% render 'input', type: 'text', name: 'name', id: 'sg-name', label: 'Nombre completo', placeholder: 'Juan Pérez' %}
+        {% render 'input', type: 'text', name: 'email', id: 'sg-email', label: 'Email', placeholder: 'correo@ejemplo.com', error: 'Ingresa un email válido' %}
+        {% render 'input', type: 'text', name: 'phone', id: 'sg-phone', label: 'Teléfono', hint: 'WhatsApp para confirmación de pedido' %}
+      </div>
+
+      <div class="space-y-6">
+        <h3 class="text-h4 font-semibold">Búsqueda y select</h3>
+        {% render 'input', type: 'search', name: 'q', id: 'sg-search', label: 'Buscador (estilo header)' %}
+        {% render 'input',
+          type: 'select',
+          name: 'sort',
+          id: 'sg-sort',
+          label: 'Ordenar por',
+          options: 'price-asc:Menor precio,price-desc:Mayor precio,best-selling:Más vendidos,created-desc:Más recientes'
+        %}
+
+        <h3 class="text-h4 font-semibold pt-4">Cantidad (Alpine)</h3>
+        {% render 'input', type: 'qty', name: 'quantity', id: 'sg-qty', label: 'Cantidad', value: 1, min: 1, max: 10 %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Styleguide — Formularios",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Formularios"
+    }
+  ],
+  "presets": [{ "name": "Styleguide — Formularios" }]
+}
+{% endschema %}

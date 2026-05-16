@@ -1,0 +1,42 @@
+{%- capture browse_label -%}{{ 'search.browse_all' | t }}{%- endcapture -%}
+
+{% render 'breadcrumbs' %}
+
+<section class="nt-section pt-0">
+  <div class="nt-container">
+    <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight mb-2">{{ 'search.title' | t }}</h1>
+    {%- if search.performed -%}
+      <p class="text-ink-muted mb-8">
+        {{ 'search.results_for' | t }} "<strong>{{ search.terms | escape }}</strong>"
+        — {{ search.results_count }} {{ 'search.results_count' | t }}
+      </p>
+    {%- endif -%}
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="max-w-xl mb-10">
+      <input type="hidden" name="type" value="product">
+      {% render 'input', type: 'search', name: 'q', id: 'search-page', label: 'Buscar', value: search.terms %}
+    </form>
+
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="text-center py-12 text-ink-muted">{{ 'search.no_results' | t }}</p>
+        {% render 'btn', variant: 'primary', size: 'lg', label: browse_label, href: routes.all_products_collection_url %}
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Búsqueda",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,36 @@
+{%- comment -%}
+  Product price: {% render 'price', product: product %}
+  Manual: {% render 'price', price: 2999000, compare_at: 3499000, installments: '12 cuotas' %}
+{%- endcomment -%}
+{%- liquid
+  if product != blank
+    assign current_price = product.price
+    assign compare_price = product.compare_at_price
+  else
+    assign current_price = price | default: 0
+    assign compare_price = compare_at | default: 0
+  endif
+
+  assign show_installments = installments | default: ''
+  assign discount_pct = 0
+  if compare_price > current_price and compare_price > 0
+    assign discount_amount = compare_price | minus: current_price
+    assign discount_pct = discount_amount | times: 100 | divided_by: compare_price
+  endif
+-%}
+
+<div class="nt-price">
+  <div class="nt-price__row">
+    <span class="nt-price__current">{{ current_price | money }}</span>
+    {%- if compare_price > current_price -%}
+      <span class="nt-price__compare">{{ compare_price | money }}</span>
+      <span class="nt-price__discount">-{{ discount_pct }}%</span>
+    {%- endif -%}
+  </div>
+  {%- if show_installments != blank -%}
+    <span class="nt-price__installments">{{ show_installments }}</span>
+  {%- elsif product != blank and current_price > 0 -%}
+    {%- assign installment_amount = current_price | divided_by: 12 -%}
+    <span class="nt-price__installments">12 cuotas de {{ installment_amount | money }}</span>
+  {%- endif -%}
+</div>

@@ -1,0 +1,20 @@
+<section class="nt-section">
+  <div class="nt-container max-w-3xl">
+    <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight text-brand-deep mb-6">
+      {{ page.title }}
+    </h1>
+    {%- if page.content != blank -%}
+      <div class="prose prose-sm max-w-none text-ink-muted rte">
+        {{ page.content }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contenido de página",
+  "settings": [],
+  "presets": [{ "name": "Contenido de página" }]
+}
+{% endschema %}

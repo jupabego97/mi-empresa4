@@ -1,0 +1,85 @@
+<section class="nt-section bg-surface-2" id="styleguide-cards">
+  <div class="nt-container">
+    <h2 class="nt-section-title">{{ section.settings.title }}</h2>
+    <p class="text-ink-muted mb-8">{{ section.settings.description }}</p>
+
+    <div class="mb-6 flex flex-wrap gap-2">
+      {% render 'badge', variant: 'oferta', label: '-15%' %}
+      {% render 'badge', variant: 'nuevo' %}
+      {% render 'badge', variant: 'stock-bajo' %}
+      {% render 'badge', variant: 'garantia' %}
+      {% render 'badge', variant: 'envio-gratis' %}
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+      {% render 'product-card',
+        demo: true,
+        title: 'Laptop ASUS VivoBook 15',
+        price: 2499000,
+        compare_at: 2899000,
+        badge: 'oferta',
+        installments: '12 cuotas de $208.250',
+        rating: 4.8
+      %}
+      {% render 'product-card',
+        demo: true,
+        title: 'PC Gamer RTX 4060 · Ryzen 5',
+        price: 4599000,
+        badge: 'nuevo',
+        installments: '12 cuotas de $383.250',
+        rating: 5
+      %}
+      {% render 'product-card',
+        demo: true,
+        title: 'Monitor LG UltraGear 27"',
+        price: 899000,
+        compare_at: 1099000,
+        badge: 'oferta',
+        rating: 4.6
+      %}
+      {% render 'product-card',
+        demo: true,
+        title: 'Teclado mecánico Redragon',
+        price: 189900,
+        badge: 'stock-bajo',
+        low_stock: true,
+        rating: 4.5
+      %}
+      {% render 'product-card',
+        demo: true,
+        title: 'SSD Kingston NV2 1TB',
+        price: 159900,
+        installments: '6 cuotas sin interés',
+        rating: 4.9
+      %}
+      {% render 'product-card',
+        demo: true,
+        title: 'Router WiFi 6 TP-Link',
+        price: 299900,
+        available: false,
+        rating: 4.2
+      %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Styleguide — Cards",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Product cards"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción",
+      "default": "Cards premium con hover sutil, badges, precio, cuotas y CTA."
+    }
+  ],
+  "presets": [{ "name": "Styleguide — Cards" }]
+}
+{% endschema %}

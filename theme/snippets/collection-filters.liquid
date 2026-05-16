@@ -1,0 +1,64 @@
+<aside class="nt-filters" x-data="{ open: false }">
+  <button
+    type="button"
+    class="lg:hidden nt-btn nt-btn--secondary nt-btn--md w-full mb-4"
+    @click="open = !open"
+  >
+    {{ 'collection.filters' | t }}
+  </button>
+
+  <div class="space-y-6" :class="open ? 'block' : 'hidden lg:block'">
+    {%- if collection.filters.size > 0 -%}
+      {%- for filter in collection.filters -%}
+        <div class="nt-filter-group">
+          <p class="nt-filter-group__title">{{ filter.label }}</p>
+          {%- case filter.type -%}
+            {%- when 'list' -%}
+              <ul class="space-y-1">
+                {%- for value in filter.values -%}
+                  <li>
+                    <label class="nt-filter-option">
+                      <input
+                        type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value }}"
+                        {% if value.active %}checked{% endif %}
+                        {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                        form="collection-filters-form"
+                      >
+                      {{ value.label }} ({{ value.count }})
+                    </label>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- when 'price_range' -%}
+              <div class="flex gap-2">
+                <input
+                  type="number"
+                  name="{{ filter.min_value.param_name }}"
+                  value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                  placeholder="Min"
+                  class="nt-input min-h-9"
+                  form="collection-filters-form"
+                >
+                <input
+                  type="number"
+                  name="{{ filter.max_value.param_name }}"
+                  value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                  placeholder="Max"
+                  class="nt-input min-h-9"
+                  form="collection-filters-form"
+                >
+              </div>
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <p class="text-sm text-ink-muted">{{ 'collection.no_filters' | t }}</p>
+      <div class="nt-filter-group">
+        <p class="nt-filter-group__title">{{ 'collection.sort' | t }}</p>
+        <p class="text-xs text-ink-muted">{{ 'collection.filters_hint' | t }}</p>
+      </div>
+    {%- endif -%}
+  </div>
+</aside>

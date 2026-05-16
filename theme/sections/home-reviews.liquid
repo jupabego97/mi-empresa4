@@ -1,0 +1,52 @@
+<section class="nt-section">
+  <div class="nt-container">
+    <h2 class="nt-section-title text-center">{{ section.settings.title }}</h2>
+    <p class="text-center text-ink-muted mb-10 max-w-xl mx-auto">{{ section.settings.description }}</p>
+    <div class="grid md:grid-cols-3 gap-6">
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          {% render 'review-card',
+            quote: block.settings.quote,
+            author: block.settings.author,
+            location: block.settings.location,
+            rating: block.settings.rating,
+            avatar: block.settings.avatar
+          %}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Reseñas",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Lo que dicen nuestros clientes" },
+    { "type": "textarea", "id": "description", "label": "Descripción", "default": "Confianza local en el oriente antioqueño" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Reseña",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Testimonio", "default": "Excelente servicio y productos de calidad." },
+        { "type": "text", "id": "author", "label": "Nombre", "default": "Cliente" },
+        { "type": "text", "id": "location", "label": "Ubicación", "default": "Rionegro, Antioquia" },
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "default": 5, "label": "Estrellas" },
+        { "type": "image_picker", "id": "avatar", "label": "Foto (opcional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home — Reseñas",
+      "blocks": [
+        { "type": "review", "settings": { "quote": "Compré mi portátil aquí y la asesoría fue increíble. Muy recomendados.", "author": "Carlos M.", "location": "La Ceja" } },
+        { "type": "review", "settings": { "quote": "Repararon mi PC gamer en tiempo récord. Tienda seria y confiable.", "author": "Andrea L.", "location": "Viboral" } },
+        { "type": "review", "settings": { "quote": "Los mejores precios de la zona y envío rápido a Medellín.", "author": "Jhon P.", "location": "Medellín" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

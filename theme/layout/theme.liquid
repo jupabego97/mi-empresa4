@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code | default: 'es' }}">
+<head>
+  {% render 'meta-tags' %}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --color-brand-royal: {{ settings.color_brand_royal | default: '#00D1C1' }};
+      --color-brand-electric: {{ settings.color_brand_electric | default: '#2D7CFF' }};
+      --color-brand-deep: {{ settings.color_brand_deep | default: '#051640' }};
+    }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background: #fff;
+      color: #0a0f1c;
+      -webkit-font-smoothing: antialiased;
+    }
+    [x-cloak] { display: none !important; }
+  </style>
+
+  {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+  {{ content_for_header }}
+
+  <script defer src="{{ 'alpine.min.js' | asset_url }}"></script>
+  <script defer src="{{ 'theme.js' | asset_url }}"></script>
+</head>
+<body
+  class="min-h-screen flex flex-col pb-16 lg:pb-0"
+  x-data="{ cartOpen: false }"
+  @keydown.escape.window="cartOpen = false"
+  @open-cart.window="cartOpen = true"
+>
+  <a href="#main-content" class="nt-sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-brand-royal focus:text-white focus:rounded-md">
+    {{ 'accessibility.skip_to_content' | t }}
+  </a>
+
+  {% section 'header' %}
+
+  <main id="main-content" role="main" class="flex-1">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  {% section 'cart-drawer' %}
+  {% render 'icon-sprite' %}
+  {% render 'whatsapp-fab' %}
+  {% render 'mobile-bottom-nav' %}
+</body>
+</html>

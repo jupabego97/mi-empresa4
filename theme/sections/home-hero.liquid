@@ -1,0 +1,55 @@
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_text = settings.whatsapp_message | url_encode
+  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+-%}
+<section class="nt-hero">
+  <div class="nt-container nt-hero__inner">
+    <div class="flex flex-col justify-center gap-6 z-10">
+      <p class="text-sm font-semibold text-brand-electric uppercase tracking-wider">{{ section.settings.eyebrow }}</p>
+      <h1 style="font-size: var(--text-display)" class="font-bold tracking-tight leading-tight">
+        {{ section.settings.heading }}
+      </h1>
+      <p class="text-lg text-white/80 max-w-lg">{{ section.settings.subheading }}</p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        {% render 'btn', variant: 'primary', size: 'lg', label: section.settings.cta_primary, href: section.settings.cta_primary_url %}
+        {% render 'btn', variant: 'whatsapp', size: 'lg', label: section.settings.cta_whatsapp, icon: 'whatsapp', href: wa_url, target: '_blank', rel: 'noopener' %}
+      </div>
+    </div>
+    <div class="nt-hero__media">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1200
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '600,900,1200',
+            sizes: '(max-width: 1024px) 100vw, 50vw',
+            class: 'w-full h-full object-cover',
+            alt: section.settings.heading
+        }}
+      {%- else -%}
+        <div class="w-full h-full min-h-[280px] bg-gradient-to-br from-brand-electric/30 to-brand-deep flex items-center justify-center text-white/50 text-sm">
+          Imagen hero (subir en Theme Editor)
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "NANOTRONICS · El Carmen de Viboral" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Tecnología que impulsa tu rendimiento" },
+    { "type": "textarea", "id": "subheading", "label": "Subtítulo", "default": "Equipos seleccionados para gamers, estudiantes y profesionales. Envíos a toda Colombia." },
+    { "type": "image_picker", "id": "image", "label": "Imagen hero" },
+    { "type": "text", "id": "cta_primary", "label": "CTA principal", "default": "Ver productos" },
+    { "type": "url", "id": "cta_primary_url", "label": "URL CTA principal" },
+    { "type": "text", "id": "cta_whatsapp", "label": "CTA WhatsApp", "default": "Hablar con asesor" }
+  ],
+  "presets": [{ "name": "Home — Hero" }]
+}
+{% endschema %}

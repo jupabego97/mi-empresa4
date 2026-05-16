@@ -1,0 +1,118 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "NANOTRONICS",
+    "theme_version": "1.0.0",
+    "theme_author": "NANOTRONICS",
+    "theme_documentation_url": "https://github.com/jupabego97/mi-empresa4",
+    "theme_support_url": "https://github.com/jupabego97/mi-empresa4"
+  },
+  {
+    "name": "Marca",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 80,
+        "max": 280,
+        "step": 10,
+        "unit": "px",
+        "label": "Ancho del logo",
+        "default": 160
+      },
+      {
+        "type": "text",
+        "id": "brand_tagline",
+        "label": "Eslogan",
+        "default": "Tecnología que impulsa tu rendimiento"
+      }
+    ]
+  },
+  {
+    "name": "Contacto y WhatsApp",
+    "settings": [
+      {
+        "type": "text",
+        "id": "whatsapp_number",
+        "label": "Número WhatsApp (solo dígitos, con código país)",
+        "default": "573236826910",
+        "info": "Ejemplo: 573236826910"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_message",
+        "label": "Mensaje predeterminado WhatsApp",
+        "default": "Hola, quiero asesoría de NANOTRONICS"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_whatsapp_fab",
+        "label": "Mostrar botón flotante WhatsApp",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "store_address",
+        "label": "Dirección tienda física",
+        "default": "El Carmen de Viboral, Antioquia, Colombia"
+      },
+      {
+        "type": "text",
+        "id": "store_nit",
+        "label": "NIT",
+        "default": "900.000.000-0"
+      },
+      {
+        "type": "text",
+        "id": "store_phone",
+        "label": "Teléfono",
+        "default": "323 682 6910"
+      },
+      {
+        "type": "text",
+        "id": "store_email",
+        "label": "Email",
+        "default": "contacto@nanotronics.co"
+      }
+    ]
+  },
+  {
+    "name": "Colores (opcional)",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_brand_royal",
+        "label": "Azul royal",
+        "default": "#00D1C1"
+      },
+      {
+        "type": "color",
+        "id": "color_brand_electric",
+        "label": "Azul eléctrico",
+        "default": "#2D7CFF"
+      },
+      {
+        "type": "color",
+        "id": "color_brand_deep",
+        "label": "Azul oscuro",
+        "default": "#051640"
+      }
+    ]
+  },
+  {
+    "name": "SEO",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "meta_description_default",
+        "label": "Meta descripción por defecto",
+        "default": "NANOTRONICS — Computadores, portátiles, componentes gamer y servicio técnico en El Carmen de Viboral, Antioquia. Envíos a toda Colombia."
+      }
+    ]
+  }
+]

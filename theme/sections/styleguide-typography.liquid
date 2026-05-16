@@ -1,0 +1,56 @@
+<section class="nt-section bg-surface-2" id="styleguide-typography">
+  <div class="nt-container">
+    <h2 class="nt-section-title">{{ section.settings.title }}</h2>
+
+    <div class="space-y-8 max-w-3xl">
+      <div>
+        <p class="text-xs text-ink-muted mb-2 font-mono">text-display · clamp(2rem → 3.25rem)</p>
+        <p style="font-size: var(--text-display)" class="font-bold tracking-tight text-brand-deep">
+          Tecnología que impulsa tu rendimiento
+        </p>
+      </div>
+      <div>
+        <p class="text-xs text-ink-muted mb-2 font-mono">text-h1</p>
+        <p style="font-size: var(--text-h1)" class="font-semibold tracking-tight">Portátiles y PC Gamer</p>
+      </div>
+      <div>
+        <p class="text-xs text-ink-muted mb-2 font-mono">text-h2</p>
+        <p style="font-size: var(--text-h2)" class="font-semibold">Productos destacados</p>
+      </div>
+      <div>
+        <p class="text-xs text-ink-muted mb-2 font-mono">text-h3</p>
+        <p style="font-size: var(--text-h3)" class="font-medium">Servicio técnico especializado</p>
+      </div>
+      <div>
+        <p class="text-xs text-ink-muted mb-2 font-mono">text-h4</p>
+        <p style="font-size: var(--text-h4)" class="font-medium">Garantía real · Envíos Colombia</p>
+      </div>
+      <div>
+        <p class="text-xs text-ink-muted mb-2 font-mono">text-body (1rem)</p>
+        <p class="text-body text-ink-muted">
+          NANOTRONICS es tu tienda tecnológica de confianza en El Carmen de Viboral. Equipos seleccionados para gamers, estudiantes y profesionales con asesoría personalizada.
+        </p>
+      </div>
+      <div>
+        <p class="text-xs text-ink-muted mb-2 font-mono">text-sm / text-xs</p>
+        <p class="text-sm text-ink-muted">12 cuotas sin interés · Envío a toda Colombia</p>
+        <p class="text-xs text-ink-muted mt-1">Últimas unidades en stock</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Styleguide — Tipografía",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Tipografía"
+    }
+  ],
+  "presets": [{ "name": "Styleguide — Tipografía" }]
+}
+{% endschema %}

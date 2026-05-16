@@ -1,0 +1,50 @@
+<section class="nt-section border-b border-line" id="styleguide-intro">
+  <div class="nt-container text-center max-w-3xl mx-auto">
+    <p class="text-sm font-semibold text-brand-royal uppercase tracking-wider mb-3">Fase 1</p>
+    <h1 style="font-size: var(--text-display)" class="font-bold tracking-tight text-brand-deep mb-4">
+      {{ section.settings.title }}
+    </h1>
+    <p class="text-lg text-ink-muted mb-8">{{ section.settings.subtitle }}</p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      {% render 'btn', variant: 'primary', size: 'lg', label: section.settings.cta_primary, href: '#styleguide-colors' %}
+      {%- liquid
+        assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+        assign wa_url = 'https://wa.me/' | append: wa_number
+      -%}
+      {% render 'btn', variant: 'whatsapp', size: 'lg', label: section.settings.cta_whatsapp, icon: 'whatsapp', href: wa_url, target: '_blank', rel: 'noopener' %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Styleguide — Intro",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Sistema de diseño NANOTRONICS"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Tokens, componentes y patrones UI — premium, rápido y enfocado en conversión."
+    },
+    {
+      "type": "text",
+      "id": "cta_primary",
+      "label": "CTA primario",
+      "default": "Ver componentes"
+    },
+    {
+      "type": "text",
+      "id": "cta_whatsapp",
+      "label": "CTA WhatsApp",
+      "default": "Hablar con asesor"
+    }
+  ],
+  "presets": [{ "name": "Styleguide — Intro" }]
+}
+{% endschema %}

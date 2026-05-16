@@ -1,0 +1,111 @@
+{%- comment -%}
+  {% render 'product-card', product: product %}
+  Demo: {% render 'product-card', demo: true, title: '...', price: 2999000, ... %}
+{%- endcomment -%}
+{%- liquid
+  if demo
+    assign card_title = title | default: 'Producto demo'
+    assign card_url = url | default: '#'
+    assign card_price = price | default: 199900000
+    assign card_compare = compare_at | default: 0
+    assign card_available = available | default: true
+    assign card_rating = rating | default: 5
+    assign card_badge = badge | default: ''
+    assign card_installments = installments | default: '12 cuotas sin interés'
+    assign card_image = image
+  else
+    assign card_product = product
+    assign card_title = card_product.title
+    assign card_url = card_product.url
+    assign card_price = card_product.price
+    assign card_compare = card_product.compare_at_price
+    assign card_available = card_product.available
+    assign card_rating = 5
+    assign card_badge = ''
+    if card_product.compare_at_price > card_product.price
+      assign card_badge = 'oferta'
+    endif
+    assign card_image = card_product.featured_image
+  endif
+
+  assign stock_label = 'general.in_stock' | t
+  assign stock_class = 'text-success'
+  if card_available == false
+    assign stock_label = 'general.out_of_stock' | t
+    assign stock_class = 'text-danger'
+  elsif low_stock
+    assign stock_label = 'general.low_stock' | t
+    assign stock_class = 'text-warning'
+  endif
+-%}
+
+<article class="nt-product-card group"{% if card_available == false %} data-sold-out{% endif %}>
+  <a href="{{ card_url }}" class="nt-product-card__media block">
+    <div class="nt-product-card__badges">
+      {%- if card_badge == 'oferta' -%}
+        {% render 'badge', variant: 'oferta' %}
+      {%- elsif card_badge == 'nuevo' -%}
+        {% render 'badge', variant: 'nuevo' %}
+      {%- elsif card_badge == 'stock-bajo' -%}
+        {% render 'badge', variant: 'stock-bajo' %}
+      {%- endif -%}
+      {%- if card_badge == 'garantia' -%}
+        {% render 'badge', variant: 'garantia' %}
+      {%- endif -%}
+    </div>
+    {%- if card_image != blank -%}
+      {{
+        card_image
+        | image_url: width: 600
+        | image_tag:
+          loading: 'lazy',
+          widths: '200,400,600',
+          sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw',
+          class: 'w-full h-full object-cover transition-transform duration-250 group-hover:scale-[1.02]',
+          alt: card_title
+      }}
+    {%- else -%}
+      <div class="w-full h-full flex items-center justify-center bg-surface-2 text-ink-muted text-sm p-4 text-center">
+        {{ card_title }}
+      </div>
+    {%- endif -%}
+  </a>
+
+  <div class="nt-product-card__body">
+    <a href="{{ card_url }}" class="nt-product-card__title hover:text-brand-royal transition-colors">
+      {{ card_title }}
+    </a>
+
+    <div class="nt-product-card__rating">
+      {%- for i in (1..5) -%}
+        {% render 'icon', name: 'star', size: 12, class: 'text-warning fill-warning' %}
+      {%- endfor -%}
+      <span>({{ card_rating }})</span>
+    </div>
+
+    {% render 'price', price: card_price, compare_at: card_compare, installments: card_installments %}
+
+    <p class="text-xs font-medium {{ stock_class }}">{{ stock_label }}</p>
+
+    {%- capture add_label -%}{{ 'general.add_to_cart' | t }}{%- endcapture -%}
+    {%- capture quick_label -%}{{ 'general.quick_add' | t }}{%- endcapture -%}
+    {%- capture sold_label -%}{{ 'general.out_of_stock' | t }}{%- endcapture -%}
+    <div class="nt-product-card__actions">
+      {%- if card_available -%}
+        {%- if demo == blank and card_product.variants.size == 1 -%}
+          <form action="{{ routes.cart_add_url }}" method="post" class="flex-1">
+            <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+            <button type="submit" class="nt-btn nt-btn--primary nt-btn--sm w-full">{{ add_label }}</button>
+          </form>
+        {%- elsif demo == blank -%}
+          {% render 'btn', variant: 'primary', size: 'sm', label: add_label, href: card_url, class: 'flex-1' %}
+        {%- else -%}
+          {% render 'btn', variant: 'primary', size: 'sm', label: add_label, type: 'button', class: 'flex-1' %}
+        {%- endif -%}
+        {% render 'btn', variant: 'ghost', size: 'sm', label: quick_label, href: card_url %}
+      {%- else -%}
+        {% render 'btn', variant: 'secondary', size: 'sm', label: sold_label, disabled: true, class: 'flex-1' %}
+      {%- endif -%}
+    </div>
+  </div>
+</article>

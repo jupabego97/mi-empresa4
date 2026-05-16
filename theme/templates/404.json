@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "styleguide-hero",
+      "settings": {
+        "title": "Página no encontrada",
+        "subtitle": "El producto o página que buscas no existe.",
+        "cta_primary": "Volver al inicio",
+        "cta_whatsapp": "Contactar soporte"
+      }
+    }
+  },
+  "order": ["main"]
+}
