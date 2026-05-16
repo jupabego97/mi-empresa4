@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const src = join(root, 'node_modules', 'alpinejs', 'dist', 'cdn.min.js');
-const destDir = join(root, 'theme', 'assets');
+const destDir = join(root, 'assets');
 const dest = join(destDir, 'alpine.min.js');
 
 if (!existsSync(src)) {
@@ -14,4 +14,4 @@ if (!existsSync(src)) {
 
 mkdirSync(destDir, { recursive: true });
 copyFileSync(src, dest);
-console.log('[copy-alpine] copied alpine.min.js → theme/assets/');
+console.log('[copy-alpine] copied alpine.min.js → assets/');

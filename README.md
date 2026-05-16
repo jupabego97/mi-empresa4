@@ -53,14 +53,19 @@ npm run theme:dev
 - Home: hero, categorías, colección destacada, reseñas
 - Dirección, NIT, teléfono, email
 
-## Estructura
+## Estructura (raíz del repo = theme Shopify)
+
+Shopify/GitHub exige `assets/`, `config/`, `layout/`, `sections/`, `snippets/`, `templates/` en la **raíz** del repositorio.
 
 ```
-theme/
-  sections/     home-*, main-*, page-*, cart-drawer, header, footer
-  snippets/     product-card, product-form, cart-drawer, ...
-  templates/    index, collection, product, cart, search, page.*
-src/tailwind.css
+assets/       # theme.css, nano-logo.png, alpine.min.js
+config/       # settings_schema.json
+layout/       # theme.liquid
+sections/     # home-*, main-*, header, footer...
+snippets/
+templates/
+src/          # Tailwind fuente (no se sube a Shopify como theme file)
+tools/
 ```
 
 ## Publicar

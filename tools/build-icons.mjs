@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const iconsDir = join(root, 'src', 'icons');
-const outDir = join(root, 'theme', 'assets');
+const outDir = join(root, 'assets');
 const outFile = join(outDir, 'icons.svg');
 
 const files = readdirSync(iconsDir).filter((f) => f.endsWith('.svg'));
@@ -25,4 +25,4 @@ const sprite = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none" ari
 
 mkdirSync(outDir, { recursive: true });
 writeFileSync(outFile, sprite, 'utf8');
-console.log(`[build-icons] ${files.length} icons → theme/assets/icons.svg`);
+console.log(`[build-icons] ${files.length} icons → assets/icons.svg`);
