@@ -1,6 +1,6 @@
 {
   "general": {
-    "search": "Buscar productos, marcas, modelos...",
+    "search": "Busca por producto, marca o modelo…",
     "search_submit": "Buscar",
     "cart": "Carrito",
     "account": "Mi cuenta",
@@ -12,21 +12,26 @@
     "add_to_cart": "Agregar al carrito",
     "buy_now": "Comprar ahora",
     "quick_add": "Agregar",
-    "out_of_stock": "Agotado",
-    "in_stock": "En stock",
-    "low_stock": "Últimas unidades",
-    "installments": "o {{ count }} cuotas sin interés",
+    "view_more": "Ver más",
+    "out_of_stock": "Sin stock",
+    "in_stock": "Disponible",
+    "low_stock": "¡Últimas unidades!",
+    "installments": "o paga en {{ count }} cuotas",
     "warranty": "Garantía oficial",
     "free_shipping": "Envío gratis",
     "view_products": "Ver productos",
-    "talk_advisor": "Hablar con asesor",
+    "talk_advisor": "Asesoría gratis",
+    "call_us": "Llámanos",
+    "announcements": "Anuncios",
     "styleguide_title": "Sistema de diseño",
-    "styleguide_subtitle": "Componentes y tokens NANOTRONICS — Fase 1"
+    "styleguide_subtitle": "Componentes y tokens NANOTRONICS"
   },
   "nav": {
     "home": "Inicio",
     "search": "Buscar",
-    "mobile": "Navegación móvil"
+    "mobile": "Navegación móvil",
+    "principal": "Navegación principal",
+    "all_products": "Todo el catálogo"
   },
   "breadcrumbs": {
     "home": "Inicio"
@@ -34,69 +39,73 @@
   "home": {
     "view_all": "Ver todos",
     "view_all_categories": "Ver todas",
-    "select_collection": "Selecciona una colección en el Theme Editor para mostrar productos reales."
+    "select_collection": "Selecciona una colección en el Theme Editor para mostrar productos reales.",
+    "service_short": "Reparación · upgrades · mantenimiento"
   },
   "collection": {
     "products_count": "productos",
     "filters": "Filtros",
-    "sort": "Ordenar",
-    "empty": "No hay productos en esta categoría.",
+    "sort": "Ordenar por",
+    "empty": "Aún no hay productos en esta categoría. Vuelve pronto o pídenos por WhatsApp lo que buscas.",
     "no_filters": "Sin filtros adicionales",
-    "filters_hint": "Usa el ordenamiento para refinar resultados."
+    "filters_hint": "Usa el orden para refinar tu búsqueda."
   },
   "product": {
     "description": "Descripción",
-    "specs": "Especificaciones",
+    "specs": "Especificaciones técnicas",
     "faq": "Preguntas frecuentes",
-    "faq_answer": "Todos nuestros productos incluyen garantía oficial. Consulta tiempos de envío según tu ciudad. Para dudas técnicas, escríbenos por WhatsApp.",
-    "related": "Productos relacionados",
+    "faq_answer": "Todos nuestros productos incluyen garantía oficial del fabricante. Para dudas técnicas o sobre el modelo, escríbenos por WhatsApp y te respondemos en minutos.",
+    "related": "También te puede interesar",
     "variant": "Variante",
-    "shipping_colombia": "Envíos a toda Colombia",
-    "secure_payment": "Pagos seguros"
+    "shipping_colombia": "Envío a toda Colombia",
+    "secure_payment": "Compra protegida",
+    "returns": "Cambios sin estrés"
   },
   "cart": {
-    "title": "Carrito de compras",
+    "title": "Tu carrito",
     "close": "Cerrar carrito",
     "empty": "Tu carrito está vacío",
     "subtotal": "Subtotal",
     "summary": "Resumen del pedido",
-    "checkout": "Finalizar compra",
+    "checkout": "Finalizar compra segura",
     "view_cart": "Ver carrito completo",
-    "checkout_note": "Envío e impuestos calculados en checkout",
+    "checkout_note": "El envío e impuestos se calculan en el checkout",
     "remove": "Eliminar",
     "payment_methods": "Métodos de pago",
     "shipping_note": "Envío calculado en el siguiente paso",
     "secure": "Compra 100% segura",
-    "help_whatsapp": "Ayuda por WhatsApp",
+    "help_whatsapp": "¿Dudas? Escríbenos",
     "continue_shopping": "Seguir comprando",
-    "recommended": "También te puede interesar"
+    "recommended": "Completa tu setup",
+    "items_count": "productos"
   },
   "search": {
     "title": "Búsqueda",
     "results_for": "Resultados para",
     "results_count": "resultados",
-    "no_results": "No encontramos productos para tu búsqueda.",
-    "browse_all": "Ver todos los productos"
+    "no_results": "No encontramos lo que buscas. Pídenoslo por WhatsApp y lo conseguimos.",
+    "browse_all": "Ver todo el catálogo"
   },
   "service": {
-    "process": "Nuestro proceso",
+    "process": "Cómo funciona",
     "time": "Tiempo estimado",
-    "cta_heading": "¿Listo para reparar tu equipo?"
+    "cta_heading": "¿Tu equipo necesita una segunda vida?"
   },
   "about": {
-    "mission": "Misión",
-    "values": "Valores",
-    "team": "Nuestro equipo"
+    "mission": "Nuestra misión",
+    "values": "Lo que nos define",
+    "team": "El equipo que te atiende"
   },
   "contact": {
-    "address": "Dirección",
+    "address": "Tienda física",
     "phone": "Teléfono",
-    "email": "Email",
-    "form_title": "Envíanos un mensaje",
+    "email": "Correo",
+    "form_title": "Cuéntanos cómo te podemos ayudar",
     "submit": "Enviar mensaje"
   },
   "footer": {
     "company": "Empresa",
+    "shop": "Tienda",
     "help": "Ayuda",
     "legal": "Legal",
     "contact": "Contacto",

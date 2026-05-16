@@ -1,33 +1,137 @@
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_url = 'https://wa.me/' | append: wa_number
+-%}
 <footer class="nt-footer">
-  <div class="nt-container">
-    <div class="nt-footer__grid">
-      <div>
-        <p class="nt-footer__title">{{ 'footer.company' | t }}</p>
-        <a href="/pages/nosotros" class="nt-footer__link">{{ 'footer.about' | t }}</a>
-        <a href="/pages/servicio-tecnico" class="nt-footer__link">{{ 'general.technical_service' | t }}</a>
-        <a href="/pages/nosotros" class="nt-footer__link">{{ 'footer.about' | t }}</a>
+  <div class="absolute -left-32 -top-32 w-96 h-96 rounded-full bg-brand-electric/15 blur-3xl pointer-events-none"></div>
+  <div class="absolute -right-32 bottom-0 w-96 h-96 rounded-full bg-brand-royal/15 blur-3xl pointer-events-none"></div>
+
+  <div class="nt-container relative">
+    <div class="nt-footer__top">
+      <div class="grid lg:grid-cols-[1fr_auto] gap-8 items-center">
+        <div>
+          <p class="nt-eyebrow !text-brand-glow mb-2">Únete al club NANOTRONICS</p>
+          <h3 class="text-2xl font-bold mb-2">Ofertas exclusivas, lanzamientos y guías tech</h3>
+          <p class="text-sm text-white/65">Suscríbete y recibe descuentos antes que nadie, tips para tu setup y novedades. Sin spam, prometido.</p>
+        </div>
+        <form action="/contact#newsletter" method="post" class="flex flex-col sm:flex-row gap-2 w-full lg:w-[420px]">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="nt-sr-only" for="footer-email">Email</label>
+          <input
+            type="email"
+            id="footer-email"
+            name="contact[email]"
+            required
+            placeholder="tucorreo@ejemplo.com"
+            class="flex-1 min-h-12 px-4 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:bg-white/15 focus:border-brand-glow focus:outline-none"
+          >
+          <button type="submit" class="nt-btn nt-btn--primary nt-btn--lg shrink-0">
+            Quiero unirme
+            {% render 'icon', name: 'arrow-right', size: 16 %}
+          </button>
+        </form>
       </div>
+    </div>
+
+    <div class="nt-footer__grid">
+      <div class="col-span-2 lg:col-span-2 space-y-4">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 200 | image_tag: class: 'h-10 w-auto brightness-0 invert', alt: shop.name, loading: 'lazy' }}
+        {%- else -%}
+          <p class="text-xl font-black tracking-tight">NANO<span class="text-brand-glow">/</span>TRONICS</p>
+        {%- endif -%}
+        <p class="text-sm text-white/65 max-w-xs leading-relaxed">
+          Tecnología premium con asesoría real, garantía oficial y taller técnico propio. Desde El Carmen de Viboral para todo Colombia.
+        </p>
+        <div class="space-y-1.5 text-sm text-white/70">
+          <p class="inline-flex items-center gap-2">
+            {% render 'icon', name: 'map-pin', size: 14, class: 'text-brand-glow' %}
+            {{ settings.store_address }}
+          </p>
+          <p class="inline-flex items-center gap-2">
+            {% render 'icon', name: 'phone', size: 14, class: 'text-brand-glow' %}
+            <a href="tel:{{ settings.store_phone | replace: ' ', '' }}" class="hover:text-white">{{ settings.store_phone }}</a>
+          </p>
+          <p class="inline-flex items-center gap-2">
+            {% render 'icon', name: 'mail', size: 14, class: 'text-brand-glow' %}
+            <a href="mailto:{{ settings.store_email }}" class="hover:text-white">{{ settings.store_email }}</a>
+          </p>
+          <p class="text-xs text-white/45 pt-1">NIT {{ settings.store_nit }}</p>
+        </div>
+
+        <div class="nt-footer__social pt-2">
+          {%- if settings.social_facebook != blank -%}
+            <a href="{{ settings.social_facebook }}" class="nt-footer__social-link" target="_blank" rel="noopener" aria-label="Facebook">
+              {% render 'icon', name: 'facebook', size: 16 %}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_instagram != blank -%}
+            <a href="{{ settings.social_instagram }}" class="nt-footer__social-link" target="_blank" rel="noopener" aria-label="Instagram">
+              {% render 'icon', name: 'instagram', size: 16 %}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_tiktok != blank -%}
+            <a href="{{ settings.social_tiktok }}" class="nt-footer__social-link" target="_blank" rel="noopener" aria-label="TikTok">
+              {% render 'icon', name: 'tiktok', size: 16 %}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_youtube != blank -%}
+            <a href="{{ settings.social_youtube }}" class="nt-footer__social-link" target="_blank" rel="noopener" aria-label="YouTube">
+              {% render 'icon', name: 'youtube', size: 16 %}
+            </a>
+          {%- endif -%}
+          <a href="{{ wa_url }}" class="nt-footer__social-link" target="_blank" rel="noopener" aria-label="WhatsApp">
+            {% render 'icon', name: 'whatsapp', size: 16 %}
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="nt-footer__title">{{ 'footer.shop' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="nt-footer__link">{{ 'nav.all_products' | t }}</a>
+        <a href="{{ routes.collections_url }}" class="nt-footer__link">{{ 'general.categories' | t }}</a>
+        <a href="/collections/ofertas" class="nt-footer__link">{{ 'general.offers' | t }}</a>
+        <a href="{{ routes.search_url }}" class="nt-footer__link">{{ 'nav.search' | t }}</a>
+      </div>
+
       <div>
         <p class="nt-footer__title">{{ 'footer.help' | t }}</p>
         <a href="/pages/contacto" class="nt-footer__link">{{ 'footer.contact' | t }}</a>
+        <a href="/pages/servicio-tecnico" class="nt-footer__link">{{ 'general.technical_service' | t }}</a>
         <a href="/policies/shipping-policy" class="nt-footer__link">{{ 'footer.shipping' | t }}</a>
         <a href="/policies/refund-policy" class="nt-footer__link">{{ 'footer.returns' | t }}</a>
+        <a href="{{ wa_url }}" class="nt-footer__link" target="_blank" rel="noopener">{{ 'general.whatsapp' | t }}</a>
       </div>
+
       <div>
-        <p class="nt-footer__title">{{ 'footer.legal' | t }}</p>
+        <p class="nt-footer__title">{{ 'footer.company' | t }}</p>
+        <a href="/pages/nosotros" class="nt-footer__link">{{ 'footer.about' | t }}</a>
         <a href="/policies/privacy-policy" class="nt-footer__link">{{ 'footer.privacy' | t }}</a>
         <a href="/policies/terms-of-service" class="nt-footer__link">{{ 'footer.terms' | t }}</a>
-      </div>
-      <div>
-        <p class="nt-footer__title">{{ 'footer.contact' | t }}</p>
-        <p class="text-sm text-white/70">{{ settings.store_address }}</p>
-        <p class="text-sm text-white/70 mt-2">{{ settings.store_phone }}</p>
-        <p class="text-sm text-white/70">{{ settings.store_email }}</p>
-        <p class="text-sm text-white/50 mt-2">NIT {{ settings.store_nit }}</p>
+        <a href="{{ routes.account_url }}" class="nt-footer__link">{{ 'general.account' | t }}</a>
       </div>
     </div>
+
+    <div class="border-t border-white/10 py-6">
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-3 justify-center">
+        <span class="text-xs text-white/55 uppercase tracking-wider">Métodos de pago:</span>
+        <span class="text-xs px-3 py-1.5 rounded-md bg-white/10 border border-white/15 font-medium">Visa</span>
+        <span class="text-xs px-3 py-1.5 rounded-md bg-white/10 border border-white/15 font-medium">Mastercard</span>
+        <span class="text-xs px-3 py-1.5 rounded-md bg-white/10 border border-white/15 font-medium">PSE</span>
+        <span class="text-xs px-3 py-1.5 rounded-md bg-white/10 border border-white/15 font-medium">Nequi</span>
+        <span class="text-xs px-3 py-1.5 rounded-md bg-white/10 border border-white/15 font-medium">Daviplata</span>
+        <span class="text-xs px-3 py-1.5 rounded-md bg-white/10 border border-white/15 font-medium">Addi</span>
+        <span class="text-xs px-3 py-1.5 rounded-md bg-white/10 border border-white/15 font-medium">Efectivo</span>
+      </div>
+    </div>
+
     <div class="nt-footer__bottom">
-      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'footer.rights' | t }}</p>
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }} · Hecho con ❤ en El Carmen de Viboral</p>
+      <p class="inline-flex items-center gap-2">
+        {% render 'icon', name: 'shield-check', size: 14, class: 'text-brand-glow' %}
+        Sitio seguro · Datos protegidos con SSL
+      </p>
     </div>
   </div>
 </footer>

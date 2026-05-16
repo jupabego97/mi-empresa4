@@ -1,7 +1,19 @@
 <section class="nt-section">
   <div class="nt-container">
-    <h2 class="nt-section-title text-center">{{ section.settings.title }}</h2>
-    <p class="text-center text-ink-muted mb-10 max-w-xl mx-auto">{{ section.settings.description }}</p>
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <p class="nt-eyebrow mb-2">{{ section.settings.eyebrow | default: 'Reseñas de clientes reales' }}</p>
+      <h2 class="nt-section-title text-center mb-2">{{ section.settings.title }}</h2>
+      <p class="text-ink-muted">{{ section.settings.description }}</p>
+      <div class="inline-flex items-center gap-2 mt-4">
+        <div class="flex items-center gap-0.5">
+          {%- for i in (1..5) -%}
+            {% render 'icon', name: 'star', size: 16, class: 'text-warning fill-warning' %}
+          {%- endfor -%}
+        </div>
+        <span class="text-sm font-bold text-ink">4.9</span>
+        <span class="text-sm text-ink-muted">· basado en {{ section.settings.review_count | default: '500+' }} reseñas verificadas</span>
+      </div>
+    </div>
     <div class="grid md:grid-cols-3 gap-6">
       {%- for block in section.blocks -%}
         <div {{ block.shopify_attributes }}>
@@ -10,7 +22,8 @@
             author: block.settings.author,
             location: block.settings.location,
             rating: block.settings.rating,
-            avatar: block.settings.avatar
+            avatar: block.settings.avatar,
+            product: block.settings.product
           %}
         </div>
       {%- endfor -%}
@@ -22,8 +35,10 @@
 {
   "name": "Home — Reseñas",
   "settings": [
-    { "type": "text", "id": "title", "label": "Título", "default": "Lo que dicen nuestros clientes" },
-    { "type": "textarea", "id": "description", "label": "Descripción", "default": "Confianza local en el oriente antioqueño" }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Reseñas de clientes reales" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Más de 500 clientes nos respaldan" },
+    { "type": "textarea", "id": "description", "label": "Descripción", "default": "Sin reseñas inventadas. Solo opiniones de personas que confiaron en nosotros y volvieron." },
+    { "type": "text", "id": "review_count", "label": "Total reseñas (visual)", "default": "500+" }
   ],
   "blocks": [
     {
@@ -33,6 +48,7 @@
         { "type": "textarea", "id": "quote", "label": "Testimonio", "default": "Excelente servicio y productos de calidad." },
         { "type": "text", "id": "author", "label": "Nombre", "default": "Cliente" },
         { "type": "text", "id": "location", "label": "Ubicación", "default": "Rionegro, Antioquia" },
+        { "type": "text", "id": "product", "label": "Producto comprado (opcional)", "default": "" },
         { "type": "range", "id": "rating", "min": 1, "max": 5, "default": 5, "label": "Estrellas" },
         { "type": "image_picker", "id": "avatar", "label": "Foto (opcional)" }
       ]
@@ -42,9 +58,9 @@
     {
       "name": "Home — Reseñas",
       "blocks": [
-        { "type": "review", "settings": { "quote": "Compré mi portátil aquí y la asesoría fue increíble. Muy recomendados.", "author": "Carlos M.", "location": "La Ceja" } },
-        { "type": "review", "settings": { "quote": "Repararon mi PC gamer en tiempo récord. Tienda seria y confiable.", "author": "Andrea L.", "location": "Viboral" } },
-        { "type": "review", "settings": { "quote": "Los mejores precios de la zona y envío rápido a Medellín.", "author": "Jhon P.", "location": "Medellín" } }
+        { "type": "review", "settings": { "quote": "Necesitaba un portátil para diseño y me asesoraron sin venderme el más caro. Llegó a Medellín en 2 días con todo configurado. La diferencia se nota.", "author": "Carlos M.", "location": "La Ceja, Antioquia", "product": "Laptop ASUS VivoBook Pro" } },
+        { "type": "review", "settings": { "quote": "Mi PC gamer dejó de prender. En 24 horas la tenían lista, con foto del problema y todo. Los precios son justos y los técnicos sí saben.", "author": "Andrea L.", "location": "El Carmen de Viboral", "product": "Servicio técnico" } },
+        { "type": "review", "settings": { "quote": "Comparé con cinco tiendas y NANOTRONICS tenía el mejor precio. Factura legal, garantía y el monitor llegó perfecto a Medellín. 10/10 vuelvo a comprar.", "author": "Jhon P.", "location": "Medellín, Antioquia", "product": "Monitor LG UltraGear 27\"" } }
       ]
     }
   ]

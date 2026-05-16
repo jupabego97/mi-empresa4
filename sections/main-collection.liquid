@@ -3,21 +3,40 @@
 <section class="nt-section pt-0">
   <div class="nt-container">
     <div class="mb-8">
-      <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight text-brand-deep">{{ collection.title }}</h1>
+      <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight text-ink">{{ collection.title }}</h1>
       {%- if collection.description != blank -%}
         <div class="text-ink-muted mt-2 max-w-3xl rte">{{ collection.description }}</div>
       {%- endif -%}
-      <p class="text-sm text-ink-muted mt-2">{{ collection.products_count }} {{ 'collection.products_count' | t }}</p>
+      <p class="text-sm text-ink-muted mt-3 inline-flex items-center gap-2">
+        <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-brand-sky text-brand-royal">
+          {% render 'icon', name: 'grid', size: 12 %}
+        </span>
+        {{ collection.products_count }} {{ 'collection.products_count' | t }}
+      </p>
     </div>
 
     <form id="collection-filters-form" action="{{ collection.url }}" method="get" class="nt-collection-layout">
       {% render 'collection-filters' %}
 
       <div>
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-          <div class="flex items-center gap-2">
-            <label for="sort-by" class="text-sm font-medium">{{ 'collection.sort' | t }}</label>
-            <select id="sort-by" name="sort_by" class="nt-input w-auto min-h-9" form="collection-filters-form" onchange="this.form.submit()">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 p-3 rounded-lg bg-surface-2 border border-line">
+          <div class="flex items-center gap-2 text-sm">
+            <span class="inline-flex items-center gap-1.5 text-ink-muted">
+              {% render 'icon', name: 'check', size: 14, class: 'text-success' %}
+              <strong class="text-ink">{{ collection.products_count }}</strong> productos
+            </span>
+            <span class="text-ink-subtle">·</span>
+            <span class="text-ink-muted hidden sm:inline">Página {{ paginate.current_page | default: 1 }}</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <label for="sort-by" class="text-sm font-medium hidden sm:inline">{{ 'collection.sort' | t }}:</label>
+            <select
+              id="sort-by"
+              name="sort_by"
+              class="nt-input w-auto min-h-9 text-sm"
+              form="collection-filters-form"
+              onchange="this.form.submit()"
+            >
               {%- for option in collection.sort_options -%}
                 <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>
                   {{ option.name }}
@@ -28,24 +47,30 @@
         </div>
 
         {%- paginate collection.products by section.settings.products_per_page -%}
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {%- for product in collection.products -%}
               {% render 'product-card', product: product %}
             {%- else -%}
-              <p class="col-span-full text-center py-12 text-ink-muted">{{ 'collection.empty' | t }}</p>
+              <p class="col-span-full text-center py-16 text-ink-muted">{{ 'collection.empty' | t }}</p>
             {%- endfor -%}
           </div>
 
           {%- if paginate.pages > 1 -%}
-            <nav class="flex justify-center gap-2 mt-10" aria-label="Paginación">
+            <nav class="flex justify-center items-center gap-2 mt-12" aria-label="Paginación">
               {%- if paginate.previous -%}
-                <a href="{{ paginate.previous.url }}" class="nt-btn nt-btn--secondary nt-btn--sm">←</a>
+                <a href="{{ paginate.previous.url }}" class="nt-btn nt-btn--secondary nt-btn--md inline-flex items-center gap-1">
+                  {% render 'icon', name: 'chevron', size: 14, class: 'rotate-180' %}
+                  Anterior
+                </a>
               {%- endif -%}
-              <span class="flex items-center px-4 text-sm text-ink-muted">
-                {{ paginate.current_page }} / {{ paginate.pages }}
+              <span class="px-4 py-2 text-sm text-ink-muted">
+                <strong class="text-ink">{{ paginate.current_page }}</strong> / {{ paginate.pages }}
               </span>
               {%- if paginate.next -%}
-                <a href="{{ paginate.next.url }}" class="nt-btn nt-btn--secondary nt-btn--sm">→</a>
+                <a href="{{ paginate.next.url }}" class="nt-btn nt-btn--secondary nt-btn--md inline-flex items-center gap-1">
+                  Siguiente
+                  {% render 'icon', name: 'chevron', size: 14 %}
+                </a>
               {%- endif -%}
             </nav>
           {%- endif -%}

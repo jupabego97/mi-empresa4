@@ -3,14 +3,18 @@
   <div class="nt-container">
     <div class="flex items-end justify-between gap-4 mb-8">
       <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="nt-eyebrow mb-2">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
         <h2 class="nt-section-title mb-2">{{ section.settings.title }}</h2>
         {%- if section.settings.description != blank -%}
-          <p class="text-ink-muted">{{ section.settings.description }}</p>
+          <p class="text-ink-muted max-w-xl">{{ section.settings.description }}</p>
         {%- endif -%}
       </div>
       {%- if collection != blank -%}
-        <a href="{{ collection.url }}" class="text-sm font-medium text-brand-royal hover:underline shrink-0">
+        <a href="{{ collection.url }}" class="text-sm font-medium text-brand-royal hover:underline shrink-0 inline-flex items-center gap-1">
           {{ 'home.view_all' | t }}
+          {% render 'icon', name: 'arrow-right', size: 14 %}
         </a>
       {%- endif -%}
     </div>
@@ -21,11 +25,15 @@
           {% render 'product-card', product: product %}
         {%- endfor -%}
       {%- else -%}
-        {% render 'product-card', demo: true, title: 'Laptop ASUS VivoBook', price: 2499000, compare_at: 2899000, badge: 'oferta' %}
-        {% render 'product-card', demo: true, title: 'PC Gamer RTX 4060', price: 4599000, badge: 'nuevo' %}
-        {% render 'product-card', demo: true, title: 'Monitor LG 27"', price: 899000, badge: 'oferta' %}
-        {% render 'product-card', demo: true, title: 'Teclado mecánico', price: 189900, badge: 'stock-bajo', low_stock: true %}
-        <p class="col-span-full text-sm text-ink-muted text-center">
+        {% render 'product-card', demo: true, title: 'Laptop ASUS VivoBook 15 OLED · i7 16GB 512GB', price: 299900000, compare_at: 359900000, badge: 'oferta', brand: 'ASUS', reviews: 47 %}
+        {% render 'product-card', demo: true, title: 'PC Gamer Ryzen 7 + RTX 4060 16GB SSD 1TB', price: 459900000, badge: 'nuevo', brand: 'NANOTRONICS', reviews: 23 %}
+        {% render 'product-card', demo: true, title: 'Monitor LG UltraGear 27" 144Hz 1ms IPS', price: 89900000, compare_at: 110000000, badge: 'oferta', brand: 'LG', reviews: 86 %}
+        {% render 'product-card', demo: true, title: 'Teclado mecánico HyperX Alloy Origins RGB', price: 18990000, badge: 'stock-bajo', brand: 'HYPERX', low_stock: true, reviews: 124 %}
+        {% render 'product-card', demo: true, title: 'Mouse Logitech G502 Hero · 25K DPI', price: 22990000, brand: 'LOGITECH', reviews: 312 %}
+        {% render 'product-card', demo: true, title: 'SSD NVMe Kingston KC3000 1TB · 7000 MB/s', price: 35990000, compare_at: 45990000, badge: 'oferta', brand: 'KINGSTON', reviews: 198 %}
+        {% render 'product-card', demo: true, title: 'Audífonos HyperX Cloud II Wireless', price: 32990000, brand: 'HYPERX', reviews: 256 %}
+        {% render 'product-card', demo: true, title: 'Router TP-Link Archer AX55 WiFi 6 AX3000', price: 33990000, brand: 'TP-LINK', reviews: 67 %}
+        <p class="col-span-full text-sm text-ink-muted text-center py-2">
           {{ 'home.select_collection' | t }}
         </p>
       {%- endif -%}
@@ -37,8 +45,9 @@
 {
   "name": "Home — Destacados",
   "settings": [
-    { "type": "text", "id": "title", "label": "Título", "default": "Productos destacados" },
-    { "type": "textarea", "id": "description", "label": "Descripción", "default": "Lo más vendido esta semana" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Top esta semana" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Lo que más están comprando" },
+    { "type": "textarea", "id": "description", "label": "Descripción", "default": "Equipos validados por más de 5.000 clientes. Stock real, garantía oficial y despacho en 24 horas." },
     { "type": "collection", "id": "collection", "label": "Colección" },
     { "type": "range", "id": "products_to_show", "min": 4, "max": 12, "step": 2, "default": 8, "label": "Productos a mostrar" }
   ],

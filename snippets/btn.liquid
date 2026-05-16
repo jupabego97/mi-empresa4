@@ -1,14 +1,17 @@
 {%- comment -%}
   {% render 'btn',
-    variant: 'primary' | 'secondary' | 'ghost' | 'whatsapp',
-    size: 'sm' | 'md' | 'lg',
+    variant: 'primary' | 'secondary' | 'ghost' | 'whatsapp' | 'dark',
+    size: 'sm' | 'md' | 'lg' | 'xl',
     label: 'Texto',
     href: '/collections/all',
-    type: 'button',
+    type: 'button' | 'submit',
+    name: 'checkout',
     full: false,
     class: '',
     disabled: false,
-    icon: 'whatsapp'
+    icon: 'whatsapp',
+    target: '_blank',
+    rel: 'noopener'
   %}
 {%- endcomment -%}
 {%- liquid
@@ -28,21 +31,27 @@
 -%}
 
 {%- if href != blank and btn_disabled == false -%}
-  <a href="{{ href }}" class="{{ btn_class }}"{% if target != blank %} target="{{ target }}"{% endif %}{% if rel != blank %} rel="{{ rel }}"{% endif %}>
-    {%- if icon != blank -%}
-      {% render 'icon', name: icon, size: 18 %}
-    {%- endif -%}
+  <a
+    href="{{ href }}"
+    class="{{ btn_class }}"
+    {% if target != blank %}target="{{ target }}"{% endif %}
+    {% if rel != blank %}rel="{{ rel }}"{% endif %}
+    {% if aria_label != blank %}aria-label="{{ aria_label }}"{% endif %}
+  >
+    {%- if icon != blank -%}{% render 'icon', name: icon, size: 18 %}{%- endif -%}
     {{ btn_label }}
   </a>
 {%- else -%}
   <button
     type="{{ btn_type }}"
     class="{{ btn_class }}"
+    {% if name != blank %}name="{{ name }}"{% endif %}
+    {% if value != blank %}value="{{ value }}"{% endif %}
+    {% if form != blank %}form="{{ form }}"{% endif %}
     {% if btn_disabled %}disabled aria-disabled="true"{% endif %}
+    {% if aria_label != blank %}aria-label="{{ aria_label }}"{% endif %}
   >
-    {%- if icon != blank -%}
-      {% render 'icon', name: icon, size: 18 %}
-    {%- endif -%}
+    {%- if icon != blank -%}{% render 'icon', name: icon, size: 18 %}{%- endif -%}
     {{ btn_label }}
   </button>
 {%- endif -%}

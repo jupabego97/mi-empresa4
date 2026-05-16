@@ -2,15 +2,32 @@
   {%- if image != blank -%}
     {{
       image
-      | image_url: width: 600
+      | image_url: width: 700
       | image_tag:
         loading: 'lazy',
-        class: 'absolute inset-0 w-full h-full object-cover transition-transform duration-250 group-hover:scale-105',
-        alt: title
+        class: 'absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105',
+        alt: title,
+        widths: '300,500,700',
+        sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw'
     }}
   {%- else -%}
-    <div class="absolute inset-0 bg-gradient-to-br from-brand-royal to-brand-deep"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-royal via-brand-electric to-brand-deep"></div>
+    <div class="absolute inset-0 nt-tech-grid opacity-30"></div>
+    {%- if icon != blank -%}
+      <div class="absolute inset-0 flex items-center justify-center text-white/20">
+        {% render 'icon', name: icon, size: 96 %}
+      </div>
+    {%- endif -%}
   {%- endif -%}
-  <span class="nt-category-card__overlay"></span>
-  <span class="nt-category-card__title">{{ title }}</span>
+  <span class="nt-category-card__overlay" aria-hidden="true"></span>
+  <div class="nt-category-card__content">
+    {%- if eyebrow != blank -%}
+      <span class="block text-[10px] font-bold uppercase tracking-wider text-white/70 mb-1">{{ eyebrow }}</span>
+    {%- endif -%}
+    <span class="nt-category-card__title">{{ title }}</span>
+    <span class="nt-category-card__cta">
+      <span>Ver más</span>
+      {% render 'icon', name: 'arrow-right', size: 12 %}
+    </span>
+  </div>
 </a>

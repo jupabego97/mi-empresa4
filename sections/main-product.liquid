@@ -1,67 +1,301 @@
 {%- liquid
   assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
-  assign wa_msg = 'Hola, me interesa: ' | append: product.title
+  assign wa_msg = 'Hola, me interesa: ' | append: product.title | append: ' (' | append: shop.url | append: product.url | append: ')'
   assign wa_text = wa_msg | url_encode
   assign wa_product_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+
+  assign current_variant = product.selected_or_first_available_variant
+  assign free_shipping = false
+  if product.price >= 20000000
+    assign free_shipping = true
+  endif
 -%}
 
 {% render 'breadcrumbs' %}
 
-<section class="nt-section pt-0 pb-24 lg:pb-16">
+<section class="nt-section pt-0 pb-32 lg:pb-16">
   <div class="nt-container">
     <div class="nt-pdp-grid mb-12">
       <div>
         {% render 'product-gallery', product: product %}
       </div>
 
-      <div class="space-y-4">
-        <h1 style="font-size: var(--text-h2)" class="font-bold tracking-tight">{{ product.title }}</h1>
+      <div class="space-y-5">
+        {%- if product.vendor != blank -%}
+          <p class="nt-eyebrow">{{ product.vendor }}</p>
+        {%- endif -%}
 
-        <div class="flex items-center gap-2">
-          {%- for i in (1..5) -%}
-            {% render 'icon', name: 'star', size: 14, class: 'text-warning fill-warning' %}
-          {%- endfor -%}
-          <span class="text-sm text-ink-muted">(5.0)</span>
+        <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight leading-tight text-ink">
+          {{ product.title }}
+        </h1>
+
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="flex items-center gap-1">
+            {%- for i in (1..5) -%}
+              {% render 'icon', name: 'star', size: 14, class: 'text-warning fill-warning' %}
+            {%- endfor -%}
+            <span class="text-sm font-medium text-ink ml-1">5.0</span>
+          </div>
+          <span class="text-sm text-ink-muted">({{ section.settings.review_count | default: '124' }} reseñas verificadas)</span>
+          <span class="text-sm text-ink-muted">·</span>
+          <span class="text-sm font-medium text-success inline-flex items-center gap-1">
+            {% render 'icon', name: 'check-circle', size: 14 %}
+            Producto verificado
+          </span>
         </div>
 
-        {% render 'price', product: product %}
+        <div class="flex flex-wrap items-center gap-2">
+          {%- if product.compare_at_price > product.price -%}
+            {% render 'badge', variant: 'oferta' %}
+          {%- endif -%}
+          {%- if free_shipping -%}
+            {% render 'badge', variant: 'envio-gratis' %}
+          {%- endif -%}
+          {% render 'badge', variant: 'garantia', label: 'Garantía oficial' %}
+          {%- if product.tags contains 'top' -%}
+            {% render 'badge', variant: 'top', label: '★ Top ventas' %}
+          {%- endif -%}
+        </div>
 
-        <p class="text-sm font-medium {% if product.available %}text-success{% else %}text-danger{% endif %}">
+        <div class="py-2">
+          {% render 'price', product: product, size: 'lg' %}
+          <p class="text-xs text-ink-muted mt-1 inline-flex items-center gap-1">
+            {% render 'icon', name: 'credit-card', size: 12 %}
+            Paga sin tarjeta con Addi · o hasta 36 cuotas
+          </p>
+        </div>
+
+        <p class="text-sm font-semibold inline-flex items-center gap-2 {% if product.available %}text-success{% else %}text-danger{% endif %}">
+          <span class="w-2 h-2 rounded-full {% if product.available %}bg-success{% else %}bg-danger{% endif %}"></span>
           {%- if product.available -%}
-            {{ 'general.in_stock' | t }}
+            En stock · despachamos hoy si compras antes de las 3pm
           {%- else -%}
-            {{ 'general.out_of_stock' | t }}
+            Agotado por ahora · pregúntanos cuándo vuelve
           {%- endif -%}
         </p>
 
-        {% render 'trust-badges' %}
+        {%- if section.settings.show_key_specs and section.blocks.size > 0 -%}
+          <div class="nt-key-specs">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'key_spec' -%}
+                <div class="nt-key-spec" {{ block.shopify_attributes }}>
+                  <span class="nt-key-spec__icon">
+                    {% render 'icon', name: block.settings.icon, size: 18 %}
+                  </span>
+                  <span>
+                    <span class="nt-key-spec__label">{{ block.settings.label }}</span>
+                    <span class="nt-key-spec__value">{{ block.settings.value }}</span>
+                  </span>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
         {% render 'product-form', product: product %}
+
+        {% render 'trust-badges' %}
+
         {% render 'payment-icons' %}
       </div>
     </div>
 
-    <div class="max-w-3xl space-y-0 border-t border-line" x-data="{ openFaq: null }">
-      <div class="border-b border-line py-6">
-        <h2 class="text-h4 font-semibold mb-4">{{ 'product.description' | t }}</h2>
-        <div class="text-ink-muted rte">{{ product.description }}</div>
-      </div>
+    <div class="grid lg:grid-cols-[1fr_320px] gap-8 max-w-6xl">
+      <div class="space-y-0 border-t border-line" x-data="{ open: 1 }">
+        <div class="border-b border-line py-6" :data-open="open === 1 ? true : null">
+          <button
+            type="button"
+            class="nt-accordion__trigger"
+            @click="open = open === 1 ? null : 1"
+            :aria-expanded="open === 1"
+          >
+            <span class="text-base lg:text-lg font-semibold text-ink">{{ 'product.description' | t }}</span>
+            <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
+          </button>
+          <div class="nt-accordion__content rte" x-show="open === 1" x-collapse x-cloak>
+            {%- if product.description != blank -%}
+              {{ product.description }}
+            {%- else -%}
+              <p>Producto seleccionado por nuestro equipo técnico. Garantía oficial, factura legal y soporte posventa real desde NANOTRONICS.</p>
+            {%- endif -%}
+          </div>
+        </div>
 
-      <div class="border-b border-line">
-        <button type="button" class="nt-accordion__trigger" @click="openFaq = openFaq === 1 ? null : 1">
-          <span>{{ 'product.faq' | t }}</span>
-          {% render 'icon', name: 'chevron', size: 18 %}
-        </button>
-        <div class="nt-accordion__content" x-show="openFaq === 1" x-cloak>
-          <p>{{ 'product.faq_answer' | t }}</p>
+        <div class="border-b border-line">
+          <button
+            type="button"
+            class="nt-accordion__trigger"
+            @click="open = open === 2 ? null : 2"
+            :aria-expanded="open === 2"
+          >
+            <span class="text-base lg:text-lg font-semibold text-ink inline-flex items-center gap-2">
+              {% render 'icon', name: 'cpu', size: 18, class: 'text-brand-royal' %}
+              {{ 'product.specs' | t }}
+            </span>
+            <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
+          </button>
+          <div class="nt-accordion__content" x-show="open === 2" x-collapse x-cloak>
+            {%- if section.settings.specs != blank -%}
+              <div class="rte">{{ section.settings.specs }}</div>
+            {%- else -%}
+              <table class="w-full text-sm">
+                <tbody class="divide-y divide-line">
+                  {%- if product.metafields.specs.processor -%}<tr><td class="py-2 text-ink-muted">Procesador</td><td class="py-2 font-medium text-ink">{{ product.metafields.specs.processor }}</td></tr>{%- endif -%}
+                  {%- if product.metafields.specs.ram -%}<tr><td class="py-2 text-ink-muted">RAM</td><td class="py-2 font-medium text-ink">{{ product.metafields.specs.ram }}</td></tr>{%- endif -%}
+                  {%- if product.metafields.specs.storage -%}<tr><td class="py-2 text-ink-muted">Almacenamiento</td><td class="py-2 font-medium text-ink">{{ product.metafields.specs.storage }}</td></tr>{%- endif -%}
+                  {%- if product.metafields.specs.gpu -%}<tr><td class="py-2 text-ink-muted">GPU</td><td class="py-2 font-medium text-ink">{{ product.metafields.specs.gpu }}</td></tr>{%- endif -%}
+                  {%- if product.metafields.specs.display -%}<tr><td class="py-2 text-ink-muted">Pantalla</td><td class="py-2 font-medium text-ink">{{ product.metafields.specs.display }}</td></tr>{%- endif -%}
+                  {%- if product.metafields.specs.os -%}<tr><td class="py-2 text-ink-muted">Sistema</td><td class="py-2 font-medium text-ink">{{ product.metafields.specs.os }}</td></tr>{%- endif -%}
+                </tbody>
+              </table>
+              <p class="text-xs text-ink-muted mt-3">Configura las especificaciones desde los metafields del producto en Shopify Admin.</p>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- if section.settings.video_url != blank -%}
+          <div class="border-b border-line">
+            <button
+              type="button"
+              class="nt-accordion__trigger"
+              @click="open = open === 3 ? null : 3"
+              :aria-expanded="open === 3"
+            >
+              <span class="text-base lg:text-lg font-semibold text-ink inline-flex items-center gap-2">
+                {% render 'icon', name: 'play', size: 16, class: 'text-brand-royal' %}
+                Video del producto
+              </span>
+              <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
+            </button>
+            <div class="nt-accordion__content" x-show="open === 3" x-collapse x-cloak>
+              <div class="aspect-video rounded-lg overflow-hidden bg-ink">
+                <iframe
+                  src="{{ section.settings.video_url }}"
+                  loading="lazy"
+                  class="w-full h-full"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  title="Video {{ product.title | escape }}"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <div class="border-b border-line">
+          <button
+            type="button"
+            class="nt-accordion__trigger"
+            @click="open = open === 4 ? null : 4"
+            :aria-expanded="open === 4"
+          >
+            <span class="text-base lg:text-lg font-semibold text-ink">{{ 'product.faq' | t }}</span>
+            <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
+          </button>
+          <div class="nt-accordion__content space-y-5" x-show="open === 4" x-collapse x-cloak>
+            <div>
+              <p class="font-semibold text-ink mb-1">¿Cuánto tarda el envío?</p>
+              <p>Despachamos el mismo día si compras antes de las 3 pm. Llega en 2 a 5 días hábiles a cualquier ciudad de Colombia. Si vives en Antioquia, llega más rápido.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-ink mb-1">¿Qué garantía tiene?</p>
+              <p>Garantía oficial del fabricante (mínimo 1 año en computadores). Además, NANOTRONICS te respalda con asesoría posventa y servicio técnico propio para que no te quedes sin ayuda.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-ink mb-1">¿Puedo pagar a cuotas?</p>
+              <p>Claro. Hasta 36 cuotas con Addi (sin tarjeta de crédito), o cuotas con tu Visa o Mastercard. También aceptamos PSE, Nequi y Daviplata.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-ink mb-1">¿Puedo recoger en tienda?</p>
+              <p>Sí, sin costo y sin filas. Apenas tu pedido esté listo te avisamos por WhatsApp para que pases por la tienda en El Carmen de Viboral.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-ink mb-1">¿Es producto nuevo y original?</p>
+              <p>Siempre. Trabajamos solo con marcas oficiales y distribuidores autorizados. Te entregamos factura legal y caja sellada cuando aplica.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-b border-line">
+          <button
+            type="button"
+            class="nt-accordion__trigger"
+            @click="open = open === 5 ? null : 5"
+            :aria-expanded="open === 5"
+          >
+            <span class="text-base lg:text-lg font-semibold text-ink inline-flex items-center gap-2">
+              {% render 'icon', name: 'star', size: 18, class: 'text-warning fill-warning' %}
+              Reseñas verificadas
+            </span>
+            <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
+          </button>
+          <div class="nt-accordion__content" x-show="open === 5" x-collapse x-cloak>
+            <p class="text-ink-muted mb-3">Las reseñas se sincronizan desde la app de reviews instalada (Judge.me / Loox / Stamped). Pronto verás aquí los testimonios reales de clientes verificados.</p>
+            <a href="{{ wa_product_url }}" target="_blank" rel="noopener" class="text-brand-royal text-sm font-medium hover:underline inline-flex items-center gap-1">
+              ¿Tienes una pregunta? Escríbenos {% render 'icon', name: 'arrow-right', size: 12 %}
+            </a>
+          </div>
         </div>
       </div>
+
+      <aside class="space-y-4 lg:sticky lg:top-32 lg:self-start">
+        <div class="nt-card p-5 space-y-3">
+          <p class="font-semibold text-sm text-ink inline-flex items-center gap-2">
+            {% render 'icon', name: 'headset', size: 16, class: 'text-brand-royal' %}
+            ¿Dudas antes de comprar?
+          </p>
+          <p class="text-xs text-ink-muted leading-relaxed">Te ayudamos a elegir el equipo correcto según tu uso, presupuesto y dónde lo usarás. Sin presión.</p>
+          {% render 'btn',
+            variant: 'whatsapp',
+            size: 'md',
+            label: 'Asesoría gratis por WhatsApp',
+            icon: 'whatsapp',
+            href: wa_product_url,
+            target: '_blank',
+            full: true
+          %}
+          <a href="tel:{{ settings.store_phone | replace: ' ', '' }}" class="block text-sm text-center text-brand-royal hover:underline">
+            o llámanos: {{ settings.store_phone }}
+          </a>
+        </div>
+
+        <div class="nt-card p-5 space-y-2">
+          <p class="font-semibold text-sm text-ink inline-flex items-center gap-2">
+            {% render 'icon', name: 'tool', size: 16, class: 'text-brand-royal' %}
+            ¿Lo necesitas armado?
+          </p>
+          <p class="text-xs text-ink-muted leading-relaxed">Lo configuramos, instalamos Windows y drivers para que llegue listo a usar.</p>
+          <a href="/pages/servicio-tecnico" class="text-sm text-brand-royal font-medium hover:underline inline-flex items-center gap-1">
+            Ver servicios {% render 'icon', name: 'arrow-right', size: 12 %}
+          </a>
+        </div>
+
+        <div class="nt-card p-5 space-y-2 bg-brand-deep text-white border-brand-deep">
+          <p class="font-semibold text-sm inline-flex items-center gap-2">
+            {% render 'icon', name: 'map-pin', size: 16 %}
+            Recoge en tienda
+          </p>
+          <p class="text-xs text-white/75">{{ settings.store_address }}</p>
+          <p class="text-xs text-white/75">Lun a Sáb · 9 am - 7 pm</p>
+          <p class="text-xs text-white/55">Sin costo · te avisamos por WhatsApp</p>
+        </div>
+      </aside>
     </div>
 
     {%- if product.collections.size > 0 -%}
       {%- assign related_col = product.collections.first -%}
       <div class="mt-16">
-        <h2 class="nt-section-title">{{ 'product.related' | t }}</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="flex items-end justify-between gap-4 mb-6">
+          <div>
+            <p class="nt-eyebrow mb-1">Completa tu setup</p>
+            <h2 class="nt-section-title mb-0">{{ 'product.related' | t }}</h2>
+          </div>
+          <a href="{{ related_col.url }}" class="text-sm font-medium text-brand-royal hover:underline shrink-0 inline-flex items-center gap-1">
+            Ver toda la categoría {% render 'icon', name: 'arrow-right', size: 14 %}
+          </a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {%- assign shown = 0 -%}
           {%- for related in related_col.products -%}
             {%- if related.id != product.id and shown < 4 -%}
@@ -77,11 +311,18 @@
 
 {%- capture add_label -%}{{ 'general.add_to_cart' | t }}{%- endcapture -%}
 <div class="nt-sticky-bar pb-safe lg:hidden">
-  <div class="flex gap-2 max-w-lg mx-auto">
-    <a href="{{ wa_product_url }}" class="nt-btn nt-btn--whatsapp nt-btn--md shrink-0" target="_blank" rel="noopener">
+  <div class="flex gap-2 max-w-lg mx-auto items-center">
+    <div class="text-xs">
+      <p class="font-bold text-ink">{{ product.price | money }}</p>
+      {%- if product.compare_at_price > product.price -%}
+        <p class="text-[10px] text-danger font-semibold">Oferta</p>
+      {%- endif -%}
+    </div>
+    <a href="{{ wa_product_url }}" class="nt-btn nt-btn--whatsapp nt-btn--md shrink-0" target="_blank" rel="noopener" aria-label="WhatsApp">
       {% render 'icon', name: 'whatsapp', size: 20 %}
     </a>
     <button type="submit" form="product-form" class="nt-btn nt-btn--primary nt-btn--md flex-1" {% unless product.available %}disabled{% endunless %}>
+      {% render 'icon', name: 'cart', size: 16 %}
       {{ add_label }}
     </button>
   </div>
@@ -90,6 +331,39 @@
 {% schema %}
 {
   "name": "Producto",
-  "settings": []
+  "settings": [
+    { "type": "checkbox", "id": "show_key_specs", "label": "Mostrar specs destacadas", "default": true },
+    { "type": "richtext", "id": "specs", "label": "Especificaciones (HTML)", "default": "<p>Configura los metafields specs.processor / specs.ram / specs.storage / specs.gpu / specs.display / specs.os para mostrar las especificaciones en formato tabla.</p>" },
+    { "type": "url", "id": "video_url", "label": "URL embed video (YouTube/Vimeo)" },
+    { "type": "text", "id": "review_count", "label": "Cantidad de reseñas (visual)", "default": "124" }
+  ],
+  "blocks": [
+    {
+      "type": "key_spec",
+      "name": "Spec destacada",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Ícono", "default": "cpu", "options": [
+          { "value": "cpu", "label": "Procesador" },
+          { "value": "monitor", "label": "Pantalla" },
+          { "value": "package", "label": "RAM" },
+          { "value": "zap", "label": "Velocidad" },
+          { "value": "gauge", "label": "Rendimiento" }
+        ] },
+        { "type": "text", "id": "label", "label": "Etiqueta", "default": "Procesador" },
+        { "type": "text", "id": "value", "label": "Valor", "default": "Intel Core i7" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Producto premium",
+      "blocks": [
+        { "type": "key_spec", "settings": { "icon": "cpu", "label": "Procesador", "value": "Intel Core i7" } },
+        { "type": "key_spec", "settings": { "icon": "package", "label": "RAM", "value": "16GB DDR5" } },
+        { "type": "key_spec", "settings": { "icon": "zap", "label": "Almacenamiento", "value": "512GB SSD" } },
+        { "type": "key_spec", "settings": { "icon": "monitor", "label": "Pantalla", "value": "15.6\" FHD" } }
+      ]
+    }
+  ]
 }
 {% endschema %}

@@ -1,0 +1,65 @@
+<section class="nt-section--sm border-y border-line bg-surface">
+  <div class="nt-container">
+    {%- if section.settings.title != blank -%}
+      <p class="text-center text-xs text-ink-muted uppercase tracking-[0.2em] mb-5">
+        {{ section.settings.title }}
+      </p>
+    {%- endif -%}
+    <div class="nt-brand-strip">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.image != blank -%}
+          {%- if block.settings.url != blank -%}
+            <a href="{{ block.settings.url }}" {{ block.shopify_attributes }} aria-label="{{ block.settings.name }}">
+              {{ block.settings.image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'nt-brand-strip__item', alt: block.settings.name }}
+            </a>
+          {%- else -%}
+            <span {{ block.shopify_attributes }}>
+              {{ block.settings.image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'nt-brand-strip__item', alt: block.settings.name }}
+            </span>
+          {%- endif -%}
+        {%- else -%}
+          <span class="text-base lg:text-lg font-bold text-ink-muted/60 hover:text-ink transition-colors" {{ block.shopify_attributes }}>
+            {{ block.settings.name }}
+          </span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Marcas",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Trabajamos solo con marcas oficiales" }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Marca",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Nombre", "default": "Marca" },
+        { "type": "image_picker", "id": "image", "label": "Logo (opcional)" },
+        { "type": "url", "id": "url", "label": "Enlace (opcional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home — Marcas",
+      "blocks": [
+        { "type": "brand", "settings": { "name": "ASUS" } },
+        { "type": "brand", "settings": { "name": "LENOVO" } },
+        { "type": "brand", "settings": { "name": "HP" } },
+        { "type": "brand", "settings": { "name": "MSI" } },
+        { "type": "brand", "settings": { "name": "NVIDIA" } },
+        { "type": "brand", "settings": { "name": "AMD" } },
+        { "type": "brand", "settings": { "name": "INTEL" } },
+        { "type": "brand", "settings": { "name": "LOGITECH" } },
+        { "type": "brand", "settings": { "name": "CORSAIR" } },
+        { "type": "brand", "settings": { "name": "RAZER" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

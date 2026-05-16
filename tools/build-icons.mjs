@@ -9,6 +9,11 @@ const outFile = join(outDir, 'icons.svg');
 
 const files = readdirSync(iconsDir).filter((f) => f.endsWith('.svg'));
 
+// Filled icons: use fill="currentColor" instead of stroke
+const FILLED = new Set([
+  'whatsapp', 'facebook', 'instagram', 'tiktok', 'youtube', 'play',
+]);
+
 let symbols = '';
 for (const file of files) {
   const name = file.replace('.svg', '');
@@ -18,7 +23,12 @@ for (const file of files) {
     .replace(/<svg[^>]*>/i, '')
     .replace(/<\/svg>/i, '')
     .trim();
-  symbols += `  <symbol id="icon-${name}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${inner}</symbol>\n`;
+
+  const attrs = FILLED.has(name)
+    ? 'fill="currentColor"'
+    : 'fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"';
+
+  symbols += `  <symbol id="icon-${name}" viewBox="0 0 24 24" ${attrs}>${inner}</symbol>\n`;
 }
 
 const sprite = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">\n${symbols}</svg>\n`;

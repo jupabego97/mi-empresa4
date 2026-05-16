@@ -1,29 +1,52 @@
-<div class="flex gap-4 py-4 border-b border-line" data-line-key="{{ item.key }}">
-  <a href="{{ item.url }}" class="shrink-0 w-20 h-20 rounded-md overflow-hidden bg-surface-2 border border-line">
+<div class="flex gap-4 py-4 border-b border-line last:border-b-0" data-line-key="{{ item.key }}">
+  <a href="{{ item.url }}" class="shrink-0 w-20 h-20 lg:w-24 lg:h-24 rounded-lg overflow-hidden bg-surface-2 border border-line">
     {%- if item.image -%}
-      {{ item.image | image_url: width: 160 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: item.title }}
+      {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'w-full h-full object-contain p-1', alt: item.title }}
+    {%- else -%}
+      <div class="w-full h-full flex items-center justify-center text-ink-muted">{% render 'icon', name: 'package', size: 24 %}</div>
     {%- endif -%}
   </a>
   <div class="flex-1 min-w-0">
+    {%- if item.product.vendor != blank -%}
+      <p class="text-[10px] font-bold uppercase tracking-wider text-brand-electric mb-0.5">{{ item.product.vendor }}</p>
+    {%- endif -%}
     <a href="{{ item.url }}" class="text-sm font-medium text-ink hover:text-brand-royal line-clamp-2">{{ item.product.title }}</a>
     {%- unless item.variant.title == 'Default Title' -%}
       <p class="text-xs text-ink-muted mt-0.5">{{ item.variant.title }}</p>
     {%- endunless -%}
-    <p class="text-sm font-semibold text-ink mt-2">{{ item.final_line_price | money }}</p>
-    <div class="flex items-center gap-2 mt-2">
-      <label class="nt-sr-only" for="qty-{{ item.key }}">Cantidad</label>
-      <input
-        type="number"
-        id="qty-{{ item.key }}"
-        name="updates[]"
-        value="{{ item.quantity }}"
-        min="0"
-        class="nt-input w-16 text-center min-h-9 py-1 cart-qty-input"
-        data-line-key="{{ item.key }}"
-      >
-      <a href="{{ item.url_to_remove }}" class="text-xs text-danger hover:underline cart-remove" data-line-key="{{ item.key }}">
-        {{ 'cart.remove' | t }}
-      </a>
+    <div class="flex items-end justify-between mt-2 gap-3">
+      <div class="flex items-center gap-1 border border-line rounded-md overflow-hidden bg-white">
+        <a
+          href="{{ item.url_to_change | default: item.url_to_remove }}{%- if item.quantity > 1 -%}{{ routes.cart_change_url }}?line={{ forloop.index | default: 1 }}&quantity={{ item.quantity | minus: 1 }}{%- endif -%}"
+          class="flex items-center justify-center w-8 h-8 text-ink-muted hover:bg-surface-2 cart-decrement"
+          data-line-key="{{ item.key }}"
+          aria-label="Disminuir"
+        >−</a>
+        <input
+          type="number"
+          name="updates[]"
+          value="{{ item.quantity }}"
+          min="0"
+          class="w-10 text-center text-sm py-1.5 cart-qty-input border-0 bg-transparent"
+          data-line-key="{{ item.key }}"
+          aria-label="Cantidad"
+        >
+        <a
+          href="{{ item.url_to_change | default: item.url_to_remove }}"
+          class="flex items-center justify-center w-8 h-8 text-ink-muted hover:bg-surface-2 cart-increment"
+          data-line-key="{{ item.key }}"
+          aria-label="Aumentar"
+        >+</a>
+      </div>
+      <div class="text-right">
+        <p class="text-sm font-bold text-ink">{{ item.final_line_price | money }}</p>
+        {%- if item.original_line_price > item.final_line_price -%}
+          <p class="text-xs text-ink-muted line-through">{{ item.original_line_price | money }}</p>
+        {%- endif -%}
+        <a href="{{ item.url_to_remove }}" class="text-[11px] text-danger hover:underline cart-remove" data-line-key="{{ item.key }}">
+          {{ 'cart.remove' | t }}
+        </a>
+      </div>
     </div>
   </div>
 </div>

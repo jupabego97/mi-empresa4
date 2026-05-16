@@ -1,0 +1,88 @@
+{%- liquid
+  assign promo_collection = collections[section.settings.collection]
+-%}
+<section class="nt-section">
+  <div class="nt-container">
+    <div class="relative overflow-hidden rounded-2xl bg-brand-deep text-white p-6 lg:p-10">
+      <div class="absolute inset-0 nt-tech-grid opacity-30 pointer-events-none"></div>
+      <div class="absolute -right-32 -top-32 w-96 h-96 rounded-full bg-brand-royal/30 blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 grid lg:grid-cols-[1fr_auto] gap-6 items-center">
+        <div class="space-y-3">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-danger/20 text-danger-soft border border-danger/40 text-xs font-bold uppercase tracking-wider">
+            {% render 'icon', name: 'fire', size: 12 %}
+            {{ section.settings.label | default: 'Oferta limitada' }}
+          </span>
+          <h2 style="font-size: var(--text-h2)" class="font-bold tracking-tight max-w-2xl">
+            {{ section.settings.heading }}
+          </h2>
+          <p class="text-white/75 max-w-xl">{{ section.settings.text }}</p>
+        </div>
+
+        <div class="flex flex-col items-start lg:items-end gap-3">
+          {%- if section.settings.show_countdown -%}
+            <div
+              x-data="{
+                end: new Date('{{ section.settings.countdown_end }}T23:59:59').getTime(),
+                d: '00', h: '00', m: '00', s: '00',
+                tick() {
+                  const now = Date.now();
+                  let diff = this.end - now;
+                  if (diff < 0) diff = 0;
+                  const D = Math.floor(diff / 86400000);
+                  const H = Math.floor(diff % 86400000 / 3600000);
+                  const M = Math.floor(diff % 3600000 / 60000);
+                  const S = Math.floor(diff % 60000 / 1000);
+                  this.d = String(D).padStart(2,'0');
+                  this.h = String(H).padStart(2,'0');
+                  this.m = String(M).padStart(2,'0');
+                  this.s = String(S).padStart(2,'0');
+                }
+              }"
+              x-init="tick(); setInterval(()=>tick(),1000)"
+              class="nt-countdown"
+              aria-label="Tiempo restante de la oferta"
+            >
+              <div class="nt-countdown__cell"><span class="nt-countdown__value" x-text="d"></span><span class="nt-countdown__label">días</span></div>
+              <div class="nt-countdown__cell"><span class="nt-countdown__value" x-text="h"></span><span class="nt-countdown__label">hrs</span></div>
+              <div class="nt-countdown__cell"><span class="nt-countdown__value" x-text="m"></span><span class="nt-countdown__label">min</span></div>
+              <div class="nt-countdown__cell"><span class="nt-countdown__value" x-text="s"></span><span class="nt-countdown__label">seg</span></div>
+            </div>
+          {%- endif -%}
+          {% render 'btn',
+            variant: 'primary',
+            size: 'lg',
+            label: section.settings.cta,
+            href: section.settings.cta_url,
+            icon: 'arrow-right'
+          %}
+        </div>
+      </div>
+    </div>
+
+    {%- if promo_collection != blank and promo_collection.products.size > 0 -%}
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mt-6">
+        {%- for product in promo_collection.products limit: 4 -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Promo",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Etiqueta", "default": "Oferta por tiempo limitado" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Tech Week NANOTRONICS · hasta 30% OFF" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Selección de portátiles, monitores y componentes gamer con descuentos reales. Stock limitado · despacho inmediato · garantía oficial." },
+    { "type": "checkbox", "id": "show_countdown", "label": "Mostrar countdown", "default": true },
+    { "type": "text", "id": "countdown_end", "label": "Fecha fin (YYYY-MM-DD)", "default": "2026-12-31" },
+    { "type": "text", "id": "cta", "label": "CTA", "default": "Aprovechar ofertas" },
+    { "type": "url", "id": "cta_url", "label": "URL CTA" },
+    { "type": "collection", "id": "collection", "label": "Colección de productos en oferta" }
+  ],
+  "presets": [{ "name": "Home — Promo" }]
+}
+{% endschema %}

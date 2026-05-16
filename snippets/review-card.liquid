@@ -1,15 +1,27 @@
 <article class="nt-review">
-  <div class="flex items-center gap-1 mb-3">
-    {%- for i in (1..rating) -%}
-      {% render 'icon', name: 'star', size: 14, class: 'text-warning fill-warning' %}
-    {%- endfor -%}
+  <div class="flex items-center justify-between mb-3">
+    <div class="flex items-center gap-0.5">
+      {%- for i in (1..rating) -%}
+        {% render 'icon', name: 'star', size: 14, class: 'text-warning fill-warning' %}
+      {%- endfor -%}
+    </div>
+    <span class="text-[10px] font-bold text-success uppercase tracking-wider inline-flex items-center gap-1">
+      {% render 'icon', name: 'check-circle', size: 11 %}
+      Verificada
+    </span>
   </div>
-  <p class="text-sm text-ink flex-1 mb-4">"{{ quote }}"</p>
-  <div class="flex items-center gap-3 mt-auto">
+  <p class="text-sm text-ink flex-1 mb-4 leading-relaxed">"{{ quote }}"</p>
+  {%- if product != blank -%}
+    <p class="text-xs text-ink-muted mb-3 inline-flex items-center gap-1.5">
+      {% render 'icon', name: 'package', size: 12 %}
+      <span>{{ product }}</span>
+    </p>
+  {%- endif -%}
+  <div class="flex items-center gap-3 mt-auto pt-3 border-t border-line">
     {%- if avatar != blank -%}
       {{ avatar | image_url: width: 80 | image_tag: class: 'w-10 h-10 rounded-full object-cover', alt: author, loading: 'lazy' }}
     {%- else -%}
-      <div class="w-10 h-10 rounded-full bg-brand-royal/10 flex items-center justify-center text-brand-royal font-semibold text-sm">
+      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-royal to-brand-electric flex items-center justify-center text-white font-bold text-sm">
         {{ author | slice: 0 }}
       </div>
     {%- endif -%}

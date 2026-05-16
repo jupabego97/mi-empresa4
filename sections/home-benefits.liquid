@@ -1,10 +1,20 @@
 <section class="nt-section bg-surface-2">
   <div class="nt-container">
-    <h2 class="nt-section-title text-center">{{ section.settings.title }}</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <p class="nt-eyebrow mb-2">{{ section.settings.eyebrow | default: 'Compra con confianza' }}</p>
+      <h2 class="nt-section-title text-center mb-2">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="text-ink-muted">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4">
       {%- for block in section.blocks -%}
         <div {{ block.shopify_attributes }}>
-          {% render 'benefit-item', icon: block.settings.icon, title: block.settings.title, text: block.settings.text %}
+          {% render 'benefit-item',
+            icon: block.settings.icon,
+            title: block.settings.title,
+            text: block.settings.text
+          %}
         </div>
       {%- endfor -%}
     </div>
@@ -15,7 +25,9 @@
 {
   "name": "Home — Beneficios",
   "settings": [
-    { "type": "text", "id": "title", "label": "Título", "default": "¿Por qué comprar en NANOTRONICS?" }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "La tienda en la que sí puedes confiar" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Compra tecnología sin sorpresas" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Más de 5.000 clientes respaldan nuestra forma de vender: precios justos, asesoría honesta y postventa que de verdad responde." }
   ],
   "blocks": [
     {
@@ -24,12 +36,16 @@
       "settings": [
         { "type": "select", "id": "icon", "label": "Ícono", "options": [
           { "value": "truck", "label": "Envío" },
-          { "value": "shield", "label": "Garantía" },
-          { "value": "check", "label": "Pagos" },
-          { "value": "user", "label": "Asesoría" },
+          { "value": "shield-check", "label": "Garantía" },
+          { "value": "credit-card", "label": "Pagos" },
+          { "value": "headset", "label": "Asesoría / Soporte" },
           { "value": "map-pin", "label": "Tienda física" },
-          { "value": "star", "label": "Calidad" }
-        ], "default": "shield" },
+          { "value": "star", "label": "Calidad" },
+          { "value": "tool", "label": "Servicio técnico" },
+          { "value": "rotate", "label": "Devoluciones" },
+          { "value": "award", "label": "Premio" },
+          { "value": "package", "label": "Empaque" }
+        ], "default": "shield-check" },
         { "type": "text", "id": "title", "label": "Título", "default": "Beneficio" },
         { "type": "text", "id": "text", "label": "Texto", "default": "Descripción breve" }
       ]
@@ -39,12 +55,12 @@
     {
       "name": "Home — Beneficios",
       "blocks": [
-        { "type": "benefit", "settings": { "icon": "truck", "title": "Envíos Colombia", "text": "Entrega rápida y segura" } },
-        { "type": "benefit", "settings": { "icon": "shield", "title": "Garantía real", "text": "Respaldo oficial" } },
-        { "type": "benefit", "settings": { "icon": "check", "title": "Pagos seguros", "text": "Múltiples métodos" } },
-        { "type": "benefit", "settings": { "icon": "user", "title": "Asesoría", "text": "Expertos en tecnología" } },
-        { "type": "benefit", "settings": { "icon": "map-pin", "title": "Tienda física", "text": "Viboral, Antioquia" } },
-        { "type": "benefit", "settings": { "icon": "star", "title": "Calidad premium", "text": "Marcas seleccionadas" } }
+        { "type": "benefit", "settings": { "icon": "truck", "title": "Envíos a todo Colombia", "text": "Despacho en 24h · llega en 2-5 días" } },
+        { "type": "benefit", "settings": { "icon": "shield-check", "title": "Garantía oficial", "text": "Respaldo del fabricante + NANOTRONICS" } },
+        { "type": "benefit", "settings": { "icon": "credit-card", "title": "Paga a tu ritmo", "text": "Hasta 36 cuotas · Addi sin tarjeta" } },
+        { "type": "benefit", "settings": { "icon": "headset", "title": "Asesoría que sí ayuda", "text": "Te guiamos a comprar lo correcto" } },
+        { "type": "benefit", "settings": { "icon": "map-pin", "title": "Tienda física", "text": "Visítanos en El Carmen de Viboral" } },
+        { "type": "benefit", "settings": { "icon": "tool", "title": "Taller propio", "text": "Reparación, upgrades y diagnóstico gratis" } }
       ]
     }
   ]

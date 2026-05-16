@@ -1,0 +1,52 @@
+<section class="nt-trust-strip" aria-label="{{ section.settings.title | default: 'Confianza' }}">
+  <div class="nt-container">
+    <div class="nt-trust-strip__inner">
+      {%- for block in section.blocks -%}
+        <span class="nt-trust-strip__item" {{ block.shopify_attributes }}>
+          {% render 'icon', name: block.settings.icon, size: 18, class: 'text-brand-royal' %}
+          <span>{{ block.settings.text }}</span>
+        </span>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trust strip",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título (a11y)", "default": "Por qué comprar en NANOTRONICS" }
+  ],
+  "blocks": [
+    {
+      "type": "trust",
+      "name": "Beneficio",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Ícono", "default": "shield-check", "options": [
+          { "value": "shield-check", "label": "Garantía" },
+          { "value": "truck", "label": "Envío" },
+          { "value": "credit-card", "label": "Pagos" },
+          { "value": "headset", "label": "Soporte" },
+          { "value": "rotate", "label": "Devoluciones" },
+          { "value": "tool", "label": "Servicio técnico" },
+          { "value": "map-pin", "label": "Tienda física" },
+          { "value": "award", "label": "Calidad" }
+        ] },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Garantía oficial" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust strip",
+      "blocks": [
+        { "type": "trust", "settings": { "icon": "truck", "text": "Envío gratis desde $200K" } },
+        { "type": "trust", "settings": { "icon": "shield-check", "text": "Garantía oficial del fabricante" } },
+        { "type": "trust", "settings": { "icon": "credit-card", "text": "Hasta 36 cuotas · Addi & PSE" } },
+        { "type": "trust", "settings": { "icon": "headset", "text": "Asesoría real por WhatsApp" } },
+        { "type": "trust", "settings": { "icon": "tool", "text": "Taller técnico propio" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

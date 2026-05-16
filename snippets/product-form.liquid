@@ -1,48 +1,72 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 {%- liquid
   assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
-  assign wa_msg = 'Hola, me interesa: ' | append: product.title
+  assign wa_msg = 'Hola, me interesa: ' | append: product.title | append: ' (' | append: shop.url | append: product.url | append: ')'
   assign wa_text = wa_msg | url_encode
   assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
 -%}
 
 {%- form 'product', product, id: 'product-form', class: 'space-y-4 ajax-cart' -%}
-  {%- if product.variants.size > 1 -%}
-    <div>
-      <label class="nt-label" for="product-variant-id">{{ 'product.variant' | t }}</label>
-      <select id="product-variant-id" name="id" class="nt-input">
-        {%- for variant in product.variants -%}
-          <option
-            value="{{ variant.id }}"
-            {% if variant == current_variant %}selected{% endif %}
-            {% unless variant.available %}disabled{% endunless %}
-          >
-            {{ variant.title }}{% unless variant.available %} — {{ 'general.out_of_stock' | t }}{% endunless %}
-          </option>
-        {%- endfor -%}
-      </select>
-    </div>
+  {%- if product.options_with_values.size > 0 and product.has_only_default_variant == false -%}
+    {%- for option in product.options_with_values -%}
+      <div>
+        <label class="nt-label block mb-2" for="option-{{ option.position }}">
+          {{ option.name }}: <span class="text-ink-muted font-normal" data-option-current-{{ option.position }}>{{ option.selected_value }}</span>
+        </label>
+        <div class="flex flex-wrap gap-2">
+          {%- for value in option.values -%}
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="option-{{ option.position }}"
+                value="{{ value | escape }}"
+                class="peer sr-only"
+                {% if value == option.selected_value %}checked{% endif %}
+                onchange="document.querySelector('[data-option-current-{{ option.position }}]').textContent=this.value"
+              >
+              <span class="inline-flex items-center px-3 py-2 text-sm rounded-md border border-line bg-surface peer-checked:border-brand-royal peer-checked:bg-brand-sky peer-checked:text-brand-royal peer-checked:font-semibold transition-colors hover:border-ink-muted">
+                {{ value }}
+              </span>
+            </label>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endfor -%}
+
+    <select name="id" id="product-variant-id" class="nt-sr-only" aria-hidden="true" tabindex="-1">
+      {%- for variant in product.variants -%}
+        <option value="{{ variant.id }}" {% if variant == current_variant %}selected{% endif %}>{{ variant.title }}</option>
+      {%- endfor -%}
+    </select>
   {%- else -%}
     <input type="hidden" name="id" value="{{ current_variant.id }}">
   {%- endif -%}
 
-  <div class="max-w-[140px]">
-    {% render 'input', type: 'qty', name: 'quantity', id: 'product-qty', label: 'Cantidad', value: 1, min: 1, max: 99 %}
+  <div class="flex items-center gap-3 flex-wrap">
+    <div class="max-w-[140px]">
+      {% render 'input', type: 'qty', name: 'quantity', id: 'product-qty', label: 'Cantidad', value: 1, min: 1, max: 99 %}
+    </div>
+    <p class="text-xs text-ink-muted">SKU: {{ current_variant.sku | default: 'N/A' }}</p>
   </div>
 
   {%- capture add_label -%}{{ 'general.add_to_cart' | t }}{%- endcapture -%}
+  {%- capture buy_label -%}{{ 'general.buy_now' | t }}{%- endcapture -%}
   {%- capture wa_label -%}{{ 'general.talk_advisor' | t }}{%- endcapture -%}
 
   <div class="flex flex-col gap-3">
     <button
       type="submit"
       name="add"
-      class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full product-add-btn"
+      class="nt-btn nt-btn--primary nt-btn--xl nt-btn--full product-add-btn"
       {% unless current_variant.available %}disabled{% endunless %}
     >
+      {% render 'icon', name: 'cart', size: 18 %}
       {{ add_label }}
     </button>
-    {% render 'btn', variant: 'whatsapp', size: 'lg', label: wa_label, icon: 'whatsapp', href: wa_url, target: '_blank', rel: 'noopener', full: true %}
+    <div class="grid grid-cols-2 gap-2">
+      {% render 'btn', variant: 'dark', size: 'lg', label: buy_label, type: 'submit', name: 'checkout', icon: 'zap', full: true %}
+      {% render 'btn', variant: 'whatsapp', size: 'lg', label: wa_label, icon: 'whatsapp', href: wa_url, target: '_blank', rel: 'noopener', full: true %}
+    </div>
   </div>
 {%- endform -%}
 

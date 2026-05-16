@@ -47,7 +47,7 @@
         "type": "text",
         "id": "whatsapp_message",
         "label": "Mensaje predeterminado WhatsApp",
-        "default": "Hola, quiero asesoría de NANOTRONICS"
+        "default": "Hola NANOTRONICS, me gustaría una asesoría 👋"
       },
       {
         "type": "checkbox",
@@ -82,26 +82,64 @@
     ]
   },
   {
-    "name": "Colores (opcional)",
+    "name": "Colores",
     "settings": [
       {
         "type": "color",
         "id": "color_brand_royal",
-        "label": "Azul royal",
-        "default": "#00D1C1"
+        "label": "Azul royal (acción / botones)",
+        "default": "#1D4ED8"
       },
       {
         "type": "color",
         "id": "color_brand_electric",
-        "label": "Azul eléctrico",
+        "label": "Azul eléctrico (acentos)",
         "default": "#2D7CFF"
       },
       {
         "type": "color",
         "id": "color_brand_deep",
-        "label": "Azul oscuro",
-        "default": "#051640"
+        "label": "Azul oscuro (fondos premium)",
+        "default": "#050B1F"
       }
+    ]
+  },
+  {
+    "name": "Anuncio superior",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_announcement",
+        "label": "Mostrar barra de anuncios",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "announcement_1",
+        "label": "Mensaje 1",
+        "default": "Envío GRATIS en compras desde $200.000"
+      },
+      {
+        "type": "text",
+        "id": "announcement_2",
+        "label": "Mensaje 2",
+        "default": "Garantía oficial · Soporte real por WhatsApp"
+      },
+      {
+        "type": "text",
+        "id": "announcement_3",
+        "label": "Mensaje 3",
+        "default": "Tienda física en El Carmen de Viboral · Antioquia"
+      }
+    ]
+  },
+  {
+    "name": "Redes sociales",
+    "settings": [
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" },
+      { "type": "url", "id": "social_youtube", "label": "YouTube" }
     ]
   },
   {

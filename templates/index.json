@@ -3,16 +3,33 @@
     "hero": {
       "type": "home-hero",
       "settings": {
-        "cta_primary_url": "/collections/all"
+        "cta_primary_url": "/collections/all",
+        "show_metrics": true,
+        "show_floating_card": true
       }
     },
-    "benefits": {
-      "type": "home-benefits",
-      "settings": {}
+    "trust": {
+      "type": "trust-strip",
+      "blocks": {
+        "b1": { "type": "trust", "settings": { "icon": "truck", "text": "Envío gratis desde $200K" } },
+        "b2": { "type": "trust", "settings": { "icon": "shield-check", "text": "Garantía oficial del fabricante" } },
+        "b3": { "type": "trust", "settings": { "icon": "credit-card", "text": "Hasta 36 cuotas · Addi & PSE" } },
+        "b4": { "type": "trust", "settings": { "icon": "headset", "text": "Asesoría real por WhatsApp" } },
+        "b5": { "type": "trust", "settings": { "icon": "tool", "text": "Taller técnico propio" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5"]
     },
     "categories": {
       "type": "home-categories",
-      "settings": {}
+      "blocks": {
+        "c1": { "type": "category", "settings": { "eyebrow": "Trabajo y estudio", "title": "Portátiles", "icon": "laptop", "url": "/collections/portatiles" } },
+        "c2": { "type": "category", "settings": { "eyebrow": "Máximo rendimiento", "title": "PC Gamer", "icon": "cpu", "url": "/collections/pc-gamer" } },
+        "c3": { "type": "category", "settings": { "eyebrow": "Pantalla pro", "title": "Monitores", "icon": "monitor", "url": "/collections/monitores" } },
+        "c4": { "type": "category", "settings": { "eyebrow": "Setup completo", "title": "Periféricos", "icon": "keyboard", "url": "/collections/perifericos" } },
+        "c5": { "type": "category", "settings": { "eyebrow": "Conexión sin caídas", "title": "Redes y WiFi", "icon": "wifi", "url": "/collections/redes" } },
+        "c6": { "type": "category", "settings": { "eyebrow": "Audio gamer", "title": "Audífonos", "icon": "headphones", "url": "/collections/audio" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6"]
     },
     "featured": {
       "type": "home-featured-collection",
@@ -21,14 +38,36 @@
         "products_to_show": 8
       }
     },
-    "reviews": {
-      "type": "home-reviews",
+    "promo": {
+      "type": "home-promo",
+      "settings": {}
+    },
+    "benefits": {
+      "type": "home-benefits",
+      "settings": {}
+    },
+    "brands": {
+      "type": "home-brands",
       "settings": {}
     },
     "service": {
       "type": "home-service-banner",
       "settings": {}
+    },
+    "reviews": {
+      "type": "home-reviews",
+      "settings": {}
     }
   },
-  "order": ["hero", "benefits", "categories", "featured", "reviews", "service"]
+  "order": [
+    "hero",
+    "trust",
+    "categories",
+    "featured",
+    "promo",
+    "benefits",
+    "brands",
+    "service",
+    "reviews"
+  ]
 }

@@ -1,6 +1,6 @@
 {%- liquid
   assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
-  assign wa_text = 'Hola, quiero solicitar servicio técnico' | url_encode
+  assign wa_text = 'Hola, quiero solicitar servicio técnico para mi equipo' | url_encode
   assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
 -%}
 
@@ -8,47 +8,100 @@
 
 <section class="nt-section pt-0">
   <div class="nt-container">
-    <div class="max-w-3xl mb-12">
-      <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight text-brand-deep mb-4">
-        {{ section.settings.heading | default: page.title }}
-      </h1>
-      <p class="text-lg text-ink-muted">{{ section.settings.intro }}</p>
+    <div class="relative overflow-hidden rounded-2xl bg-brand-deep text-white p-6 md:p-12 mb-12">
+      <div class="absolute inset-0 nt-tech-grid opacity-25 pointer-events-none"></div>
+      <div class="absolute -right-32 top-0 w-96 h-96 rounded-full bg-brand-electric/25 blur-3xl pointer-events-none"></div>
+      <div class="relative z-10 max-w-3xl">
+        <span class="nt-hero__pill mb-4">
+          {% render 'icon', name: 'tool', size: 14 %}
+          Taller técnico certificado
+        </span>
+        <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight mb-4">
+          {{ section.settings.heading | default: page.title }}
+        </h1>
+        <p class="text-lg text-white/75 mb-6">{{ section.settings.intro }}</p>
+        <div class="flex flex-wrap gap-3">
+          {% render 'btn',
+            variant: 'whatsapp',
+            size: 'lg',
+            label: section.settings.cta,
+            icon: 'whatsapp',
+            href: wa_url,
+            target: '_blank'
+          %}
+          <a href="tel:{{ settings.store_phone | replace: ' ', '' }}" class="nt-btn nt-btn--secondary nt-btn--lg !bg-white/10 !text-white !border-white/20 hover:!bg-white/20">
+            {% render 'icon', name: 'phone', size: 16 %}
+            Llamar: {{ settings.store_phone }}
+          </a>
+        </div>
+        <p class="text-xs text-white/55 mt-4">Diagnóstico 100% gratuito · Atendemos cualquier marca · Llevamos 8 años</p>
+      </div>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+    <div class="mb-6">
+      <p class="nt-eyebrow mb-2">Lo que reparamos</p>
+      <h2 class="nt-section-title mb-0">Servicios que ofrecemos</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
       {%- for block in section.blocks -%}
-        <div class="p-6 rounded-lg border border-line bg-surface" {{ block.shopify_attributes }}>
-          {% render 'icon', name: block.settings.icon | default: 'check', size: 28, class: 'text-brand-royal mb-4' %}
+        <div class="nt-card p-6 hover:border-brand-electric/40 transition-colors group" {{ block.shopify_attributes }}>
+          <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-sky text-brand-royal mb-4 group-hover:bg-brand-royal group-hover:text-white transition-colors">
+            {% render 'icon', name: block.settings.icon | default: 'tool', size: 22 %}
+          </div>
           <h3 class="font-semibold text-ink mb-2">{{ block.settings.title }}</h3>
-          <p class="text-sm text-ink-muted">{{ block.settings.text }}</p>
+          <p class="text-sm text-ink-muted leading-relaxed">{{ block.settings.text }}</p>
         </div>
       {%- endfor -%}
     </div>
 
-    <div class="grid lg:grid-cols-2 gap-12 items-start mb-16">
+    <div class="grid lg:grid-cols-2 gap-10 items-start mb-16">
       <div>
+        <p class="nt-eyebrow mb-2">Cómo trabajamos</p>
         <h2 class="nt-section-title">{{ 'service.process' | t }}</h2>
-        <ol class="space-y-4">
+        <ol class="space-y-4 mt-6">
           {%- assign steps_list = section.settings.process_steps | newline_to_br | split: '<br />' -%}
           {%- for step in steps_list -%}
-            <li class="flex gap-3 text-sm">
-              <span class="flex shrink-0 w-8 h-8 items-center justify-center rounded-full bg-brand-royal text-white font-semibold text-xs">{{ forloop.index }}</span>
-              <span class="text-ink-muted pt-1">{{ step | strip }}</span>
+            <li class="flex gap-4">
+              <span class="flex shrink-0 w-9 h-9 items-center justify-center rounded-lg bg-brand-royal text-white font-bold text-sm">{{ forloop.index }}</span>
+              <span class="text-ink-muted leading-relaxed pt-1.5">{{ step | strip }}</span>
             </li>
           {%- endfor -%}
         </ol>
-        <p class="mt-6 text-sm font-medium text-ink">{{ 'service.time' | t }}: {{ section.settings.turnaround }}</p>
+        <div class="mt-8 p-4 rounded-lg bg-brand-sky border border-brand-electric/20 inline-flex items-start gap-3">
+          {% render 'icon', name: 'clock', size: 20, class: 'text-brand-royal shrink-0 mt-0.5' %}
+          <div class="text-sm">
+            <p class="font-semibold text-ink">{{ 'service.time' | t }}</p>
+            <p class="text-ink-muted">{{ section.settings.turnaround }}</p>
+          </div>
+        </div>
       </div>
       {%- if section.settings.workshop_image != blank -%}
-        <div class="rounded-lg overflow-hidden aspect-video">
-          {{ section.settings.workshop_image | image_url: width: 900 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: 'Taller NANOTRONICS' }}
+        <div class="rounded-xl overflow-hidden aspect-[4/3] shadow-md">
+          {{ section.settings.workshop_image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: 'Taller NANOTRONICS' }}
+        </div>
+      {%- else -%}
+        <div class="rounded-xl aspect-[4/3] bg-brand-deep flex items-center justify-center text-white/30">
+          {% render 'icon', name: 'tool', size: 80 %}
         </div>
       {%- endif -%}
     </div>
 
-    <div class="text-center p-8 rounded-xl bg-brand-deep text-white">
-      <h2 class="text-h3 font-bold mb-4">{{ 'service.cta_heading' | t }}</h2>
-      {% render 'btn', variant: 'whatsapp', size: 'lg', label: section.settings.cta, icon: 'whatsapp', href: wa_url, target: '_blank', full: false %}
+    <div class="relative overflow-hidden text-center p-10 rounded-2xl bg-brand-deep text-white">
+      <div class="absolute inset-0 nt-tech-grid opacity-30 pointer-events-none"></div>
+      <div class="relative z-10 max-w-xl mx-auto space-y-4">
+        <span class="nt-hero__pill mx-auto"><span class="nt-hero__pill-dot"></span><span>Diagnóstico 100% gratuito</span></span>
+        <h2 class="text-h2 font-bold">¿Tu equipo necesita una segunda vida?</h2>
+        <p class="text-white/75">Escríbenos por WhatsApp con una foto o describiendo lo que pasa. Te damos un primer diagnóstico en minutos, sin compromiso.</p>
+        {% render 'btn',
+          variant: 'whatsapp',
+          size: 'xl',
+          label: section.settings.cta,
+          icon: 'whatsapp',
+          href: wa_url,
+          target: '_blank'
+        %}
+        <p class="text-xs text-white/55">Respuesta promedio: menos de 5 minutos en horario hábil</p>
+      </div>
     </div>
   </div>
 </section>
@@ -57,12 +110,12 @@
 {
   "name": "Servicio técnico",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Título", "default": "Servicio técnico especializado" },
-    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Reparación, mantenimiento y upgrades de computadores y equipos tecnológicos en El Carmen de Viboral." },
-    { "type": "textarea", "id": "process_steps", "label": "Pasos del proceso (uno por línea)", "default": "Recibimos tu equipo\nDiagnóstico gratuito\nCotización aprobada\nReparación y pruebas\nEntrega con garantía" },
-    { "type": "text", "id": "turnaround", "label": "Tiempo estimado", "default": "24–72 horas según complejidad" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Reparamos lo que otros desisten" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Diagnóstico gratuito, repuestos originales y garantía sobre la reparación. Atendemos computadores, portátiles, monitores y consolas — cualquier marca, cualquier modelo." },
+    { "type": "textarea", "id": "process_steps", "label": "Pasos del proceso (uno por línea)", "default": "Nos traes tu equipo o lo recogemos\nDiagnóstico gratuito · sin compromiso\nCotización clara · tú decides si avanzamos\nReparamos con repuestos originales\nPruebas de calidad y entrega con garantía" },
+    { "type": "text", "id": "turnaround", "label": "Tiempo estimado", "default": "Entre 24 y 72 horas según el caso. Te avisamos siempre por WhatsApp." },
     { "type": "image_picker", "id": "workshop_image", "label": "Foto del taller" },
-    { "type": "text", "id": "cta", "label": "CTA", "default": "Solicitar diagnóstico por WhatsApp" }
+    { "type": "text", "id": "cta", "label": "CTA", "default": "Pedir diagnóstico gratis" }
   ],
   "blocks": [
     {
@@ -70,10 +123,15 @@
       "name": "Servicio",
       "settings": [
         { "type": "select", "id": "icon", "label": "Ícono", "options": [
-          { "value": "check", "label": "Check" },
-          { "value": "shield", "label": "Shield" },
-          { "value": "star", "label": "Star" }
-        ], "default": "check" },
+          { "value": "tool", "label": "Reparación" },
+          { "value": "shield-check", "label": "Mantenimiento" },
+          { "value": "zap", "label": "Upgrade" },
+          { "value": "cpu", "label": "Hardware" },
+          { "value": "monitor", "label": "Pantalla" },
+          { "value": "gamepad", "label": "Setup gamer" },
+          { "value": "wifi", "label": "Redes" },
+          { "value": "package", "label": "SSD" }
+        ], "default": "tool" },
         { "type": "text", "id": "title", "label": "Título", "default": "Reparación" },
         { "type": "text", "id": "text", "label": "Descripción", "default": "Computadores y laptops" }
       ]
@@ -83,12 +141,12 @@
     {
       "name": "Servicio técnico",
       "blocks": [
-        { "type": "service", "settings": { "title": "Reparación", "text": "Diagnóstico y reparación de hardware" } },
-        { "type": "service", "settings": { "title": "Mantenimiento", "text": "Limpieza, pasta térmica, optimización" } },
-        { "type": "service", "settings": { "title": "Upgrades", "text": "SSD, RAM, GPU y más" } },
-        { "type": "service", "settings": { "title": "Instalación SSD", "text": "Migración de datos incluida" } },
-        { "type": "service", "settings": { "title": "Gaming setups", "text": "Armado y configuración profesional" } },
-        { "type": "service", "settings": { "title": "Diagnóstico", "text": "Evaluación sin compromiso" } }
+        { "type": "service", "settings": { "icon": "tool", "title": "Reparación de hardware", "text": "Tarjeta madre, fuente, pantalla, teclado, batería. Diagnosticamos al instante." } },
+        { "type": "service", "settings": { "icon": "shield-check", "title": "Mantenimiento preventivo", "text": "Limpieza interna profunda y pasta térmica nueva. Rendimiento como el primer día." } },
+        { "type": "service", "settings": { "icon": "zap", "title": "Upgrades de poder", "text": "Más RAM, SSD más rápido, GPU más potente. Sin perder un solo archivo." } },
+        { "type": "service", "settings": { "icon": "package", "title": "Migración a SSD", "text": "Tu PC arranca en segundos. Migramos Windows y todos tus programas sin reinstalar." } },
+        { "type": "service", "settings": { "icon": "gamepad", "title": "Armados gamer", "text": "Configuramos tu PC ideal: drivers, RGB, benchmarks. Lista para jugar al recibirla." } },
+        { "type": "service", "settings": { "icon": "monitor", "title": "Recuperación de datos", "text": "Disco dañado, formato accidental o virus. Recuperamos lo importante." } }
       ]
     }
   ]

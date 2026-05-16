@@ -4,7 +4,7 @@
     <p class="text-ink-muted mb-8 max-w-2xl">{{ section.settings.description }}</p>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      {%- assign swatches = 'brand-royal:#0B3FFF:Principal CTA|brand-electric:#2D7CFF:Acento links|brand-deep:#051640:Footer fondos|ink:#0A0F1C:Texto principal|ink-muted:#4B5566:Texto secundario|surface:#FFFFFF:Fondos|surface-2:#F5F7FB:Fondos alternos|line:#E5E9F2:Bordes|success:#0E9F6E:Stock/pago|danger:#E11D48:Descuentos|warning:#F59E0B:Urgencia' | split: '|' -%}
+      {%- assign swatches = 'brand-royal:#1D4ED8:Principal CTA / botones|brand-electric:#2D7CFF:Acento links / badges|brand-deep:#050B1F:Hero / footer / dark|brand-sky:#EAF2FF:Tints suaves|brand-glow:#60A5FA:Acentos luminosos|ink:#0A0F1C:Texto principal|ink-muted:#4B5566:Texto secundario|surface:#FFFFFF:Fondos|surface-2:#F5F7FB:Fondos alternos|line:#E3E7EF:Bordes|success:#0E9F6E:Stock / pago seguro|danger:#DC2626:Descuentos / errores|warning:#F59E0B:Urgencia / stock bajo' | split: '|' -%}
 
       {%- for swatch in swatches -%}
         {%- assign parts = swatch | split: ':' -%}

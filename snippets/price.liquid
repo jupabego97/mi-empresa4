@@ -1,6 +1,7 @@
 {%- comment -%}
   Product price: {% render 'price', product: product %}
   Manual: {% render 'price', price: 2999000, compare_at: 3499000, installments: '12 cuotas' %}
+  Variants: size: 'lg' (for PDP)
 {%- endcomment -%}
 {%- liquid
   if product != blank
@@ -17,9 +18,14 @@
     assign discount_amount = compare_price | minus: current_price
     assign discount_pct = discount_amount | times: 100 | divided_by: compare_price
   endif
+
+  assign price_class = 'nt-price'
+  if size == 'lg'
+    assign price_class = 'nt-price nt-price--lg'
+  endif
 -%}
 
-<div class="nt-price">
+<div class="{{ price_class }}">
   <div class="nt-price__row">
     <span class="nt-price__current">{{ current_price | money }}</span>
     {%- if compare_price > current_price -%}
@@ -29,8 +35,10 @@
   </div>
   {%- if show_installments != blank -%}
     <span class="nt-price__installments">{{ show_installments }}</span>
-  {%- elsif product != blank and current_price > 0 -%}
+  {%- elsif current_price > 0 -%}
     {%- assign installment_amount = current_price | divided_by: 12 -%}
-    <span class="nt-price__installments">12 cuotas de {{ installment_amount | money }}</span>
+    <span class="nt-price__installments">
+      o 12 cuotas de <strong class="text-ink">{{ installment_amount | money }}</strong>
+    </span>
   {%- endif -%}
 </div>

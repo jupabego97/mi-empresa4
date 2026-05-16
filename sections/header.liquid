@@ -4,7 +4,12 @@
   assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
 -%}
 
-<header class="nt-header" x-data="{ mobileOpen: false, megaOpen: false }">
+<header
+  class="nt-header"
+  x-data="{ mobileOpen: false, megaOpen: false, scrolled: false }"
+  @scroll.window="scrolled = window.scrollY > 6"
+  :class="{ 'is-scrolled': scrolled }"
+>
   <div class="nt-container nt-header__inner">
     <div class="nt-header__row">
       <a href="{{ routes.root_url }}" class="nt-header__logo" aria-label="{{ shop.name }}">
@@ -16,13 +21,13 @@
               loading: 'eager',
               width: settings.logo_width,
               alt: shop.name,
-              class: 'h-8 w-auto'
+              class: 'h-9 w-auto'
           }}
         {%- else -%}
           <img
             src="{{ 'nano-logo.png' | asset_url }}"
             alt="NANOTRONICS"
-            width="{{ settings.logo_width | default: 140 }}"
+            width="{{ settings.logo_width | default: 160 }}"
             height="40"
             class="h-9 w-auto object-contain"
             loading="eager"
@@ -30,33 +35,25 @@
         {%- endif -%}
       </a>
 
-      <a
-        href="tel:+573236826910"
-        class="hidden md:flex items-center gap-1.5 text-sm font-medium text-brand-royal hover:underline shrink-0"
-      >
-        {% render 'icon', name: 'phone', size: 16 %}
-        <span>323 682 6910</span>
-      </a>
-
       <div class="nt-header__search hidden sm:block">
         <form action="{{ routes.search_url }}" method="get" role="search" class="relative">
           <input type="hidden" name="type" value="product">
           <label for="header-search" class="nt-sr-only">{{ 'general.search' | t }}</label>
-          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none">
-            {% render 'icon', name: 'search', size: 20 %}
+          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none">
+            {% render 'icon', name: 'search', size: 18 %}
           </span>
           <input
             type="search"
             id="header-search"
             name="q"
-            class="nt-input w-full pl-11 pr-24 min-h-12 text-base border-brand-electric/30 focus:border-brand-royal"
+            class="nt-input w-full pl-10 pr-28 min-h-12 text-base"
             placeholder="{{ 'general.search' | t }}"
             value="{{ search.terms | escape }}"
             autocomplete="off"
           >
           <button
             type="submit"
-            class="absolute right-1 top-1/2 -translate-y-1/2 nt-btn nt-btn--primary nt-btn--sm"
+            class="absolute right-1.5 top-1/2 -translate-y-1/2 nt-btn nt-btn--primary nt-btn--sm h-9"
           >
             {{ 'general.search_submit' | t }}
           </button>
@@ -64,6 +61,18 @@
       </div>
 
       <div class="nt-header__actions">
+        <a
+          href="tel:{{ settings.store_phone | replace: ' ', '' }}"
+          class="hidden xl:flex items-center gap-2 px-3 py-2 rounded-md hover:bg-surface-2 text-sm shrink-0"
+          aria-label="{{ 'general.call_us' | t }}"
+        >
+          {% render 'icon', name: 'headset', size: 22, class: 'text-brand-royal' %}
+          <span class="leading-tight">
+            <span class="block text-[10px] uppercase tracking-wider text-ink-muted">{{ 'general.support' | t }}</span>
+            <span class="block font-semibold text-ink">{{ settings.store_phone }}</span>
+          </span>
+        </a>
+
         <a
           href="{{ wa_url }}"
           class="nt-header__icon-btn text-[#25D366] hidden md:flex"
@@ -73,9 +82,15 @@
         >
           {% render 'icon', name: 'whatsapp', size: 22 %}
         </a>
-        <a href="{{ routes.account_url }}" class="nt-header__icon-btn hidden md:flex" aria-label="{{ 'general.account' | t }}">
+
+        <a
+          href="{{ routes.account_url }}"
+          class="nt-header__icon-btn hidden md:flex"
+          aria-label="{{ 'general.account' | t }}"
+        >
           {% render 'icon', name: 'user', size: 22 %}
         </a>
+
         <button
           type="button"
           class="nt-header__icon-btn"
@@ -84,12 +99,13 @@
         >
           {% render 'icon', name: 'cart', size: 22 %}
           <span
-            class="absolute -top-0.5 -right-0.5 flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold bg-brand-royal text-white rounded-full cart-count-badge"
+            class="nt-cart-pop cart-count-badge"
             {% if cart.item_count == 0 %}style="display:none"{% endif %}
           >
             {{ cart.item_count }}
           </span>
         </button>
+
         <button
           type="button"
           class="nt-header__icon-btn lg:hidden"
@@ -103,30 +119,71 @@
       </div>
     </div>
 
-    <nav class="nt-header__nav" aria-label="Principal">
+    <nav class="nt-header__nav" aria-label="{{ 'nav.principal' | t }}">
       <div class="relative" @mouseenter="megaOpen = true" @mouseleave="megaOpen = false">
-        <a href="{{ routes.collections_url }}" class="nt-header__nav-link">{{ 'general.categories' | t }}</a>
-        <div
-          x-show="megaOpen"
-          x-cloak
-          class="absolute top-full left-0 mt-1 w-64 p-4 rounded-lg border border-line bg-surface shadow-modal z-50"
+        <a
+          href="{{ routes.collections_url }}"
+          class="nt-header__nav-link inline-flex items-center gap-1"
         >
-          <p class="text-xs font-semibold text-ink-muted uppercase mb-2">{{ 'general.categories' | t }}</p>
-          <ul class="space-y-1">
+          {% render 'icon', name: 'grid', size: 16 %}
+          {{ 'general.categories' | t }}
+          {% render 'icon', name: 'chevron-down', size: 14 %}
+        </a>
+
+        <div x-show="megaOpen" x-cloak class="nt-megamenu" x-transition.opacity.duration.150ms>
+          <div class="flex items-center justify-between mb-4">
+            <p class="nt-eyebrow">{{ 'general.categories' | t }}</p>
+            <a href="{{ routes.collections_url }}" class="text-xs font-medium text-brand-royal hover:underline">
+              {{ 'home.view_all_categories' | t }} →
+            </a>
+          </div>
+          <div class="nt-megamenu__grid">
+            {%- assign quick_links = 'laptop:Portátiles|monitor:Monitores|cpu:PC Gamer y componentes|keyboard:Periféricos|wifi:Redes|gamepad:Gaming|headphones:Audio|tag:Ofertas' | split: '|' -%}
             {%- for collection in collections limit: 8 -%}
               {%- unless collection.handle == 'frontpage' -%}
-                <li>
-                  <a href="{{ collection.url }}" class="block text-sm py-1.5 px-2 rounded hover:bg-surface-2 hover:text-brand-royal">
-                    {{ collection.title }}
-                  </a>
-                </li>
+                <a href="{{ collection.url }}" class="nt-megamenu__link">
+                  {% render 'icon', name: 'arrow-right', size: 14, class: 'opacity-60' %}
+                  <span>{{ collection.title }}</span>
+                  <span class="ml-auto text-xs text-ink-subtle">{{ collection.products_count }}</span>
+                </a>
               {%- endunless -%}
+            {%- else -%}
+              {%- for entry in quick_links -%}
+                {%- assign parts = entry | split: ':' -%}
+                <a href="{{ routes.collections_url }}" class="nt-megamenu__link">
+                  {% render 'icon', name: parts[0], size: 16 %}
+                  <span>{{ parts[1] }}</span>
+                </a>
+              {%- endfor -%}
             {%- endfor -%}
-          </ul>
+          </div>
+          <div class="mt-5 pt-4 border-t border-line">
+            <a href="/pages/servicio-tecnico" class="flex items-center gap-3 p-3 rounded-lg bg-brand-sky text-brand-deep hover:bg-brand-royal hover:text-white transition-colors">
+              {% render 'icon', name: 'tool', size: 20 %}
+              <div class="text-sm">
+                <p class="font-semibold">{{ 'general.technical_service' | t }}</p>
+                <p class="text-xs opacity-80">{{ 'home.service_short' | t }}</p>
+              </div>
+              {% render 'icon', name: 'arrow-right', size: 16, class: 'ml-auto' %}
+            </a>
+          </div>
         </div>
       </div>
-      <a href="{{ routes.all_products_collection_url }}?sort_by=price-ascending" class="nt-header__nav-link">{{ 'general.offers' | t }}</a>
-      <a href="/pages/servicio-tecnico" class="nt-header__nav-link">{{ 'general.technical_service' | t }}</a>
+
+      <a href="{{ routes.all_products_collection_url }}" class="nt-header__nav-link">
+        {{ 'nav.all_products' | t }}
+      </a>
+      <a
+        href="{{ routes.collections_url }}/ofertas"
+        class="nt-header__nav-link inline-flex items-center gap-1.5 text-danger hover:bg-danger-soft"
+      >
+        {% render 'icon', name: 'fire', size: 14 %}
+        {{ 'general.offers' | t }}
+      </a>
+      <a href="/pages/servicio-tecnico" class="nt-header__nav-link inline-flex items-center gap-1.5">
+        {% render 'icon', name: 'tool', size: 14 %}
+        {{ 'general.technical_service' | t }}
+      </a>
       <a href="/pages/nosotros" class="nt-header__nav-link">{{ 'footer.about' | t }}</a>
       <a href="/pages/contacto" class="nt-header__nav-link">{{ 'general.support' | t }}</a>
     </nav>
@@ -149,25 +206,46 @@
 
   <div
     id="mobile-nav"
-    class="lg:hidden border-t border-line bg-surface max-h-[70vh] overflow-y-auto"
+    class="lg:hidden border-t border-line bg-surface max-h-[80vh] overflow-y-auto"
     x-show="mobileOpen"
     x-cloak
+    x-transition.opacity.duration.150ms
     @click.outside="mobileOpen = false"
   >
-    <nav class="nt-container py-4 flex flex-col gap-1" aria-label="Móvil">
+    <nav class="nt-container py-4 flex flex-col gap-1" aria-label="{{ 'nav.mobile' | t }}">
       <a href="{{ routes.root_url }}" class="nt-header__nav-link">{{ 'nav.home' | t }}</a>
-      <a href="{{ routes.collections_url }}" class="nt-header__nav-link">{{ 'general.categories' | t }}</a>
-      {%- for collection in collections limit: 6 -%}
+      <a href="{{ routes.collections_url }}" class="nt-header__nav-link font-semibold">{{ 'general.categories' | t }}</a>
+      {%- for collection in collections limit: 8 -%}
         {%- unless collection.handle == 'frontpage' -%}
-          <a href="{{ collection.url }}" class="nt-header__nav-link pl-6 text-ink-muted">{{ collection.title }}</a>
+          <a href="{{ collection.url }}" class="nt-header__nav-link pl-6 text-ink-muted">
+            {{ collection.title }}
+          </a>
         {%- endunless -%}
       {%- endfor -%}
-      <a href="{{ routes.all_products_collection_url }}" class="nt-header__nav-link">{{ 'general.offers' | t }}</a>
-      <a href="/pages/servicio-tecnico" class="nt-header__nav-link">{{ 'general.technical_service' | t }}</a>
+      <a href="{{ routes.all_products_collection_url }}" class="nt-header__nav-link">
+        {{ 'nav.all_products' | t }}
+      </a>
+      <a
+        href="{{ routes.collections_url }}/ofertas"
+        class="nt-header__nav-link text-danger inline-flex items-center gap-2"
+      >
+        {% render 'icon', name: 'fire', size: 14 %} {{ 'general.offers' | t }}
+      </a>
+      <a href="/pages/servicio-tecnico" class="nt-header__nav-link inline-flex items-center gap-2">
+        {% render 'icon', name: 'tool', size: 14 %} {{ 'general.technical_service' | t }}
+      </a>
       <a href="/pages/nosotros" class="nt-header__nav-link">{{ 'footer.about' | t }}</a>
       <a href="/pages/contacto" class="nt-header__nav-link">{{ 'general.support' | t }}</a>
-      <a href="{{ wa_url }}" class="nt-header__nav-link text-[#25D366]" target="_blank" rel="noopener">{{ 'general.whatsapp' | t }}</a>
-      <a href="{{ routes.account_url }}" class="nt-header__nav-link">{{ 'general.account' | t }}</a>
+      <div class="border-t border-line my-2"></div>
+      <a href="{{ wa_url }}" class="nt-header__nav-link text-[#25D366] inline-flex items-center gap-2" target="_blank" rel="noopener">
+        {% render 'icon', name: 'whatsapp', size: 16 %} {{ 'general.whatsapp' | t }}
+      </a>
+      <a href="{{ routes.account_url }}" class="nt-header__nav-link inline-flex items-center gap-2">
+        {% render 'icon', name: 'user', size: 16 %} {{ 'general.account' | t }}
+      </a>
+      <a href="tel:{{ settings.store_phone }}" class="nt-header__nav-link inline-flex items-center gap-2">
+        {% render 'icon', name: 'phone', size: 16 %} {{ settings.store_phone }}
+      </a>
     </nav>
   </div>
 </header>

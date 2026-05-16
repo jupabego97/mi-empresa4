@@ -1,34 +1,63 @@
-<div class="nt-pdp-gallery" x-data="{ active: 0 }">
-  <div class="nt-pdp-gallery__main">
+<div class="nt-pdp-gallery" x-data="{ active: 0, zoomed: false }">
+  <div class="nt-pdp-gallery__main relative group">
     {%- for image in product.images -%}
       {%- if forloop.first -%}
         {%- assign img_loading = 'eager' -%}
+        {%- assign img_priority = 'high' -%}
       {%- else -%}
         {%- assign img_loading = 'lazy' -%}
+        {%- assign img_priority = 'low' -%}
       {%- endif -%}
-      <div x-show="active === {{ forloop.index0 }}" {% unless forloop.first %}x-cloak{% endunless %}>
+      <div
+        x-show="active === {{ forloop.index0 }}"
+        {% unless forloop.first %}x-cloak{% endunless %}
+        x-transition.opacity.duration.150ms
+        class="absolute inset-0 flex items-center justify-center p-4"
+      >
         {{
           image
-          | image_url: width: 1200
+          | image_url: width: 1400
           | image_tag:
             loading: img_loading,
-            widths: '400,800,1200',
-            sizes: '(max-width: 1024px) 100vw, 50vw',
-            class: 'w-full h-full object-contain',
+            fetchpriority: img_priority,
+            widths: '500,800,1200,1400',
+            sizes: '(max-width: 1024px) 100vw, 600px',
+            class: 'max-w-full max-h-full object-contain transition-transform duration-300',
             alt: product.title
         }}
       </div>
     {%- else -%}
       {%- if product.featured_image -%}
-        {{
-          product.featured_image
-          | image_url: width: 1200
-          | image_tag: loading: 'eager', class: 'w-full h-full object-contain', alt: product.title
-        }}
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+          {{
+            product.featured_image
+            | image_url: width: 1200
+            | image_tag: loading: 'eager', class: 'max-w-full max-h-full object-contain', alt: product.title
+          }}
+        </div>
       {%- else -%}
-        <div class="w-full h-full flex items-center justify-center text-ink-muted p-8">{{ product.title }}</div>
+        <div class="absolute inset-0 flex items-center justify-center text-ink-muted p-8">{{ product.title }}</div>
       {%- endif -%}
     {%- endfor -%}
+
+    {%- if product.images.size > 1 -%}
+      <button
+        type="button"
+        class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+        @click="active = (active - 1 + {{ product.images.size }}) % {{ product.images.size }}"
+        aria-label="Imagen anterior"
+      >
+        {% render 'icon', name: 'chevron', size: 18, class: 'rotate-180' %}
+      </button>
+      <button
+        type="button"
+        class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+        @click="active = (active + 1) % {{ product.images.size }}"
+        aria-label="Imagen siguiente"
+      >
+        {% render 'icon', name: 'chevron', size: 18 %}
+      </button>
+    {%- endif -%}
   </div>
 
   {%- if product.images.size > 1 -%}
@@ -41,7 +70,7 @@
           @click="active = {{ forloop.index0 }}"
           aria-label="Imagen {{ forloop.index }}"
         >
-          {{ image | image_url: width: 128 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: '' }}
+          {{ image | image_url: width: 160 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: '' }}
         </button>
       {%- endfor -%}
     </div>

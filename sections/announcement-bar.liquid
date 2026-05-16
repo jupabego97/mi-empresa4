@@ -1,0 +1,33 @@
+{%- if settings.show_announcement -%}
+  <div class="nt-announcement" role="region" aria-label="{{ 'general.announcements' | t }}">
+    <div class="nt-container">
+      <div class="nt-announcement__inner">
+        {%- if settings.announcement_1 != blank -%}
+          <span class="nt-announcement__item">
+            {% render 'icon', name: 'truck', size: 14 %}
+            <span>{{ settings.announcement_1 }}</span>
+          </span>
+        {%- endif -%}
+        {%- if settings.announcement_2 != blank -%}
+          <span class="nt-announcement__item">
+            {% render 'icon', name: 'shield-check', size: 14 %}
+            <span>{{ settings.announcement_2 }}</span>
+          </span>
+        {%- endif -%}
+        {%- if settings.announcement_3 != blank -%}
+          <span class="nt-announcement__item hidden md:inline-flex">
+            {% render 'icon', name: 'map-pin', size: 14 %}
+            <span>{{ settings.announcement_3 }}</span>
+          </span>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Anuncio superior",
+  "settings": []
+}
+{% endschema %}

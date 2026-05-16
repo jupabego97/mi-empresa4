@@ -12,70 +12,162 @@
 
 <section class="nt-section pt-0">
   <div class="nt-container">
-    <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight mb-8">{{ 'cart.title' | t }}</h1>
+    <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight mb-2">{{ 'cart.title' | t }}</h1>
+    <p class="text-ink-muted mb-8">
+      {%- if cart.item_count > 0 -%}
+        Tienes {{ cart.item_count }} {{ 'cart.items_count' | t }} listos para comprar
+      {%- else -%}
+        Tu carrito está esperándote
+      {%- endif -%}
+    </p>
 
     {%- if cart.item_count > 0 -%}
-      <form action="{{ routes.cart_url }}" method="post" id="cart-form" class="grid lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 space-y-0 border border-line rounded-lg overflow-hidden bg-surface">
-          {%- for item in cart.items -%}
-            <div class="px-4">
-              {% render 'cart-line-item', item: item %}
-            </div>
-          {%- endfor -%}
-        </div>
+      <form action="{{ routes.cart_url }}" method="post" id="cart-form" class="grid lg:grid-cols-[1fr_380px] gap-8">
+        <div class="space-y-4">
+          {% render 'shipping-progress' %}
 
-        <div class="space-y-6">
-          <div class="p-6 rounded-lg border border-line bg-surface-2 sticky top-24">
-            <h2 class="font-semibold text-lg mb-4">{{ 'cart.summary' | t }}</h2>
-            <div class="flex justify-between text-sm mb-2">
-              <span class="text-ink-muted">{{ 'cart.subtotal' | t }}</span>
-              <span>{{ cart.total_price | money }}</span>
+          <div class="nt-card overflow-hidden">
+            <div class="px-4 py-3 border-b border-line bg-surface-2 flex items-center justify-between">
+              <p class="text-sm font-semibold">Tus productos</p>
+              <span class="text-xs text-ink-muted">{{ cart.item_count }} {{ 'cart.items_count' | t }}</span>
             </div>
-            <p class="text-xs text-ink-muted mb-4">{{ 'cart.shipping_note' | t }}</p>
-            {% render 'payment-icons' %}
-
-            <div class="space-y-3 mt-6">
-              <button type="submit" name="checkout" class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full">
-                {{ 'cart.checkout' | t }}
-              </button>
-              {% render 'btn', variant: 'whatsapp', size: 'md', label: cart_wa_label, icon: 'whatsapp', href: wa_cart_url, target: '_blank', full: true %}
+            <div class="divide-y divide-line">
+              {%- for item in cart.items -%}
+                <div class="px-4">
+                  {% render 'cart-line-item', item: item %}
+                </div>
+              {%- endfor -%}
             </div>
+          </div>
 
-            <div class="nt-checkout-trust mt-6">
-              <div class="text-center">
-                {% render 'icon', name: 'shield', size: 24, class: 'mx-auto text-brand-royal mb-2' %}
-                <p class="text-xs font-medium">{{ 'cart.secure' | t }}</p>
-              </div>
-              <div class="text-center">
-                {% render 'icon', name: 'truck', size: 24, class: 'mx-auto text-brand-royal mb-2' %}
-                <p class="text-xs font-medium">{{ 'product.shipping_colombia' | t }}</p>
-              </div>
-              <div class="text-center">
-                {% render 'icon', name: 'check', size: 24, class: 'mx-auto text-brand-royal mb-2' %}
-                <p class="text-xs font-medium">{{ 'cart.help_whatsapp' | t }}</p>
-              </div>
+          <div class="grid sm:grid-cols-3 gap-3 p-4 rounded-xl bg-brand-sky border border-brand-electric/20">
+            <div class="flex items-center gap-2 text-sm">
+              <span class="w-9 h-9 rounded-lg bg-white text-brand-royal flex items-center justify-center shrink-0">
+                {% render 'icon', name: 'shield-check', size: 18 %}
+              </span>
+              <span class="text-ink">
+                <strong class="block leading-tight">Garantía oficial</strong>
+                <span class="text-xs text-ink-muted">en todos los productos</span>
+              </span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <span class="w-9 h-9 rounded-lg bg-white text-brand-royal flex items-center justify-center shrink-0">
+                {% render 'icon', name: 'truck', size: 18 %}
+              </span>
+              <span class="text-ink">
+                <strong class="block leading-tight">Despacho hoy</strong>
+                <span class="text-xs text-ink-muted">si compras antes de las 3 pm</span>
+              </span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <span class="w-9 h-9 rounded-lg bg-white text-brand-royal flex items-center justify-center shrink-0">
+                {% render 'icon', name: 'rotate', size: 18 %}
+              </span>
+              <span class="text-ink">
+                <strong class="block leading-tight">Cambios fáciles</strong>
+                <span class="text-xs text-ink-muted">5 días para decidir</span>
+              </span>
             </div>
           </div>
         </div>
+
+        <aside class="space-y-4 lg:sticky lg:top-32 lg:self-start">
+          <div class="nt-card p-6 space-y-3">
+            <h2 class="font-semibold text-lg">{{ 'cart.summary' | t }}</h2>
+            <div class="flex justify-between text-sm">
+              <span class="text-ink-muted">{{ 'cart.subtotal' | t }} ({{ cart.item_count }})</span>
+              <span class="font-medium">{{ cart.total_price | money }}</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-ink-muted">Envío</span>
+              <span class="font-medium text-success">Calculado en checkout</span>
+            </div>
+            {%- if cart.total_discount > 0 -%}
+              <div class="flex justify-between text-sm">
+                <span class="text-ink-muted">Descuentos</span>
+                <span class="font-medium text-success">-{{ cart.total_discount | money }}</span>
+              </div>
+            {%- endif -%}
+            <div class="border-t border-line pt-3 flex justify-between items-baseline">
+              <span class="font-semibold">Total</span>
+              <span class="text-xl font-bold text-ink">{{ cart.total_price | money }}</span>
+            </div>
+            <p class="text-xs text-ink-muted">{{ 'cart.shipping_note' | t }}</p>
+
+            <div class="space-y-3 pt-3">
+              <button type="submit" name="checkout" class="nt-btn nt-btn--primary nt-btn--xl nt-btn--full">
+                {% render 'icon', name: 'shield-check', size: 18 %}
+                {{ 'cart.checkout' | t }}
+              </button>
+              {% render 'btn',
+                variant: 'whatsapp',
+                size: 'md',
+                label: cart_wa_label,
+                icon: 'whatsapp',
+                href: wa_cart_url,
+                target: '_blank',
+                full: true
+              %}
+            </div>
+
+            {% render 'payment-icons' %}
+
+            <div class="nt-checkout-trust">
+              <div class="text-center">
+                {% render 'icon', name: 'shield-check', size: 22, class: 'mx-auto text-brand-royal mb-1.5' %}
+                <p class="text-xs font-semibold leading-tight">{{ 'cart.secure' | t }}</p>
+              </div>
+              <div class="text-center">
+                {% render 'icon', name: 'truck', size: 22, class: 'mx-auto text-brand-royal mb-1.5' %}
+                <p class="text-xs font-semibold leading-tight">{{ 'product.shipping_colombia' | t }}</p>
+              </div>
+              <div class="text-center">
+                {% render 'icon', name: 'headset', size: 22, class: 'mx-auto text-brand-royal mb-1.5' %}
+                <p class="text-xs font-semibold leading-tight">{{ 'cart.help_whatsapp' | t }}</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="{{ routes.all_products_collection_url }}" class="block text-center text-sm text-brand-royal hover:underline">
+            ← {{ 'cart.continue_shopping' | t }}
+          </a>
+        </aside>
       </form>
 
       {%- if section.settings.show_recommendations -%}
         <div class="mt-16">
-          <h2 class="nt-section-title">{{ 'cart.recommended' | t }}</h2>
+          <div class="flex items-end justify-between mb-6">
+            <h2 class="nt-section-title mb-0">{{ 'cart.recommended' | t }}</h2>
+            <a href="{{ routes.all_products_collection_url }}" class="text-sm text-brand-royal hover:underline">
+              Ver más →
+            </a>
+          </div>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             {%- assign rec_col = collections[section.settings.recommendation_collection] -%}
             {%- if rec_col != blank -%}
               {%- for product in rec_col.products limit: 4 -%}
                 {% render 'product-card', product: product %}
               {%- endfor -%}
+            {%- else -%}
+              {% render 'product-card', demo: true, title: 'Mouse gamer Logitech G502', price: 24990000, brand: 'LOGITECH' %}
+              {% render 'product-card', demo: true, title: 'SSD NVMe 1TB Kingston', price: 35990000, brand: 'KINGSTON', badge: 'oferta', compare_at: 42990000 %}
+              {% render 'product-card', demo: true, title: 'Audífonos HyperX Cloud II', price: 29990000, brand: 'HYPERX' %}
+              {% render 'product-card', demo: true, title: 'Webcam Logitech C920', price: 27990000, brand: 'LOGITECH' %}
             {%- endif -%}
           </div>
         </div>
       {%- endif -%}
     {%- else -%}
-      <div class="text-center py-16 max-w-md mx-auto">
-        <p class="text-ink-muted mb-6">{{ 'cart.empty' | t }}</p>
-        {% render 'btn', variant: 'primary', size: 'lg', label: shop_label, href: routes.all_products_collection_url %}
+      <div class="text-center py-20 max-w-md mx-auto">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-brand-sky text-brand-royal mb-6">
+          {% render 'icon', name: 'cart', size: 40 %}
+        </div>
+        <h2 class="text-h3 font-bold mb-2">Tu carrito está vacío</h2>
+        <p class="text-ink-muted mb-8">Empieza a llenarlo con tecnología seleccionada por nuestro equipo. Si tienes dudas, te asesoramos por WhatsApp.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          {% render 'btn', variant: 'primary', size: 'lg', label: 'Explorar catálogo', href: routes.all_products_collection_url, icon: 'arrow-right' %}
+          {% render 'btn', variant: 'secondary', size: 'lg', label: 'Ver ofertas', href: '/collections/ofertas', icon: 'fire' %}
+        </div>
       </div>
     {%- endif -%}
   </div>
