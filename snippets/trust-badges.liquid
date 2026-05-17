@@ -1,16 +1,22 @@
+{%- liquid
+  assign returns_days = settings.returns_days | default: 5
+  assign warranty_note = settings.product_warranty_note | default: 'Garantía oficial del fabricante. NANOTRONICS te respalda con posventa real.'
+  assign shipping_national = settings.shipping_national | default: '2-5 días hábiles'
+  assign cutoff = settings.shipping_cutoff_time | default: '3:00 pm'
+-%}
 <div class="nt-trust-row">
   <div class="nt-trust-item">
     <span class="nt-trust-item__icon">{% render 'icon', name: 'truck', size: 18 %}</span>
     <span>
       <span class="nt-trust-item__title">Despacho hoy mismo</span>
-      <span class="nt-trust-item__desc">Llega en 2-5 días · gratis desde $200K</span>
+      <span class="nt-trust-item__desc">Antes de las {{ cutoff }} · {{ shipping_national }} en Colombia</span>
     </span>
   </div>
   <div class="nt-trust-item">
     <span class="nt-trust-item__icon">{% render 'icon', name: 'shield-check', size: 18 %}</span>
     <span>
       <span class="nt-trust-item__title">Garantía oficial</span>
-      <span class="nt-trust-item__desc">Respaldo del fabricante + posventa</span>
+      <span class="nt-trust-item__desc">{{ warranty_note | truncate: 90 }}</span>
     </span>
   </div>
   <div class="nt-trust-item">
@@ -23,8 +29,8 @@
   <div class="nt-trust-item">
     <span class="nt-trust-item__icon">{% render 'icon', name: 'rotate', size: 18 %}</span>
     <span>
-      <span class="nt-trust-item__title">Cambios en 5 días</span>
-      <span class="nt-trust-item__desc">Si algo no te convence, lo resolvemos</span>
+      <span class="nt-trust-item__title">Cambios en {{ returns_days }} días</span>
+      <span class="nt-trust-item__desc">Si algo no te convence, lo resolvemos contigo</span>
     </span>
   </div>
 </div>

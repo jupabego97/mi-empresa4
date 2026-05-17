@@ -3,6 +3,9 @@
   assign page_description = page_description | default: settings.meta_description_default | default: shop.description
   assign page_image = page_image | default: settings.logo | default: shop.brand.logo
   assign canonical_url = canonical_url | default: request.origin | append: request.path
+  assign street = settings.store_street_address | default: settings.store_address
+  assign geo_lat = settings.store_geo_lat | default: '6.0823'
+  assign geo_lng = settings.store_geo_lng | default: '-75.3351'
 -%}
 
 <meta charset="utf-8">
@@ -40,23 +43,42 @@
 {%- endif -%}
 
 <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": {{ shop.name | json }},
-    "url": {{ shop.url | json }},
-    "description": {{ page_description | json }},
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "El Carmen de Viboral",
-      "addressRegion": "Antioquia",
-      "addressCountry": "CO"
-    }
-    {%- if settings.store_phone != blank -%}
-    ,"telephone": {{ settings.store_phone | json }}
-    {%- endif -%}
-    {%- if settings.store_email != blank -%}
-    ,"email": {{ settings.store_email | json }}
-    {%- endif -%}
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": {{ shop.url | append: '/#localbusiness' | json }},
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "description": {{ page_description | json }},
+  "image": {{ shop.url | append: '/cdn/shop/files/logo.png' | json }},
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": {{ street | json }},
+    "addressLocality": "El Carmen de Viboral",
+    "addressRegion": "Antioquia",
+    "addressCountry": "CO"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": {{ geo_lat | json }},
+    "longitude": {{ geo_lng | json }}
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+    "opens": "09:00",
+    "closes": "19:00"
   }
+  {%- if settings.store_phone != blank -%}
+  ,"telephone": {{ settings.store_phone | json }}
+  {%- endif -%}
+  {%- if settings.store_email != blank -%}
+  ,"email": {{ settings.store_email | json }}
+  {%- endif -%}
+  ,"areaServed": {
+    "@type": "Country",
+    "name": "Colombia"
+  }
+}
 </script>

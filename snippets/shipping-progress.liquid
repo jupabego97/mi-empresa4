@@ -1,27 +1,29 @@
 {%- comment -%}
-  Barra de progreso para envío gratis
-  Threshold default: 200000 COP = 20000000 cents
+  Barra de progreso envío gratis — umbral en settings.free_shipping_threshold (COP pesos)
 {%- endcomment -%}
 {%- liquid
-  assign threshold = threshold_cents | default: 20000000
+  assign threshold_cop = settings.free_shipping_threshold | default: 200000
+  assign threshold = threshold_cop | times: 100
   assign cart_total = cart.total_price
   assign remaining = threshold | minus: cart_total
   assign progress_pct = cart_total | times: 100 | divided_by: threshold
   if progress_pct > 100
     assign progress_pct = 100
   endif
+  assign threshold_display = threshold_cop | times: 100
 -%}
 
 <div class="nt-shipping-bar">
   {%- if cart_total >= threshold -%}
     <p class="font-semibold text-success inline-flex items-center gap-2">
       {% render 'icon', name: 'check-circle', size: 16 %}
-      ¡Tu envío es GRATIS! 🎉
+      ¡Tu envío es GRATIS!
     </p>
   {%- else -%}
     <p class="text-ink">
       Súmale <strong class="text-brand-royal">{{ remaining | money }}</strong> para que tu
       <strong>envío sea gratis</strong>
+      <span class="text-ink-muted text-xs">(compras desde {{ threshold_display | money }})</span>
     </p>
   {%- endif -%}
   <div class="nt-shipping-bar__track">

@@ -1,6 +1,6 @@
 {%- liquid
   assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
-  assign wa_msg = 'Hola, quiero solicitar un diagnóstico de servicio técnico'
+  assign wa_msg = settings.whatsapp_message_service | default: 'Hola, quiero solicitar servicio técnico para mi equipo'
   assign wa_text = wa_msg | url_encode
   assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
 -%}

@@ -1,14 +1,23 @@
 {%- liquid
   assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
-  assign wa_msg = 'Hola, me interesa: ' | append: product.title | append: ' (' | append: shop.url | append: product.url | append: ')'
+  assign wa_prefix = settings.whatsapp_message_product | default: 'Hola, me interesa este producto:'
+  assign wa_msg = wa_prefix | append: ' ' | append: product.title | append: ' — ' | append: request.origin | append: product.url
   assign wa_text = wa_msg | url_encode
   assign wa_product_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
 
   assign current_variant = product.selected_or_first_available_variant
+  assign threshold_cop = settings.free_shipping_threshold | default: 200000
+  assign threshold_cents = threshold_cop | times: 100
   assign free_shipping = false
-  if product.price >= 20000000
+  if product.price >= threshold_cents
     assign free_shipping = true
   endif
+
+  assign shipping_cutoff = settings.shipping_cutoff_time | default: '3:00 pm'
+  assign shipping_national = settings.shipping_national | default: '2-5 días hábiles'
+  assign shipping_medellin = settings.shipping_medellin | default: '1-2 días hábiles'
+  assign product_warranty = settings.product_warranty_note | default: 'Garantía oficial del fabricante con respaldo NANOTRONICS.'
+  assign returns_days = settings.returns_days | default: 5
 -%}
 
 {% render 'breadcrumbs' %}
@@ -68,7 +77,7 @@
         <p class="text-sm font-semibold inline-flex items-center gap-2 {% if product.available %}text-success{% else %}text-danger{% endif %}">
           <span class="w-2 h-2 rounded-full {% if product.available %}bg-success{% else %}bg-danger{% endif %}"></span>
           {%- if product.available -%}
-            En stock · despachamos hoy si compras antes de las 3pm
+            En stock · despachamos hoy si compras antes de las {{ settings.shipping_cutoff_time | default: '3:00 pm' }}
           {%- else -%}
             Agotado por ahora · pregúntanos cuándo vuelve
           {%- endif -%}
@@ -196,11 +205,11 @@
           <div class="nt-accordion__content space-y-5" x-show="open === 4" x-collapse x-cloak>
             <div>
               <p class="font-semibold text-ink mb-1">¿Cuánto tarda el envío?</p>
-              <p>Despachamos el mismo día si compras antes de las 3 pm. Llega en 2 a 5 días hábiles a cualquier ciudad de Colombia. Si vives en Antioquia, llega más rápido.</p>
+              <p>Despachamos el mismo día si compras antes de las {{ shipping_cutoff }}. Medellín y área metro: {{ shipping_medellin }}. Resto de Colombia: {{ shipping_national }}.</p>
             </div>
             <div>
               <p class="font-semibold text-ink mb-1">¿Qué garantía tiene?</p>
-              <p>Garantía oficial del fabricante (mínimo 1 año en computadores). Además, NANOTRONICS te respalda con asesoría posventa y servicio técnico propio para que no te quedes sin ayuda.</p>
+              <p>{{ product_warranty }}</p>
             </div>
             <div>
               <p class="font-semibold text-ink mb-1">¿Puedo pagar a cuotas?</p>
@@ -208,7 +217,7 @@
             </div>
             <div>
               <p class="font-semibold text-ink mb-1">¿Puedo recoger en tienda?</p>
-              <p>Sí, sin costo y sin filas. Apenas tu pedido esté listo te avisamos por WhatsApp para que pases por la tienda en El Carmen de Viboral.</p>
+              <p>Sí, sin costo. Te avisamos por WhatsApp cuando esté listo. Horario: {{ settings.store_hours }}.</p>
             </div>
             <div>
               <p class="font-semibold text-ink mb-1">¿Es producto nuevo y original?</p>

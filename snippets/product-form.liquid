@@ -1,7 +1,8 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 {%- liquid
   assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
-  assign wa_msg = 'Hola, me interesa: ' | append: product.title | append: ' (' | append: shop.url | append: product.url | append: ')'
+  assign wa_prefix = settings.whatsapp_message_product | default: 'Hola, me interesa este producto:'
+  assign wa_msg = wa_prefix | append: ' ' | append: product.title | append: ' — ' | append: request.origin | append: product.url
   assign wa_text = wa_msg | url_encode
   assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
 -%}

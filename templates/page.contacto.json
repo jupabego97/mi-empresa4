@@ -2,7 +2,10 @@
   "sections": {
     "main": {
       "type": "page-contacto",
-      "settings": {}
+      "settings": {
+        "heading": "Hablemos. Estamos para ayudarte.",
+        "intro": "Estamos para ayudarte a elegir, cotizar, instalar o reparar. Por WhatsApp respondemos en minutos · por correo en menos de 24 horas. Sin bots, te atiende una persona real."
+      }
     }
   },
   "order": ["main"]
