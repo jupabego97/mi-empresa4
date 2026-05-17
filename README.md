@@ -4,6 +4,12 @@ Tienda tecnológica premium para **NANOTRONICS** (El Carmen de Viboral, Antioqui
 
 Stack: **Shopify Online Store 2.0** · **Liquid** · **Tailwind CSS v4** · **Alpine.js**
 
+## Brand brief (fuente de verdad)
+
+Documentación de identidad, catálogo y operación en [`docs/`](docs/README.md). Los valores editables del negocio viven en **Theme Editor** → secciones *Identidad de marca*, *Métricas de confianza* y *Operación*.
+
+Rama de trabajo: `brand-precision`.
+
 ## Identidad
 
 - **Paleta**: azul royal `#1D4ED8` · azul eléctrico `#2D7CFF` · azul oscuro `#050B1F` · acentos luminosos sutiles

@@ -1,3 +1,15 @@
+{%- liquid
+  assign story_html = section.settings.story
+  if story_html == blank and settings.brand_story_short != blank
+    assign story_html = settings.brand_story_short | newline_to_br
+  endif
+  assign mission_text = section.settings.mission | default: settings.brand_mission
+  assign values_source = section.settings.values
+  if values_source == blank
+    assign values_source = settings.brand_values
+  endif
+-%}
+
 {% render 'breadcrumbs' %}
 
 <section class="nt-section pt-0">
@@ -10,21 +22,25 @@
           {{ section.settings.heading | default: page.title }}
         </h1>
         <div class="prose prose-invert prose-sm max-w-none text-white/80 rte leading-relaxed">
-          {{ section.settings.story }}
+          {%- if section.settings.story != blank -%}
+            {{ section.settings.story }}
+          {%- else -%}
+            {{ settings.brand_story_short | newline_to_br }}
+          {%- endif -%}
         </div>
 
         <div class="grid sm:grid-cols-3 gap-6 mt-8 pt-8 border-t border-white/10">
           <div>
-            <p class="text-3xl font-bold tracking-tight">+5.000</p>
-            <p class="text-sm text-white/65">Clientes en Colombia</p>
+            <p class="text-3xl font-bold tracking-tight">{{ settings.metric_clients_value }}</p>
+            <p class="text-sm text-white/65">{{ settings.metric_clients_label }}</p>
           </div>
           <div>
-            <p class="text-3xl font-bold tracking-tight">8 años</p>
-            <p class="text-sm text-white/65">Vendiendo tecnología</p>
+            <p class="text-3xl font-bold tracking-tight">{{ settings.metric_years_value }}</p>
+            <p class="text-sm text-white/65">{{ settings.metric_years_label }}</p>
           </div>
           <div>
-            <p class="text-3xl font-bold tracking-tight">4.9★</p>
-            <p class="text-sm text-white/65">Calificación promedio</p>
+            <p class="text-3xl font-bold tracking-tight">{{ settings.metric_rating_value }}</p>
+            <p class="text-sm text-white/65">{{ settings.metric_rating_label }}</p>
           </div>
         </div>
       </div>
@@ -47,7 +63,7 @@
             {% render 'icon', name: 'sparkle', size: 20, class: 'text-brand-royal' %}
             {{ 'about.mission' | t }}
           </h2>
-          <p class="text-ink-muted leading-relaxed">{{ section.settings.mission }}</p>
+          <p class="text-ink-muted leading-relaxed">{{ mission_text }}</p>
         </div>
         <div>
           <h2 class="text-h3 font-semibold mb-3 inline-flex items-center gap-2">
@@ -55,7 +71,7 @@
             {{ 'about.values' | t }}
           </h2>
           <ul class="grid sm:grid-cols-2 gap-2">
-            {%- assign values_list = section.settings.values | newline_to_br | split: '<br />' -%}
+            {%- assign values_list = values_source | newline_to_br | split: '<br />' -%}
             {%- for value in values_list -%}
               <li class="flex items-center gap-2 text-sm text-ink-muted">
                 {% render 'icon', name: 'check-circle', size: 16, class: 'text-success shrink-0' %}
@@ -68,8 +84,8 @@
           {% render 'icon', name: 'map-pin', size: 22, class: 'text-brand-royal shrink-0 mt-0.5' %}
           <div class="text-sm">
             <p class="font-semibold text-ink">Visítanos en El Carmen de Viboral</p>
-            <p class="text-ink-muted">{{ settings.store_address }}</p>
-            <p class="text-ink-muted">Lunes a Sábado · 9 am - 7 pm</p>
+            <p class="text-ink-muted">{{ settings.store_street_address | default: settings.store_address }}</p>
+            <p class="text-ink-muted">{{ settings.store_hours }}</p>
             <p class="text-xs text-ink-muted mt-1">NIT {{ settings.store_nit }} · Empresa legalmente constituida</p>
           </div>
         </div>

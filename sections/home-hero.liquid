@@ -66,20 +66,20 @@
       {%- if section.settings.show_metrics -%}
         <div class="nt-hero__metrics">
           <div>
-            <p class="nt-hero__metric-num">{{ section.settings.metric_1_value | default: '+5K' }}</p>
-            <p class="nt-hero__metric-label">{{ section.settings.metric_1_label | default: 'Clientes' }}</p>
+            <p class="nt-hero__metric-num">{{ section.settings.metric_1_value | default: settings.metric_clients_value }}</p>
+            <p class="nt-hero__metric-label">{{ section.settings.metric_1_label | default: settings.metric_clients_label }}</p>
           </div>
           <div>
-            <p class="nt-hero__metric-num">{{ section.settings.metric_2_value | default: '4.9' }}</p>
-            <p class="nt-hero__metric-label">{{ section.settings.metric_2_label | default: 'Rating' }}</p>
+            <p class="nt-hero__metric-num">{{ section.settings.metric_2_value | default: settings.metric_rating_value }}</p>
+            <p class="nt-hero__metric-label">{{ section.settings.metric_2_label | default: settings.metric_rating_label }}</p>
           </div>
           <div>
-            <p class="nt-hero__metric-num">{{ section.settings.metric_3_value | default: '24h' }}</p>
-            <p class="nt-hero__metric-label">{{ section.settings.metric_3_label | default: 'Soporte' }}</p>
+            <p class="nt-hero__metric-num">{{ section.settings.metric_3_value | default: settings.metric_dispatch_value }}</p>
+            <p class="nt-hero__metric-label">{{ section.settings.metric_3_label | default: settings.metric_dispatch_label }}</p>
           </div>
           <div>
-            <p class="nt-hero__metric-num">{{ section.settings.metric_4_value | default: '5★' }}</p>
-            <p class="nt-hero__metric-label">{{ section.settings.metric_4_label | default: 'Garantía' }}</p>
+            <p class="nt-hero__metric-num">{{ section.settings.metric_4_value | default: settings.metric_years_value }}</p>
+            <p class="nt-hero__metric-label">{{ section.settings.metric_4_label | default: settings.metric_years_label }}</p>
           </div>
         </div>
       {%- endif -%}

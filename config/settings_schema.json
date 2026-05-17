@@ -34,6 +34,142 @@
     ]
   },
   {
+    "name": "Identidad de marca",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Datos alineados con docs/01-identidad.md. Marca VALIDAR antes de campañas."
+      },
+      {
+        "type": "text",
+        "id": "brand_founded_year",
+        "label": "Año de fundación",
+        "default": "2018",
+        "info": "VALIDAR con el negocio"
+      },
+      {
+        "type": "textarea",
+        "id": "brand_story_short",
+        "label": "Historia corta (nosotros / SEO)",
+        "default": "NANOTRONICS nació en El Carmen de Viboral con una idea simple: vender tecnología de forma honesta. Hoy acompañamos a clientes en toda Colombia con asesoría real y taller propio."
+      },
+      {
+        "type": "textarea",
+        "id": "brand_mission",
+        "label": "Misión",
+        "default": "Hacer que comprar tecnología en Colombia deje de ser una apuesta. Asesoramos con honestidad, vendemos solo lo que recomendaríamos y respondemos cuando algo falla."
+      },
+      {
+        "type": "textarea",
+        "id": "brand_values",
+        "label": "Valores (uno por línea)",
+        "default": "Honestidad ante todo\nSolo productos que usaríamos\nAtención cercana, sin guiones\nCompromiso con Antioquia\nPostventa que sí responde\nConocimiento técnico real"
+      },
+      {
+        "type": "text",
+        "id": "brand_usp_1",
+        "label": "USP 1",
+        "default": "Asesoría honesta: te recomendamos lo que necesitas"
+      },
+      {
+        "type": "text",
+        "id": "brand_usp_2",
+        "label": "USP 2",
+        "default": "Taller propio con diagnóstico gratuito"
+      },
+      {
+        "type": "text",
+        "id": "brand_usp_3",
+        "label": "USP 3",
+        "default": "Postventa por WhatsApp con personas reales"
+      },
+      {
+        "type": "text",
+        "id": "store_hours",
+        "label": "Horario tienda",
+        "default": "Lun a Sáb · 9 am - 7 pm"
+      },
+      {
+        "type": "text",
+        "id": "store_street_address",
+        "label": "Dirección detallada (calle, barrio)",
+        "default": "El Carmen de Viboral, Antioquia, Colombia",
+        "info": "Completar dirección exacta en docs/01-identidad.md"
+      },
+      {
+        "type": "text",
+        "id": "store_geo_lat",
+        "label": "Latitud (SEO / mapas)",
+        "default": "6.0823",
+        "info": "VALIDAR en Google Maps"
+      },
+      {
+        "type": "text",
+        "id": "store_geo_lng",
+        "label": "Longitud (SEO / mapas)",
+        "default": "-75.3351",
+        "info": "VALIDAR en Google Maps"
+      }
+    ]
+  },
+  {
+    "name": "Métricas de confianza",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Solo publicar cifras verificables (docs/01-identidad.md)."
+      },
+      {
+        "type": "text",
+        "id": "metric_clients_value",
+        "label": "Métrica 1 — valor",
+        "default": "+5.000"
+      },
+      {
+        "type": "text",
+        "id": "metric_clients_label",
+        "label": "Métrica 1 — etiqueta",
+        "default": "Clientes en Colombia"
+      },
+      {
+        "type": "text",
+        "id": "metric_rating_value",
+        "label": "Métrica 2 — valor",
+        "default": "4.9★"
+      },
+      {
+        "type": "text",
+        "id": "metric_rating_label",
+        "label": "Métrica 2 — etiqueta",
+        "default": "Calificación Google"
+      },
+      {
+        "type": "text",
+        "id": "metric_years_value",
+        "label": "Métrica 3 — valor",
+        "default": "8 años"
+      },
+      {
+        "type": "text",
+        "id": "metric_years_label",
+        "label": "Métrica 3 — etiqueta",
+        "default": "De experiencia"
+      },
+      {
+        "type": "text",
+        "id": "metric_dispatch_value",
+        "label": "Métrica 4 — valor",
+        "default": "24h"
+      },
+      {
+        "type": "text",
+        "id": "metric_dispatch_label",
+        "label": "Métrica 4 — etiqueta",
+        "default": "Despacho garantizado"
+      }
+    ]
+  },
+  {
     "name": "Contacto y WhatsApp",
     "settings": [
       {
@@ -46,8 +182,26 @@
       {
         "type": "text",
         "id": "whatsapp_message",
-        "label": "Mensaje predeterminado WhatsApp",
+        "label": "WhatsApp — mensaje general (FAB / header)",
         "default": "Hola NANOTRONICS, me gustaría una asesoría 👋"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_message_product",
+        "label": "WhatsApp — desde producto",
+        "default": "Hola, me interesa este producto:"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_message_service",
+        "label": "WhatsApp — servicio técnico",
+        "default": "Hola, quiero solicitar servicio técnico para mi equipo"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_message_cart",
+        "label": "WhatsApp — carrito (futuro)",
+        "default": "Hola, tengo dudas sobre mi pedido"
       },
       {
         "type": "checkbox",
@@ -140,6 +294,76 @@
       { "type": "url", "id": "social_instagram", "label": "Instagram" },
       { "type": "url", "id": "social_tiktok", "label": "TikTok" },
       { "type": "url", "id": "social_youtube", "label": "YouTube" }
+    ]
+  },
+  {
+    "name": "Operación",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Políticas alineadas con docs/03-operacion.md"
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Envío gratis desde (COP, pesos)",
+        "default": 200000,
+        "info": "Ej: 200000 = $200.000. El theme convierte a centavos."
+      },
+      {
+        "type": "text",
+        "id": "shipping_cutoff_time",
+        "label": "Corte despacho mismo día",
+        "default": "3:00 pm"
+      },
+      {
+        "type": "text",
+        "id": "shipping_medellin",
+        "label": "Tiempo envío Medellín / área metro",
+        "default": "1-2 días hábiles"
+      },
+      {
+        "type": "text",
+        "id": "shipping_national",
+        "label": "Tiempo envío resto de Colombia",
+        "default": "2-5 días hábiles"
+      },
+      {
+        "type": "text",
+        "id": "shipping_carriers",
+        "label": "Transportadoras",
+        "default": "Servientrega, Coordinadora, Interrapidísimo"
+      },
+      {
+        "type": "range",
+        "id": "returns_days",
+        "min": 3,
+        "max": 30,
+        "step": 1,
+        "label": "Días para cambios / devoluciones",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "repair_warranty_days",
+        "min": 0,
+        "max": 90,
+        "step": 5,
+        "label": "Garantía reparación (días)",
+        "default": 30
+      },
+      {
+        "type": "textarea",
+        "id": "product_warranty_note",
+        "label": "Texto garantía productos",
+        "default": "Garantía oficial del fabricante. NANOTRONICS te respalda con asesoría posventa y servicio técnico propio."
+      },
+      {
+        "type": "textarea",
+        "id": "seo_local_keywords",
+        "label": "Keywords SEO local (referencia interna)",
+        "default": "computadores Carmen de Viboral, PC gamer Antioquia, reparar portátil, portátiles Medellín, servicio técnico oriente antioqueño"
+      }
     ]
   },
   {
