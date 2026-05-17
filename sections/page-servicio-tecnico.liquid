@@ -1,7 +1,9 @@
 {%- liquid
   assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
-  assign wa_text = 'Hola, quiero solicitar servicio técnico para mi equipo' | url_encode
+  assign wa_msg = settings.whatsapp_message_service | default: 'Hola, quiero solicitar servicio técnico para mi equipo'
+  assign wa_text = wa_msg | url_encode
   assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+  assign repair_warranty = settings.repair_warranty_days | default: 30
 -%}
 
 {% render 'breadcrumbs' %}
@@ -34,7 +36,9 @@
             Llamar: {{ settings.store_phone }}
           </a>
         </div>
-        <p class="text-xs text-white/55 mt-4">Diagnóstico 100% gratuito · Atendemos cualquier marca · Llevamos 8 años</p>
+        <p class="text-xs text-white/55 mt-4">
+          Diagnóstico 100% gratuito · Atendemos cualquier marca · {{ settings.metric_years_value | default: '8 años' }} de experiencia
+        </p>
       </div>
     </div>
 
@@ -50,6 +54,23 @@
           </div>
           <h3 class="font-semibold text-ink mb-2">{{ block.settings.title }}</h3>
           <p class="text-sm text-ink-muted leading-relaxed">{{ block.settings.text }}</p>
+          {%- if block.settings.price_from != blank -%}
+            <p class="text-sm font-bold text-brand-royal mt-3">{{ block.settings.price_from }}</p>
+          {%- endif -%}
+          <ul class="mt-2 space-y-1 text-xs text-ink-muted">
+            {%- if block.settings.turnaround != blank -%}
+              <li class="inline-flex items-center gap-1.5">
+                {% render 'icon', name: 'clock', size: 12, class: 'text-brand-royal' %}
+                {{ block.settings.turnaround }}
+              </li>
+            {%- endif -%}
+            {%- if block.settings.warranty_note != blank -%}
+              <li class="inline-flex items-center gap-1.5">
+                {% render 'icon', name: 'shield-check', size: 12, class: 'text-success' %}
+                {{ block.settings.warranty_note }}
+              </li>
+            {%- endif -%}
+          </ul>
         </div>
       {%- endfor -%}
     </div>
@@ -133,7 +154,10 @@
           { "value": "package", "label": "SSD" }
         ], "default": "tool" },
         { "type": "text", "id": "title", "label": "Título", "default": "Reparación" },
-        { "type": "text", "id": "text", "label": "Descripción", "default": "Computadores y laptops" }
+        { "type": "text", "id": "text", "label": "Descripción", "default": "Computadores y laptops" },
+        { "type": "text", "id": "price_from", "label": "Precio desde", "default": "Consultar", "info": "Ej: Desde $80.000 · VALIDAR en docs/02-catalogo.md" },
+        { "type": "text", "id": "turnaround", "label": "Tiempo estimado", "default": "24-72 h" },
+        { "type": "text", "id": "warranty_note", "label": "Garantía", "default": "30 días sobre la reparación" }
       ]
     }
   ],
@@ -141,12 +165,12 @@
     {
       "name": "Servicio técnico",
       "blocks": [
-        { "type": "service", "settings": { "icon": "tool", "title": "Reparación de hardware", "text": "Tarjeta madre, fuente, pantalla, teclado, batería. Diagnosticamos al instante." } },
-        { "type": "service", "settings": { "icon": "shield-check", "title": "Mantenimiento preventivo", "text": "Limpieza interna profunda y pasta térmica nueva. Rendimiento como el primer día." } },
-        { "type": "service", "settings": { "icon": "zap", "title": "Upgrades de poder", "text": "Más RAM, SSD más rápido, GPU más potente. Sin perder un solo archivo." } },
-        { "type": "service", "settings": { "icon": "package", "title": "Migración a SSD", "text": "Tu PC arranca en segundos. Migramos Windows y todos tus programas sin reinstalar." } },
-        { "type": "service", "settings": { "icon": "gamepad", "title": "Armados gamer", "text": "Configuramos tu PC ideal: drivers, RGB, benchmarks. Lista para jugar al recibirla." } },
-        { "type": "service", "settings": { "icon": "monitor", "title": "Recuperación de datos", "text": "Disco dañado, formato accidental o virus. Recuperamos lo importante." } }
+        { "type": "service", "settings": { "icon": "tool", "title": "Reparación de hardware", "text": "Tarjeta madre, fuente, pantalla, teclado, batería.", "price_from": "Consultar", "turnaround": "24-72 h", "warranty_note": "30 días garantía" } },
+        { "type": "service", "settings": { "icon": "shield-check", "title": "Mantenimiento preventivo", "text": "Limpieza interna y pasta térmica nueva.", "price_from": "Consultar", "turnaround": "24-48 h", "warranty_note": "30 días garantía" } },
+        { "type": "service", "settings": { "icon": "zap", "title": "Upgrades de poder", "text": "Más RAM, SSD o GPU. Sin perder archivos.", "price_from": "Consultar", "turnaround": "24 h", "warranty_note": "30 días garantía" } },
+        { "type": "service", "settings": { "icon": "package", "title": "Migración a SSD", "text": "Windows y programas migrados sin reinstalar.", "price_from": "Consultar", "turnaround": "24 h", "warranty_note": "30 días garantía" } },
+        { "type": "service", "settings": { "icon": "gamepad", "title": "Armados gamer", "text": "Drivers, RGB y benchmarks incluidos.", "price_from": "Consultar", "turnaround": "48 h", "warranty_note": "30 días garantía" } },
+        { "type": "service", "settings": { "icon": "monitor", "title": "Recuperación de datos", "text": "Disco dañado o formato accidental.", "price_from": "Cotización previa", "turnaround": "Según caso", "warranty_note": "Presupuesto sin compromiso" } }
       ]
     }
   ]

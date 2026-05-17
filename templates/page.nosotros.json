@@ -2,7 +2,10 @@
   "sections": {
     "main": {
       "type": "page-nosotros",
-      "settings": {}
+      "settings": {
+        "heading": "Tecnología honesta, hecha en Antioquia"
+      },
+      "blocks": {}
     }
   },
   "order": ["main"]
