@@ -48,7 +48,32 @@
     },
     "brands": {
       "type": "home-brands",
-      "settings": {}
+      "settings": {
+        "title": "Marcas con respaldo oficial"
+      },
+      "blocks": {
+        "m1": { "type": "brand", "settings": { "name": "JBL" } },
+        "m2": { "type": "brand", "settings": { "name": "Samsung" } },
+        "m3": { "type": "brand", "settings": { "name": "ASUS" } },
+        "m4": { "type": "brand", "settings": { "name": "Lenovo" } },
+        "m5": { "type": "brand", "settings": { "name": "HP" } },
+        "m6": { "type": "brand", "settings": { "name": "Dell" } },
+        "m7": { "type": "brand", "settings": { "name": "MSI" } },
+        "m8": { "type": "brand", "settings": { "name": "Acer" } },
+        "m9": { "type": "brand", "settings": { "name": "Logitech" } },
+        "m10": { "type": "brand", "settings": { "name": "Kingston" } },
+        "m11": { "type": "brand", "settings": { "name": "ADATA" } },
+        "m12": { "type": "brand", "settings": { "name": "Epson" } },
+        "m13": { "type": "brand", "settings": { "name": "TCL" } },
+        "m14": { "type": "brand", "settings": { "name": "Tenda" } },
+        "m15": { "type": "brand", "settings": { "name": "Genius" } },
+        "m16": { "type": "brand", "settings": { "name": "Janus" } },
+        "m17": { "type": "brand", "settings": { "name": "Jaltech" } },
+        "m18": { "type": "brand", "settings": { "name": "JYR" } },
+        "m19": { "type": "brand", "settings": { "name": "Movisun" } },
+        "m20": { "type": "brand", "settings": { "name": "1 Hora" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8", "m9", "m10", "m11", "m12", "m13", "m14", "m15", "m16", "m17", "m18", "m19", "m20"]
     },
     "service": {
       "type": "home-service-banner",

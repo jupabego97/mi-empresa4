@@ -1,6 +1,6 @@
 # 02 — Catálogo y servicios NANOTRONICS
 
-> **Estado:** Parcialmente completado desde cuestionario — precios de servicio CONFIRMADOS; marcas oficiales PENDIENTE.
+> **Estado:** Marcas oficiales CONFIRMADAS (mayo 2026). Servicios con precios confirmados.
 
 ## Líneas de negocio
 
@@ -16,8 +16,8 @@
 | Power bank | Estrella | |
 | Parlantes | Estrella | |
 | Diademas / audio personal | Estrella | |
-| Artículos de belleza | Estrella | Diferenciador vs tienda solo-tech |
-| Portátiles / PC / monitores | Secundario | Confirmar stock actual en Shopify |
+| Artículos de belleza | Estrella | |
+| Portátiles / PC / monitores | Secundario | ASUS, Acer, Lenovo, HP, Dell, MSI |
 
 ## Colecciones Shopify sugeridas
 
@@ -32,13 +32,41 @@
 
 ## Marcas con factura oficial
 
-**PENDIENTE** — Completar lista exacta en cuestionario.
+Lista confirmada por el negocio. Solo publicar en web y materiales las que sigan con factura vigente.
+
+| Marca | Categoría típica |
+|-------|------------------|
+| ASUS | Computadores, componentes |
+| Acer | Computadores |
+| Lenovo | Portátiles, PCs |
+| HP | Computadores, impresoras |
+| Dell | Computadores |
+| MSI | PC gamer, componentes |
+| Samsung | Celulares, monitores, accesorios |
+| TCL | Televisores, monitores |
+| Epson | Impresoras |
+| JBL | Audio, parlantes |
+| Logitech | Periféricos |
+| Genius | Periféricos, accesorios |
+| Kingston | Memoria RAM, SSD |
+| ADATA | Almacenamiento |
+| Tenda | Redes, WiFi |
+| Janus | Marca distribuida |
+| Jaltech | Marca distribuida |
+| JYR | Marca distribuida |
+| Movisun | Marca distribuida |
+| 1 Hora | Marca distribuida |
+
+**Lista rápida (20 marcas):**  
+JBL · Janus · Samsung · Jaltech · JYR · Tenda · Epson · ASUS · Acer · Lenovo · TCL · MSI · HP · Dell · Kingston · ADATA · Logitech · Genius · Movisun · 1 Hora
+
+**Pendiente:** Subir logos en Theme Editor → Home — Marcas (opcional; por ahora se muestra el nombre).
 
 ## Servicios técnicos (precios confirmados)
 
 | Servicio | Desde (COP) | Tiempo | Garantía reparación |
 |----------|-------------|--------|---------------------|
-| Diagnóstico | $0 (consultar condiciones) | ~1 día | — |
+| Diagnóstico | Consultar | ~1 día | — |
 | Mantenimiento | $30.000 – $50.000 | Por cotizar | 30 días |
 | Pasta térmica | $25.000 | Por cotizar | 30 días |
 | Pantalla portátil | Cotizar | Por modelo | 30 días |
@@ -48,10 +76,7 @@
 | Recuperación de datos | Cotizar | Según caso | — |
 | Armado PC | Cotizar | Por cotizar | 30 días |
 | Windows + drivers | $40.000 | Por cotizar | — |
-| Consolas | No confirmado | — | — |
-
-*Nota: tabla del cuestionario tenía columnas mezcladas; validar en tienda antes de publicar campañas.*
 
 ## Gama de precios
 
-Definir en Shopify por colección cuando el catálogo esté cargado (entrada / media / alta).
+Definir en Shopify por colección cuando el catálogo esté cargado.

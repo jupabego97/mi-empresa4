@@ -78,7 +78,7 @@ accesorios
 cables
 
 ### Marcas con factura oficial (lista exacta)
-___________
+JBL, Janus, Samsung, Jaltech, JYR, Tenda, Epson, ASUS, Acer, Lenovo, TCL, MSI, HP, Dell, Kingston, ADATA, Logitech, Genius, Movisun, 1 Hora
 
 ### Servicios técnicos (precio desde + tiempo + garantía días)
 
