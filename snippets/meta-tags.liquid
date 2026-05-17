@@ -64,12 +64,20 @@
     "latitude": {{ geo_lat | json }},
     "longitude": {{ geo_lng | json }}
   },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-    "opens": "09:00",
-    "closes": "19:00"
-  }
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "10:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday",
+      "opens": "10:00",
+      "closes": "19:00"
+    }
+  ]
   {%- if settings.store_phone != blank -%}
   ,"telephone": {{ settings.store_phone | json }}
   {%- endif -%}

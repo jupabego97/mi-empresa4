@@ -1,88 +1,57 @@
 # 02 — Catálogo y servicios NANOTRONICS
 
-> **Estado:** Borrador v1 — precios y marcas `VALIDAR` con inventario real.
+> **Estado:** Parcialmente completado desde cuestionario — precios de servicio CONFIRMADOS; marcas oficiales PENDIENTE.
 
 ## Líneas de negocio
 
-1. **Venta de tecnología** — e-commerce + tienda física.
-2. **Servicio técnico** — taller propio (alto valor de confianza).
-3. **Armado y configuración** — PCs gamer y equipos a medida. `VALIDAR` si se cobra mano de obra por separado.
+1. **Venta retail** — Tecnología, accesorios, audio, belleza, cables (tienda física + canal digital).
+2. **Servicio técnico** — Taller integrado a la tienda.
 
-## Categorías de producto
+## Categorías con stock (prioridad home)
 
-| Categoría | Prioridad | Eyebrow web | Colección Shopify | Estado |
-|-----------|-----------|-------------|-------------------|--------|
-| Portátiles | Estrella | Trabajo y estudio | `/collections/portatiles` | VALIDAR stock |
-| PC Gamer | Estrella | Máximo rendimiento | `/collections/pc-gamer` | VALIDAR stock |
-| Monitores | Alta | Pantalla pro | `/collections/monitores` | VALIDAR |
-| Periféricos | Alta | Setup completo | `/collections/perifericos` | VALIDAR |
-| Componentes | Media | Arma tu PC | `/collections/componentes` | PENDIENTE colección |
-| Redes y WiFi | Media | Conexión sin caídas | `/collections/redes` | VALIDAR |
-| Audífonos / Audio | Complemento | Audio gamer | `/collections/audio` | VALIDAR |
-| Accesorios | Complemento | Esenciales | `/collections/accesorios` | PENDIENTE |
+| Categoría | Prioridad | Notas |
+|-----------|-----------|--------|
+| Accesorios | Estrella | Amplio mix |
+| Cables | Estrella | |
+| Power bank | Estrella | |
+| Parlantes | Estrella | |
+| Diademas / audio personal | Estrella | |
+| Artículos de belleza | Estrella | Diferenciador vs tienda solo-tech |
+| Portátiles / PC / monitores | Secundario | Confirmar stock actual en Shopify |
 
-## Segmentación por presupuesto (colecciones futuras)
+## Colecciones Shopify sugeridas
 
-| Gama | Rango referencia COP | Uso |
-|------|----------------------|-----|
-| Entrada | < $2.000.000 | Estudiantes, oficina básica |
-| Media | $2M – $5M | Profesional, gamer intermedio |
-| Alta | $5M – $10M | Gamer serio, creadores |
-| Premium | > $10M | Workstation, enthusiast |
+| Categoría | Handle sugerido |
+|-----------|-----------------|
+| Accesorios | `accesorios` |
+| Cables | `cables` |
+| Power bank | `power-bank` |
+| Parlantes | `parlantes` |
+| Diademas | `diademas` |
+| Belleza | `belleza` |
 
-`VALIDAR` rangos con precios reales del catálogo Shopify.
+## Marcas con factura oficial
 
-## Marcas distribuidas (solo con factura oficial)
+**PENDIENTE** — Completar lista exacta en cuestionario.
 
-**Borrador — marcar las que aplican:**
+## Servicios técnicos (precios confirmados)
 
-| Marca | Computadores | Componentes | Periféricos | Monitores | Redes |
-|-------|:---:|:---:|:---:|:---:|:---:|
-| ASUS | ☐ | ☐ | ☐ | ☐ | ☐ |
-| Lenovo | ☐ | ☐ | ☐ | ☐ | ☐ |
-| HP | ☐ | ☐ | ☐ | ☐ | ☐ |
-| Dell | ☐ | ☐ | ☐ | ☐ | ☐ |
-| MSI | ☐ | ☐ | ☐ | ☐ | ☐ |
-| Acer | ☐ | ☐ | ☐ | ☐ | ☐ |
-| Logitech | — | — | ☐ | — | — |
-| Razer | — | — | ☐ | — | — |
-| HyperX | — | — | ☐ | — | — |
-| LG | — | — | — | ☐ | — |
-| Samsung | — | — | — | ☐ | — |
-| TP-Link | — | — | — | — | ☐ |
+| Servicio | Desde (COP) | Tiempo | Garantía reparación |
+|----------|-------------|--------|---------------------|
+| Diagnóstico | $0 (consultar condiciones) | ~1 día | — |
+| Mantenimiento | $30.000 – $50.000 | Por cotizar | 30 días |
+| Pasta térmica | $25.000 | Por cotizar | 30 días |
+| Pantalla portátil | Cotizar | Por modelo | 30 días |
+| SSD + migración | $150.000 – $700.000 | Por caso | 30 días |
+| Upgrade RAM | Cotizar | Por cotizar | 30 días |
+| Limpieza profunda | $50.000 | Por cotizar | 30 días |
+| Recuperación de datos | Cotizar | Según caso | — |
+| Armado PC | Cotizar | Por cotizar | 30 días |
+| Windows + drivers | $40.000 | Por cotizar | — |
+| Consolas | No confirmado | — | — |
 
-**En web hoy (theme):** texto genérico "Trabajamos solo con marcas oficiales" — subir logos a `sections/home-brands` cuando estén confirmadas.
+*Nota: tabla del cuestionario tenía columnas mezcladas; validar en tienda antes de publicar campañas.*
 
-## Productos hero (1 por categoría estrella)
+## Gama de precios
 
-| Categoría | Producto hero | SKU / handle | Estado |
-|-----------|---------------|--------------|--------|
-| Portátiles | _pendiente_ | | PENDIENTE |
-| PC Gamer | _pendiente_ | | PENDIENTE |
-| Monitores | _pendiente_ | | PENDIENTE |
-
-Configurar en Theme Editor → **Productos destacados** → colección real.
-
-## Catálogo de servicios técnicos
-
-| Servicio | Desde (COP) | Tiempo | Garantía reparación | Notas |
-|----------|-------------|--------|---------------------|-------|
-| Diagnóstico | $0 | 30 min – 24 h | N/A | Gratis sin compromiso `VALIDAR` |
-| Mantenimiento preventivo | VALIDAR | 24–48 h | 30 días | |
-| Pasta térmica | VALIDAR | 24 h | 30 días | |
-| Cambio pantalla portátil | VALIDAR | 48–72 h | 30 días | Según modelo |
-| SSD + migración | VALIDAR | 24 h | 30 días | Incluye clonación |
-| Upgrade RAM | VALIDAR | 24 h | 30 días | |
-| Limpieza profunda | VALIDAR | 24 h | 30 días | |
-| Recuperación de datos | VALIDAR | Depende | — | Presupuesto previo |
-| Armado PC gamer | VALIDAR | 48 h | 30 días | Mano de obra `VALIDAR` |
-| Windows + drivers | VALIDAR | 24 h | — | |
-| Consolas | VALIDAR | — | — | ¿Ofrecen? ☐ |
-
-**Garantía estándar reparación (borrador):** 30 días sobre mano de obra — `VALIDAR` legal.
-
-## Reglas de contenido en ficha de servicio
-
-- Mostrar **Desde $X** si el precio varía por modelo.
-- Mostrar **tiempo estimado** siempre.
-- No prometer "mismo día" salvo que operación lo confirme.
+Definir en Shopify por colección cuando el catálogo esté cargado (entrada / media / alta).

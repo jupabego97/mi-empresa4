@@ -11,23 +11,23 @@
     "trust": {
       "type": "trust-strip",
       "blocks": {
-        "b1": { "type": "trust", "settings": { "icon": "truck", "text": "Envío gratis desde $200K" } },
-        "b2": { "type": "trust", "settings": { "icon": "shield-check", "text": "Garantía oficial del fabricante" } },
-        "b3": { "type": "trust", "settings": { "icon": "credit-card", "text": "Hasta 36 cuotas · Addi & PSE" } },
-        "b4": { "type": "trust", "settings": { "icon": "headset", "text": "Asesoría real por WhatsApp" } },
-        "b5": { "type": "trust", "settings": { "icon": "tool", "text": "Taller técnico propio" } }
+        "b1": { "type": "trust", "settings": { "icon": "map-pin", "text": "Parque Principal · Viboral" } },
+        "b2": { "type": "trust", "settings": { "icon": "shield-check", "text": "Garantía mín. 3 meses" } },
+        "b3": { "type": "trust", "settings": { "icon": "credit-card", "text": "Mercado Pago · Transferencia · Efectivo" } },
+        "b4": { "type": "trust", "settings": { "icon": "headset", "text": "WhatsApp · respuesta ~5 min" } },
+        "b5": { "type": "trust", "settings": { "icon": "tool", "text": "Servicio técnico en tienda" } }
       },
       "block_order": ["b1", "b2", "b3", "b4", "b5"]
     },
     "categories": {
       "type": "home-categories",
       "blocks": {
-        "c1": { "type": "category", "settings": { "eyebrow": "Trabajo y estudio", "title": "Portátiles", "icon": "laptop", "url": "/collections/portatiles" } },
-        "c2": { "type": "category", "settings": { "eyebrow": "Máximo rendimiento", "title": "PC Gamer", "icon": "cpu", "url": "/collections/pc-gamer" } },
-        "c3": { "type": "category", "settings": { "eyebrow": "Pantalla pro", "title": "Monitores", "icon": "monitor", "url": "/collections/monitores" } },
-        "c4": { "type": "category", "settings": { "eyebrow": "Setup completo", "title": "Periféricos", "icon": "keyboard", "url": "/collections/perifericos" } },
-        "c5": { "type": "category", "settings": { "eyebrow": "Conexión sin caídas", "title": "Redes y WiFi", "icon": "wifi", "url": "/collections/redes" } },
-        "c6": { "type": "category", "settings": { "eyebrow": "Audio gamer", "title": "Audífonos", "icon": "headphones", "url": "/collections/audio" } }
+        "c1": { "type": "category", "settings": { "eyebrow": "Amplio catálogo", "title": "Accesorios", "icon": "keyboard", "url": "/collections/accesorios" } },
+        "c2": { "type": "category", "settings": { "eyebrow": "Conexión", "title": "Cables", "icon": "wifi", "url": "/collections/cables" } },
+        "c3": { "type": "category", "settings": { "eyebrow": "Energía portátil", "title": "Power bank", "icon": "zap", "url": "/collections/power-bank" } },
+        "c4": { "type": "category", "settings": { "eyebrow": "Sonido", "title": "Parlantes", "icon": "headphones", "url": "/collections/parlantes" } },
+        "c5": { "type": "category", "settings": { "eyebrow": "Audio personal", "title": "Diademas", "icon": "headphones", "url": "/collections/diademas" } },
+        "c6": { "type": "category", "settings": { "eyebrow": "Cuidado personal", "title": "Belleza", "icon": "sparkle", "url": "/collections/belleza" } }
       },
       "block_order": ["c1", "c2", "c3", "c4", "c5", "c6"]
     },

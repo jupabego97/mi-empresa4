@@ -1,64 +1,51 @@
 # Voz de marca NANOTRONICS
 
-> **Estado:** Borrador v1 — línea elegida: **cercana, directa, premium sin ser fría**.
+> **Estado:** CONFIRMADO — línea elegida: **técnica y seria** (referencia Apple / enterprise), sin perder calidez local.
 
-## Personalidad en 4 adjetivos
+## Personalidad
 
-1. **Confiable** — datos concretos, sin hype vacío.
-2. **Cercana** — tuteo natural, sin ser informal de más.
-3. **Técnica cuando hace falta** — specs claros, sin jerga innecesaria.
-4. **Local orgullosa** — Antioquia y El Carmen de Viboral sin caricatura.
+1. **Seria** — Información precisa, sin exageraciones.
+2. **Clara** — Beneficio concreto antes que adjetivos vacíos.
+3. **Confiable** — Años en el mercado, tienda física, rating real (4.3★ Google).
+4. **Directa** — Frases cortas; sin slang forzado ni humor exagerado.
 
 ## Tono: sí / no
 
 | Sí | No |
 |----|-----|
-| "Te ayudamos a elegir bien" | "¡OFERTA INCREÍBLE!!!" |
-| "Despachamos hoy si compras antes de las 3 pm" | "Envío ultrarrápido garantizado siempre" |
-| "Diagnóstico gratis" | "El mejor taller del mundo" |
-| Cifras verificables | "+10.000 clientes" sin respaldo |
-| WhatsApp como canal humano | "Chatea con nuestra IA" |
+| "Desde 2005 en El Carmen de Viboral" | "¡La mejor tienda del universo!" |
+| "4.3★ en Google" | "4.9★" sin respaldo |
+| "Amplia variedad de productos" | Listas interminables de emojis |
+| "Respuesta en ~5 minutos" (horario hábil) | "24/7 instantáneo" |
+| "Buen precio" como promesa honesta | "Los precios más bajos de Colombia" |
 
-## Estructura de mensajes
+## Estructura de mensaje
 
-1. **Beneficio** — qué gana el cliente.
-2. **Prueba** — garantía, tiempo, número, política.
-3. **CTA** — acción única clara.
+1. Hecho verificable (año, ubicación, garantía).
+2. Beneficio (precio, variedad, atención).
+3. Acción (visitar tienda, WhatsApp, ver catálogo).
 
-**Ejemplo PDP:**
-
-> En stock · despachamos hoy si compras antes de las 3 pm.  
-> Garantía oficial + respaldo NANOTRONICS.  
-> [Agregar al carrito] · [Asesoría gratis por WhatsApp]
-
-## Frases tipo (copiar/adaptar)
+## Frases tipo actualizadas
 
 | Contexto | Frase |
 |----------|-------|
-| Hero | El equipo que necesitas, con la asesoría que mereces |
-| CTA compra | Explorar catálogo / Agregar al carrito |
-| CTA WhatsApp | Asesoría gratis / Pedir diagnóstico gratis |
-| Confianza | Sin reseñas inventadas. Solo opiniones reales. |
-| Servicio | ¿Tu equipo no está rindiendo? Lo dejamos como nuevo. |
-| Envío | Envío gratis desde $200.000 (VALIDAR umbral) |
-| Cierre | Hecho con ❤ en El Carmen de Viboral |
+| Eslogan | Al son de la tecnología |
+| Hero | Tecnología y servicio técnico desde 2005 |
+| Ubicación | Calle 30 # 30-31, Parque Principal, El Carmen de Viboral |
+| USP 1 | Buen precio |
+| USP 2 | Amplia variedad |
+| USP 3 | Excelente atención |
+| WhatsApp | Respuesta en aprox. 5 minutos en horario de tienda |
 
 ## Palabras preferidas
 
-- Asesoría (no "soporte genérico")
-- Despacho (no solo "envío")
-- Garantía oficial
-- Taller propio / técnicos certificados
-- Diagnóstico gratuito
-- Setup / equipo (según contexto)
+- Tecnología, equipos, accesorios, servicio técnico
+- Tienda física, Parque Principal
+- Garantía, cambios (15 días — ver operación)
+- Mercado Pago, transferencia, efectivo en tienda
 
 ## Palabras a evitar
 
-- "Increíble", "revolucionario", "único en el mundo"
-- "Cyber" / "mega" sin campaña real
-- Emojis en exceso (máx. 1 por bloque en promos)
-- Inglés innecesario (salvo términos tech: SSD, GPU, FPS)
-
-## WhatsApp (plantillas en settings)
-
-Ver [03-operacion.md](./03-operacion.md) — mensajes por contexto sincronizados con Theme Editor.
+- "Increíble", "brutal", "insano"
+- Cifras de clientes sin dato
+- Promesas de envío no confirmadas en Fase 3

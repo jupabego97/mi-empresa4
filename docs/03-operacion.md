@@ -1,97 +1,54 @@
-# 03 — Operación y experiencia NANOTRONICS
+# 03 — Operación NANOTRONICS
 
-> **Estado:** Borrador v1 — políticas legales deben revisarse con contador/abogado.
+> **Estado:** Parcialmente completado desde cuestionario.
 
-## Resumen operativo
+## Resumen
 
-| Proceso | Política borrador | Estado |
-|---------|-------------------|--------|
-| Envío gratis | Compras desde **$200.000** COP | CONFIRMADO en theme |
-| Despacho | Mismo día si compra antes de **3:00 pm** | VALIDAR |
-| Medellín / área metro | 1–2 días hábiles | VALIDAR |
-| Resto Colombia | 2–5 días hábiles | VALIDAR |
-| Recoger en tienda | Gratis · aviso por WhatsApp | VALIDAR tiempo preparación |
-| Cambios | **5 días** · producto sin usar | VALIDAR política Shopify |
-| Garantía productos | Oficial fabricante + respaldo NANOTRONICS | VALIDAR texto legal |
-| Garantía reparación | **30 días** mano de obra | VALIDAR |
+| Proceso | Política | Estado |
+|---------|----------|--------|
+| Garantía productos | Mínimo 3 meses | CONFIRMADO |
+| Cambios / devoluciones | 15 días | CONFIRMADO |
+| Garantía reparación | 30 días | CONFIRMADO |
+| Respuesta WhatsApp | ~5 min (horario tienda) | CONFIRMADO |
+| Pagos | Efectivo en tienda, transferencia, Mercado Pago | CONFIRMADO |
+| Envío gratis umbral | $200.000 (theme) | VALIDAR con negocio |
+| Transportadoras | — | PENDIENTE |
 
-## Envíos
+## Horarios tienda
 
-**Transportadoras (VALIDAR):** Servientrega, Coordinadora, Interrapidísimo.
-
-**Umbral envío gratis:** $200.000 COP → en theme: `20000000` centavos Shopify.
-
-**Corte despacho mismo día:** 3:00 pm hora Colombia.
-
-**Zonas sin cobertura:** _PENDIENTE_ — listar si aplica.
+- **Lun–Sáb:** 10:00 – 20:00
+- **Dom:** 10:00 – 19:00
 
 ## Pagos
 
-| Método | Activo | Notas |
-|--------|--------|-------|
-| Tarjeta Visa / Mastercard | VALIDAR | Cuotas según pasarela |
-| PSE | VALIDAR | |
-| Nequi | VALIDAR | |
-| Daviplata | VALIDAR | |
-| Addi (sin tarjeta) | VALIDAR | |
-| Efectivo en tienda | VALIDAR | |
-| Transferencia | VALIDAR | |
+| Método | Activo |
+|--------|--------|
+| Efectivo en tienda | Sí |
+| Transferencia | Sí |
+| Mercado Pago | Sí |
+| Addi / PSE / Nequi | No marcado en cuestionario |
 
-**Cuotas en web:** "Hasta 36 cuotas" — `VALIDAR` máximo real con Addi/pasarela.
+## WhatsApp
 
-## Horarios y contacto
+| Contexto | Mensaje sugerido |
+|----------|------------------|
+| General | Hola NANOTRONICS, necesito información sobre un producto o servicio |
+| Producto | Hola, me interesa este producto: |
+| Servicio técnico | Hola, quiero solicitar servicio técnico para mi equipo |
 
-| Canal | Horario / SLA |
-|-------|----------------|
-| Tienda física | Lun a Sáb · 9 am - 7 pm |
-| WhatsApp | Respuesta < 15 min en horario `VALIDAR` |
-| Email | < 24 h hábiles |
+**SLA:** Respuesta en aproximadamente 5 minutos en horario de atención de tienda.
 
-## WhatsApp — mensajes por contexto
+## SEO local
 
-| Contexto | Setting theme | Mensaje borrador |
-|----------|---------------|------------------|
-| General (FAB) | `whatsapp_message` | Hola NANOTRONICS, me gustaría una asesoría 👋 |
-| Producto (PDP) | `whatsapp_message_product` | Hola, me interesa este producto: |
-| Servicio técnico | `whatsapp_message_service` | Hola, quiero solicitar servicio técnico para mi equipo |
-| Carrito (futuro) | `whatsapp_message_cart` | Hola, tengo dudas sobre mi pedido en el carrito |
+**PENDIENTE** — Completar 5 búsquedas reales en cuestionario.
 
-## Flujo de compra online
+Sugerencias iniciales:
+- nanotronics viboral
+- tienda tecnologia carmen de viboral
+- servicio tecnico computadores viboral
+- accesorios celular viboral
+- parlantes viboral
 
-```mermaid
-flowchart LR
-  browse[Explorar catalogo] --> pdp[Ficha producto]
-  pdp --> cart[Carrito]
-  cart --> checkout[Checkout Shopify]
-  pdp --> wa[WhatsApp asesoria]
-  cart --> wa
-```
+## Envíos
 
-## Flujo servicio técnico
-
-```mermaid
-flowchart LR
-  landing[Pagina servicio] --> wa[WhatsApp diagnostico]
-  wa --> receive[Recibe equipo]
-  receive --> diag[Diagnostico gratis]
-  diag --> quote[Cotizacion]
-  quote --> repair[Reparacion]
-  repair --> deliver[Entrega con garantia]
-```
-
-## SEO local (keywords borrador)
-
-1. computadores El Carmen de Viboral
-2. PC gamer Antioquia
-3. reparar portátil Carmen de Viboral
-4. portátiles Medellín envío
-5. servicio técnico computadores oriente antioqueño
-
-**Schema:** `LocalBusiness` en `snippets/meta-tags.liquid` — coordenadas `VALIDAR` en Theme Editor.
-
-## Checklist legal / Shopify
-
-- [ ] Política de envíos publicada en Shopify Admin
-- [ ] Política de devoluciones alineada con `returns_days`
-- [ ] NIT y razón social correctos en footer
-- [ ] Facturación electrónica mencionada si aplica
+Completar en cuestionario: transportadoras, tiempos Medellín/nacional, recoger en tienda.

@@ -1,46 +1,44 @@
 # Personas de cliente NANOTRONICS
 
-> **Estado:** Borrador v1 — priorizar según ventas reales del último trimestre.
+> **Estado:** CONFIRMADO desde cuestionario Fase 1.
 
-## Persona 1 — El gamer del oriente
-
-| Atributo | Detalle |
-|----------|---------|
-| Edad | 18–28 años |
-| Ubicación | Oriente antioqueño + Medellín |
-| Necesidad | PC gamer, periféricos, upgrades, FPS estable |
-| Dolor | Precios inflados en ML, miedo a equipos usados sin garantía |
-| Cómo compra | WhatsApp + comparación online; pide asesoría de specs |
-| Mensaje clave | *"Arma tu setup con garantía y asesoría que entiende de gaming."* |
-| Categorías | PC Gamer, monitores 144Hz+, periféricos, servicio técnico |
-| VALIDAR | Ticket promedio real, marcas que más pide |
-
-## Persona 2 — Profesional / estudiante productivo
+## Persona 1 — Profesional y freelancer
 
 | Atributo | Detalle |
 |----------|---------|
-| Edad | 22–40 años |
-| Necesidad | Portátil para diseño, programación, oficina, clases |
-| Dolor | No sabe qué RAM/SSD necesita; miedo a comprar mal |
-| Cómo compra | Investiga en Google, pregunta por WhatsApp, valora cuotas |
-| Mensaje clave | *"El portátil correcto para tu trabajo — sin pagar de más."* |
-| Categorías | Portátiles, monitores, accesorios, migración SSD |
-| VALIDAR | % ventas portátiles vs gamer |
+| Prioridad | Alta |
+| Necesidad | Equipos y accesorios para trabajar: portátiles, periféricos, cables, power banks |
+| Dolor | No tiene tiempo para comparar en varias tiendas |
+| Comportamiento | Valora asesoría clara y respuesta rápida |
+| Mensaje | Tecnología confiable para tu trabajo, con respaldo local. |
 
-## Persona 3 — Cliente de servicio técnico
+## Persona 2 — PyME y oficina
 
 | Atributo | Detalle |
 |----------|---------|
-| Edad | 25–55 años |
-| Necesidad | Reparar laptop/PC lenta, pantalla rota, recuperar datos |
-| Dolor | Talleres que no responden, precios opacos, pierden datos |
-| Cómo llega | Recomendación local, Google "reparar portátil Viboral" |
-| Mensaje clave | *"Diagnóstico gratis. Te explicamos el problema antes de cobrar."* |
-| Categorías | Servicio técnico (prioridad), luego venta de repuestos |
-| VALIDAR | Volumen reparaciones/mes, ticket servicio |
+| Prioridad | Alta |
+| Necesidad | Compras recurrentes, varios equipos, factura, confianza |
+| Dolor | Proveedores que no responden o demoran en soporte |
+| Comportamiento | Repite compra si la atención y el precio son consistentes |
+| Mensaje | Un solo proveedor tecnológico en la región con trato serio. |
 
-## Priorización en la web
+## Persona 3 — Cliente de inmediatez y confianza
 
-1. **Home hero:** balance gamer + profesional (no solo gaming).
-2. **Banner servicio:** visible — alto margen y confianza local.
-3. **Colecciones:** ordenar por volumen real cuando se valide en Shopify.
+| Atributo | Detalle |
+|----------|---------|
+| Prioridad | Alta |
+| Necesidad | Resolver ya: compra, cambio, reparación o asesoría por WhatsApp |
+| Dolor | Tiendas impersonales o que no cumplen lo prometido |
+| Comportamiento | Elige NANOTRONICS porque ya confía; pregunta poco y decide rápido |
+| Mensaje | Respuesta en minutos. Tienda física en el Parque Principal. |
+
+## Perfiles secundarios (no prioritarios en home)
+
+- Gamer 18–28: audiencia posible, no marcada como foco principal en cuestionario.
+- Estudiante: puede comprar accesorios y equipos de entrada.
+
+## Implicaciones en la web
+
+- Hero y beneficios: énfasis en **confianza, variedad y precio**, no solo gaming.
+- CTAs: WhatsApp con promesa real de **~5 min** en horario hábil.
+- Categorías home alineadas al catálogo real (belleza, audio, accesorios, cables, etc.).

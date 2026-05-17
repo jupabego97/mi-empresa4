@@ -2,51 +2,56 @@
 
 Responde por bloques. Copia las respuestas en los docs correspondientes.
 
+> **Fase 1:** integrada en `01-identidad.md`, `personas.md`, `voz-de-marca.md` y Theme Editor (mayo 2026).  
+> **Fase 2 y 3:** parcialmente integradas en `02-catalogo.md`, `03-operacion.md` y theme — completar lo que falte.
+
 ---
 
 ## Fase 1 — Identidad
 
 ### Origen
-1. ¿En qué año empezó NANOTRONICS? ___________
-2. ¿Cómo nació? (taller → tienda / redes → físico / otro) ___________
-3. ¿Quién fundó o lidera hoy? ___________
+1. ¿En qué año empezó NANOTRONICS? 2005___________
+2. ¿Cómo nació? (taller → tienda / redes → físico / otro) 
+nacio como tienda y servicio tecnico___________
+3. ¿Quién fundó o lidera hoy? fundo alpidio betancur, hoy lidera su hijo juan pablo betancur
 
 ### Local físico
-4. ¿Dirección exacta (calle, barrio, referencia)? ___________
-5. ¿Horario real de atención? ___________
-6. ¿Es taller + showroom, solo tienda, solo taller? ___________
+4. ¿Dirección exacta (calle, barrio, referencia)? CALLE 30 # 30-31 PARQUE PRINCIPAL EL CARMEN DE VIBORAL ANTIOQUIA ___________
+5. ¿Horario real de atención? 
+Lun - Sáb: 10am - 8pm | Dom: 10am - 7pm
+6. ¿Es taller + showroom, solo tienda, solo taller? ES MAS TIENDA QUE TALLER, PERO TAMBIEN ES TALLER___________
 
 ### Equipo
-7. ¿Cuántas personas trabajan? ___________
-8. ¿Nombres y roles para mostrar en web? (opcional) ___________
+7. ¿Cuántas personas trabajan? 5
+8. ¿Nombres y roles para mostrar en web? (opcional) por ahora no
 
 ### Cifras respaldables
 9. Clientes atendidos (aprox., rango): ___________
 10. Reparaciones por mes (aprox.): ___________
-11. Rating real (Google / redes): ___________
-12. Ciudad donde más venden: ___________
+11. Rating real (Google / redes): 4.3 en google
+12. Ciudad donde más venden: el carmen de viboral
 
 ### USP (3 diferenciadores concretos)
-13. ___________
-14. ___________
-15. ___________
+13. buen precio
+14. amplia variedad
+15. excelente atencion
 
 ### Personas (elige 3 perfiles prioritarios)
 - [ ] Gamer 18–28
 - [ ] Estudiante
-- [ ] Profesional / freelancer
-- [ ] PyME / oficina
-- [ ] Otro: ___________
+- [*] Profesional / freelancer
+- [*] PyME / oficina
+- [ ] Otro: __persona que busca la inmediatez y confia en nosotros_________
 
 ### Voz de marca (elige una línea)
 - [ ] Cercana, directa, antioqueña sin exagerar
-- [ ] Técnica y seria (Apple / enterprise)
+- [ *] Técnica y seria (Apple / enterprise)
 - [ ] Entusiasta gamer sin ser infantil
 
 ### Assets
-- [ ] Logo final en alta
-- [ ] Fotos local / equipo / taller
-- [ ] Fotos productos propias
+- [ *] Logo final en alta
+- [ *] Fotos local / equipo / taller
+- [ *] Fotos productos propias
 
 ---
 
@@ -65,6 +70,12 @@ Marca **E** = estrella, **S** = secundaria
 | Redes | | | |
 | Audio | | | |
 | Accesorios | | | |
+articulos de belleza
+parlantes
+diademas
+power bank
+accesorios
+cables
 
 ### Marcas con factura oficial (lista exacta)
 ___________
@@ -73,16 +84,16 @@ ___________
 
 | Servicio | Desde ($) | Tiempo | Garantía reparación |
 |----------|-----------|--------|---------------------|
-| Diagnóstico | | | |
-| Mantenimiento | | | |
-| Pasta térmica | | | |
+| Diagnóstico |0 | 30.000|1 dia|
+| Mantenimiento |30.000 |50.000 | |
+| Pasta térmica |25.000 | | |
 | Pantalla portátil | | | |
-| SSD + migración | | | |
+| SSD + migración |150000 |700000 | |
 | RAM | | | |
-| Limpieza profunda | | | |
+| Limpieza profunda | 50000|50000 | |
 | Recuperación datos | | | |
 | Armado PC | | | |
-| Windows + drivers | | | |
+| Windows + drivers | 40000|40000 | |
 | Consolas | | | |
 
 ---
@@ -101,20 +112,21 @@ ___________
 - [ ] Addi
 - [ ] PSE
 - [ ] Nequi / Daviplata
-- [ ] Efectivo tienda
-- [ ] Transferencia
-- Cuotas máximas reales: ___
+- [*] Efectivo tienda
+- [*] Transferencia
+- Cutas máximas reales: ___
+- mercadopago
 
 ### Políticas
-1. Garantía productos (texto legal corto): ___________
-2. Días para cambios/devoluciones: ___________
-3. Garantía sobre reparación (días): ___________
+1. Garantía productos (texto legal corto):minimo 3 meses
+2. Días para cambios/devoluciones:15__________
+3. Garantía sobre reparación (días):30__________
 
 ### WhatsApp
 1. Mensaje asesoría compra: ___________
 2. Mensaje servicio técnico: ___________
 3. Mensaje general (FAB): ___________
-4. Tiempo respuesta real en horario: ___ min
+4. Tiempo respuesta real en horario: __5 min
 
 ### SEO local (5 búsquedas que tus clientes usan)
 1. ___________

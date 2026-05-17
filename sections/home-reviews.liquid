@@ -10,8 +10,8 @@
             {% render 'icon', name: 'star', size: 16, class: 'text-warning fill-warning' %}
           {%- endfor -%}
         </div>
-        <span class="text-sm font-bold text-ink">4.9</span>
-        <span class="text-sm text-ink-muted">· basado en {{ section.settings.review_count | default: '500+' }} reseñas verificadas</span>
+        <span class="text-sm font-bold text-ink">4.3</span>
+        <span class="text-sm text-ink-muted">· calificación en Google</span>
       </div>
     </div>
     <div class="grid md:grid-cols-3 gap-6">
@@ -36,9 +36,9 @@
   "name": "Home — Reseñas",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Reseñas de clientes reales" },
-    { "type": "text", "id": "title", "label": "Título", "default": "Más de 500 clientes nos respaldan" },
-    { "type": "textarea", "id": "description", "label": "Descripción", "default": "Sin reseñas inventadas. Solo opiniones de personas que confiaron en nosotros y volvieron." },
-    { "type": "text", "id": "review_count", "label": "Total reseñas (visual)", "default": "500+" }
+    { "type": "text", "id": "title", "label": "Título", "default": "Lo que dicen en Google" },
+    { "type": "textarea", "id": "description", "label": "Descripción", "default": "4.3★ de calificación promedio. Confianza construida desde 2005 en el oriente antioqueño." },
+    { "type": "text", "id": "review_count", "label": "Total reseñas (visual)", "default": "" }
   ],
   "blocks": [
     {

@@ -29,7 +29,7 @@
         "type": "text",
         "id": "brand_tagline",
         "label": "Eslogan",
-        "default": "Tecnología que impulsa tu rendimiento"
+        "default": "Al son de la tecnología"
       }
     ]
   },
@@ -44,7 +44,7 @@
         "type": "text",
         "id": "brand_founded_year",
         "label": "Año de fundación",
-        "default": "2018",
+        "default": "2005",
         "info": "VALIDAR con el negocio"
       },
       {
@@ -213,13 +213,13 @@
         "type": "text",
         "id": "store_address",
         "label": "Dirección tienda física",
-        "default": "El Carmen de Viboral, Antioquia, Colombia"
+        "default": "Calle 30 # 30-31, Parque Principal, El Carmen de Viboral, Antioquia, Colombia"
       },
       {
         "type": "text",
         "id": "store_nit",
         "label": "NIT",
-        "default": "900.000.000-0"
+        "default": "1036402484"
       },
       {
         "type": "text",
@@ -231,7 +231,7 @@
         "type": "text",
         "id": "store_email",
         "label": "Email",
-        "default": "contacto@nanotronics.co"
+        "default": "contacto@nanotronics.com.co"
       }
     ]
   },
@@ -341,7 +341,7 @@
         "max": 30,
         "step": 1,
         "label": "Días para cambios / devoluciones",
-        "default": 5
+        "default": 15
       },
       {
         "type": "range",
@@ -356,7 +356,7 @@
         "type": "textarea",
         "id": "product_warranty_note",
         "label": "Texto garantía productos",
-        "default": "Garantía oficial del fabricante. NANOTRONICS te respalda con asesoría posventa y servicio técnico propio."
+        "default": "Garantía mínima de 3 meses en productos, según política de la marca y NANOTRONICS."
       },
       {
         "type": "textarea",
