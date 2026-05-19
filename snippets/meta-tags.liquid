@@ -6,6 +6,10 @@
   assign street = settings.store_street_address | default: settings.store_address
   assign geo_lat = settings.store_geo_lat | default: '6.0823'
   assign geo_lng = settings.store_geo_lng | default: '-75.3351'
+  assign schema_image = page_image
+  if schema_image == blank and settings.logo != blank
+    assign schema_image = settings.logo
+  endif
 -%}
 
 <meta charset="utf-8">
@@ -50,7 +54,11 @@
   "name": {{ shop.name | json }},
   "url": {{ shop.url | json }},
   "description": {{ page_description | json }},
-  "image": {{ shop.url | append: '/cdn/shop/files/logo.png' | json }},
+  {%- if schema_image != blank -%}
+  "image": {{ schema_image | image_url: width: 1200 | prepend: 'https:' | json }},
+  {%- else -%}
+  "image": {{ shop.url | json }},
+  {%- endif -%}
   "priceRange": "$$",
   "address": {
     "@type": "PostalAddress",

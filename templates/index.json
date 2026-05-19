@@ -5,7 +5,9 @@
       "settings": {
         "cta_primary_url": "/collections/all",
         "show_metrics": true,
-        "show_floating_card": true
+        "show_floating_card": true,
+        "floating_title": "Paga como prefieras",
+        "floating_subtitle": "Mercado Pago · Transferencia · Efectivo en tienda"
       }
     },
     "trust": {
@@ -35,16 +37,39 @@
       "type": "home-featured-collection",
       "settings": {
         "collection": "",
-        "products_to_show": 8
+        "products_to_show": 8,
+        "eyebrow": "Catálogo destacado",
+        "title": "Productos que más buscan",
+        "description": "Desde 2005 en El Carmen de Viboral. Asigna una colección en el Theme Editor para mostrar stock real."
       }
     },
     "promo": {
       "type": "home-promo",
-      "settings": {}
+      "settings": {
+        "show_countdown": false,
+        "label": "Promociones",
+        "heading": "Ofertas en tienda y online",
+        "text": "Accesorios, audio y tecnología con buen precio. Escríbenos por WhatsApp y te contamos qué hay en promoción.",
+        "cta": "Ver catálogo",
+        "cta_url": "/collections/all"
+      }
     },
     "benefits": {
       "type": "home-benefits",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Por qué NANOTRONICS",
+        "title": "Buen precio, variedad y atención",
+        "subtitle": "Desde 2005 en el Parque Principal. 4.3★ en Google. Tienda física y servicio técnico en un solo lugar."
+      },
+      "blocks": {
+        "bn1": { "type": "benefit", "settings": { "icon": "award", "title": "Buen precio", "text": "Relación costo-beneficio en la región" } },
+        "bn2": { "type": "benefit", "settings": { "icon": "package", "title": "Amplia variedad", "text": "Tecnología, accesorios, audio, belleza y más" } },
+        "bn3": { "type": "benefit", "settings": { "icon": "headset", "title": "Excelente atención", "text": "WhatsApp con respuesta en ~5 min" } },
+        "bn4": { "type": "benefit", "settings": { "icon": "map-pin", "title": "Parque Principal", "text": "Calle 30 # 30-31, El Carmen de Viboral" } },
+        "bn5": { "type": "benefit", "settings": { "icon": "shield-check", "title": "Garantía mín. 3 meses", "text": "En productos, según política" } },
+        "bn6": { "type": "benefit", "settings": { "icon": "tool", "title": "Servicio técnico", "text": "Taller en la misma tienda" } }
+      },
+      "block_order": ["bn1", "bn2", "bn3", "bn4", "bn5", "bn6"]
     },
     "brands": {
       "type": "home-brands",
@@ -77,11 +102,51 @@
     },
     "service": {
       "type": "home-service-banner",
-      "settings": {}
+      "settings": {
+        "label": "Servicio técnico en tienda",
+        "heading": "¿Tu equipo falló? Lo revisamos en el taller.",
+        "text": "Desde 2005 en el Parque Principal. Cotización antes de reparar y 30 días de garantía en mano de obra.",
+        "cta": "Solicitar servicio por WhatsApp"
+      }
     },
     "reviews": {
       "type": "home-reviews",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Confianza local",
+        "title": "Lo que dicen en Google",
+        "description": "4.3★ de calificación promedio. Confianza construida desde 2005 en el oriente antioqueño."
+      },
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "quote": "Buena atención y variedad de accesorios. Siempre encuentro lo que busco en el centro.",
+            "author": "Cliente verificado",
+            "location": "El Carmen de Viboral",
+            "rating": 5
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "quote": "Me arreglaron el portátil y me explicaron el problema antes de cobrar. Precio justo.",
+            "author": "Cliente verificado",
+            "location": "Rionegro, Antioquia",
+            "product": "Servicio técnico",
+            "rating": 4
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "quote": "Tienda de confianza en Viboral. Responden rápido por WhatsApp.",
+            "author": "Cliente verificado",
+            "location": "La Ceja, Antioquia",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": ["r1", "r2", "r3"]
     }
   },
   "order": [

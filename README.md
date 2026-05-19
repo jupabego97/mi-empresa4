@@ -8,7 +8,7 @@ Stack: **Shopify Online Store 2.0** · **Liquid** · **Tailwind CSS v4** · **Al
 
 Documentación de identidad, catálogo y operación en [`docs/`](docs/README.md). Los valores editables del negocio viven en **Theme Editor** → secciones *Identidad de marca*, *Métricas de confianza* y *Operación*.
 
-Rama de trabajo: `brand-precision`.
+Rama principal: `main` (incluye brand precision: docs + settings + theme).
 
 ## Identidad
 
@@ -38,7 +38,7 @@ Rama de trabajo: `brand-precision`.
 
 - Galería con zoom, navegación, thumbs, eager + priority
 - Vendor / brand · rating · reseñas · badges múltiples
-- Precio grande con descuento %, cuotas y método sin tarjeta (Addi)
+- Precio grande con descuento % y medios de pago reales (Mercado Pago, transferencia, efectivo)
 - Stock real con dot · key-specs grid (procesador, RAM, etc.)
 - Form con variantes radio · cantidad · 3 CTAs (Add / Buy now / WhatsApp)
 - Trust grid (envío, garantía, pagos, devoluciones) + payment icons

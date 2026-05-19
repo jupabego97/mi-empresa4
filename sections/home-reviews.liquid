@@ -5,13 +5,14 @@
       <h2 class="nt-section-title text-center mb-2">{{ section.settings.title }}</h2>
       <p class="text-ink-muted">{{ section.settings.description }}</p>
       <div class="inline-flex items-center gap-2 mt-4">
-        <div class="flex items-center gap-0.5">
-          {%- for i in (1..5) -%}
+        <span class="inline-flex items-center gap-0.5" aria-hidden="true">
+          {%- for i in (1..4) -%}
             {% render 'icon', name: 'star', size: 16, class: 'text-warning fill-warning' %}
           {%- endfor -%}
-        </div>
-        <span class="text-sm font-bold text-ink">4.3</span>
-        <span class="text-sm text-ink-muted">· calificación en Google</span>
+          {% render 'icon', name: 'star', size: 16, class: 'text-warning/35' %}
+        </span>
+        <span class="text-sm font-bold text-ink">{{ settings.metric_rating_value | default: '4.3★' }}</span>
+        <a href="https://www.google.com/maps/search/?api=1&query=NANOTRONICS+El+Carmen+de+Viboral" target="_blank" rel="noopener" class="text-sm text-brand-royal hover:underline">Google Maps</a>
       </div>
     </div>
     <div class="grid md:grid-cols-3 gap-6">
@@ -58,9 +59,9 @@
     {
       "name": "Home — Reseñas",
       "blocks": [
-        { "type": "review", "settings": { "quote": "Necesitaba un portátil para diseño y me asesoraron sin venderme el más caro. Llegó a Medellín en 2 días con todo configurado. La diferencia se nota.", "author": "Carlos M.", "location": "La Ceja, Antioquia", "product": "Laptop ASUS VivoBook Pro" } },
-        { "type": "review", "settings": { "quote": "Mi PC gamer dejó de prender. En 24 horas la tenían lista, con foto del problema y todo. Los precios son justos y los técnicos sí saben.", "author": "Andrea L.", "location": "El Carmen de Viboral", "product": "Servicio técnico" } },
-        { "type": "review", "settings": { "quote": "Comparé con cinco tiendas y NANOTRONICS tenía el mejor precio. Factura legal, garantía y el monitor llegó perfecto a Medellín. 10/10 vuelvo a comprar.", "author": "Jhon P.", "location": "Medellín, Antioquia", "product": "Monitor LG UltraGear 27\"" } }
+        { "type": "review", "settings": { "quote": "Buena atención y variedad de accesorios. Siempre encuentro lo que busco en el centro.", "author": "Cliente verificado", "location": "El Carmen de Viboral", "rating": 5 } },
+        { "type": "review", "settings": { "quote": "Me arreglaron el portátil y me explicaron el problema antes de cobrar. Precio justo.", "author": "Cliente verificado", "location": "Rionegro, Antioquia", "product": "Servicio técnico", "rating": 4 } },
+        { "type": "review", "settings": { "quote": "Tienda de confianza en Viboral. Responden rápido por WhatsApp.", "author": "Cliente verificado", "location": "La Ceja, Antioquia", "rating": 5 } }
       ]
     }
   ]

@@ -11,7 +11,8 @@
 | Garantía reparación | 30 días | CONFIRMADO |
 | Respuesta WhatsApp | ~5 min (horario tienda) | CONFIRMADO |
 | Pagos | Efectivo en tienda, transferencia, Mercado Pago | CONFIRMADO |
-| Envío gratis umbral | $200.000 (theme) | VALIDAR con negocio |
+| Envío gratis umbral | $200.000 (theme) | VALIDAR con negocio antes de campañas |
+| Textos envío en theme | Medellín 1-2 días · Nacional 2-5 días | VALIDAR (configurados en settings) |
 | Transportadoras | — | PENDIENTE |
 
 ## Horarios tienda

@@ -36,9 +36,8 @@
   {%- if show_installments != blank -%}
     <span class="nt-price__installments">{{ show_installments }}</span>
   {%- elsif current_price > 0 -%}
-    {%- assign installment_amount = current_price | divided_by: 12 -%}
-    <span class="nt-price__installments">
-      o 12 cuotas de <strong class="text-ink">{{ installment_amount | money }}</strong>
+    <span class="nt-price__installments text-ink-muted">
+      Cuotas según Mercado Pago en checkout
     </span>
   {%- endif -%}
 </div>

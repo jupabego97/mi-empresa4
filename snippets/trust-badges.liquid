@@ -1,6 +1,6 @@
 {%- liquid
   assign returns_days = settings.returns_days | default: 5
-  assign warranty_note = settings.product_warranty_note | default: 'Garantía oficial del fabricante. NANOTRONICS te respalda con posventa real.'
+  assign warranty_note = settings.product_warranty_note | default: 'Garantía mínima de 3 meses en productos, según política de la marca y NANOTRONICS.'
   assign shipping_national = settings.shipping_national | default: '2-5 días hábiles'
   assign cutoff = settings.shipping_cutoff_time | default: '3:00 pm'
 -%}
@@ -8,14 +8,14 @@
   <div class="nt-trust-item">
     <span class="nt-trust-item__icon">{% render 'icon', name: 'truck', size: 18 %}</span>
     <span>
-      <span class="nt-trust-item__title">Despacho hoy mismo</span>
-      <span class="nt-trust-item__desc">Antes de las {{ cutoff }} · {{ shipping_national }} en Colombia</span>
+      <span class="nt-trust-item__title">Envío a Colombia</span>
+      <span class="nt-trust-item__desc">{{ shipping_national }} · Medellín {{ settings.shipping_medellin | default: '1-2 días' }}</span>
     </span>
   </div>
   <div class="nt-trust-item">
     <span class="nt-trust-item__icon">{% render 'icon', name: 'shield-check', size: 18 %}</span>
     <span>
-      <span class="nt-trust-item__title">Garantía oficial</span>
+      <span class="nt-trust-item__title">Garantía respaldada</span>
       <span class="nt-trust-item__desc">{{ warranty_note | truncate: 90 }}</span>
     </span>
   </div>

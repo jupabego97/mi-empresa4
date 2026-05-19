@@ -16,7 +16,7 @@
   assign shipping_cutoff = settings.shipping_cutoff_time | default: '3:00 pm'
   assign shipping_national = settings.shipping_national | default: '2-5 días hábiles'
   assign shipping_medellin = settings.shipping_medellin | default: '1-2 días hábiles'
-  assign product_warranty = settings.product_warranty_note | default: 'Garantía oficial del fabricante con respaldo NANOTRONICS.'
+  assign product_warranty = settings.product_warranty_note | default: 'Garantía mínima de 3 meses en productos, según política de la marca y NANOTRONICS.'
   assign returns_days = settings.returns_days | default: 5
 -%}
 
@@ -39,18 +39,21 @@
         </h1>
 
         <div class="flex items-center gap-3 flex-wrap">
-          <div class="flex items-center gap-1">
-            {%- for i in (1..5) -%}
-              {% render 'icon', name: 'star', size: 14, class: 'text-warning fill-warning' %}
-            {%- endfor -%}
-            <span class="text-sm font-medium text-ink ml-1">5.0</span>
-          </div>
-          <span class="text-sm text-ink-muted">({{ section.settings.review_count | default: '124' }} reseñas verificadas)</span>
-          <span class="text-sm text-ink-muted">·</span>
-          <span class="text-sm font-medium text-success inline-flex items-center gap-1">
-            {% render 'icon', name: 'check-circle', size: 14 %}
-            Producto verificado
-          </span>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=NANOTRONICS+El+Carmen+de+Viboral"
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-1.5 text-sm hover:text-brand-royal transition-colors"
+          >
+            <span class="inline-flex items-center gap-0.5" aria-hidden="true">
+              {%- for i in (1..4) -%}
+                {% render 'icon', name: 'star', size: 14, class: 'text-warning fill-warning' %}
+              {%- endfor -%}
+              {% render 'icon', name: 'star', size: 14, class: 'text-warning/35' %}
+            </span>
+            <span class="font-medium text-ink">{{ settings.metric_rating_value | default: '4.3★' }}</span>
+            <span class="text-ink-muted">en Google · tienda física</span>
+          </a>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
@@ -60,7 +63,7 @@
           {%- if free_shipping -%}
             {% render 'badge', variant: 'envio-gratis' %}
           {%- endif -%}
-          {% render 'badge', variant: 'garantia', label: 'Garantía oficial' %}
+          {% render 'badge', variant: 'garantia', label: 'Garantía respaldada' %}
           {%- if product.tags contains 'top' -%}
             {% render 'badge', variant: 'top', label: '★ Top ventas' %}
           {%- endif -%}
@@ -70,14 +73,14 @@
           {% render 'price', product: product, size: 'lg' %}
           <p class="text-xs text-ink-muted mt-1 inline-flex items-center gap-1">
             {% render 'icon', name: 'credit-card', size: 12 %}
-            Paga sin tarjeta con Addi · o hasta 36 cuotas
+            Mercado Pago · Transferencia · Efectivo en tienda
           </p>
         </div>
 
         <p class="text-sm font-semibold inline-flex items-center gap-2 {% if product.available %}text-success{% else %}text-danger{% endif %}">
           <span class="w-2 h-2 rounded-full {% if product.available %}bg-success{% else %}bg-danger{% endif %}"></span>
           {%- if product.available -%}
-            En stock · despachamos hoy si compras antes de las {{ settings.shipping_cutoff_time | default: '3:00 pm' }}
+            En stock · despacho según disponibilidad (consulta tiempos en checkout)
           {%- else -%}
             Agotado por ahora · pregúntanos cuándo vuelve
           {%- endif -%}
@@ -125,7 +128,7 @@
             {%- if product.description != blank -%}
               {{ product.description }}
             {%- else -%}
-              <p>Producto seleccionado por nuestro equipo técnico. Garantía oficial, factura legal y soporte posventa real desde NANOTRONICS.</p>
+              <p>Producto con respaldo NANOTRONICS. Factura cuando aplica y soporte por WhatsApp en horario de tienda.</p>
             {%- endif -%}
           </div>
         </div>
@@ -213,7 +216,7 @@
             </div>
             <div>
               <p class="font-semibold text-ink mb-1">¿Puedo pagar a cuotas?</p>
-              <p>Claro. Hasta 36 cuotas con Addi (sin tarjeta de crédito), o cuotas con tu Visa o Mastercard. También aceptamos PSE, Nequi y Daviplata.</p>
+              <p>Mercado Pago en la tienda online, transferencia bancaria y efectivo en nuestra tienda del Parque Principal. Las cuotas dependen del medio que elijas en checkout.</p>
             </div>
             <div>
               <p class="font-semibold text-ink mb-1">¿Puedo recoger en tienda?</p>
@@ -221,7 +224,7 @@
             </div>
             <div>
               <p class="font-semibold text-ink mb-1">¿Es producto nuevo y original?</p>
-              <p>Siempre. Trabajamos solo con marcas oficiales y distribuidores autorizados. Te entregamos factura legal y caja sellada cuando aplica.</p>
+              <p>Productos nuevos con factura cuando aplica. Trabajamos con marcas de nuestro catálogo oficial; si tienes dudas sobre un modelo, escríbenos antes de comprar.</p>
             </div>
           </div>
         </div>
@@ -235,12 +238,12 @@
           >
             <span class="text-base lg:text-lg font-semibold text-ink inline-flex items-center gap-2">
               {% render 'icon', name: 'star', size: 18, class: 'text-warning fill-warning' %}
-              Reseñas verificadas
+              Reseñas y opiniones
             </span>
             <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
           </button>
           <div class="nt-accordion__content" x-show="open === 5" x-collapse x-cloak>
-            <p class="text-ink-muted mb-3">Las reseñas se sincronizan desde la app de reviews instalada (Judge.me / Loox / Stamped). Pronto verás aquí los testimonios reales de clientes verificados.</p>
+            <p class="text-ink-muted mb-3">Nuestra calificación en Google es {{ settings.metric_rating_value | default: '4.3★' }}. Para opiniones sobre este producto, consúltanos por WhatsApp o revisa nuestra ficha en Google Maps.</p>
             <a href="{{ wa_product_url }}" target="_blank" rel="noopener" class="text-brand-royal text-sm font-medium hover:underline inline-flex items-center gap-1">
               ¿Tienes una pregunta? Escríbenos {% render 'icon', name: 'arrow-right', size: 12 %}
             </a>
@@ -286,7 +289,7 @@
             Recoge en tienda
           </p>
           <p class="text-xs text-white/75">{{ settings.store_address }}</p>
-          <p class="text-xs text-white/75">Lun a Sáb · 9 am - 7 pm</p>
+          <p class="text-xs text-white/75">{{ settings.store_hours }}</p>
           <p class="text-xs text-white/55">Sin costo · te avisamos por WhatsApp</p>
         </div>
       </aside>
@@ -343,8 +346,7 @@
   "settings": [
     { "type": "checkbox", "id": "show_key_specs", "label": "Mostrar specs destacadas", "default": true },
     { "type": "richtext", "id": "specs", "label": "Especificaciones (HTML)", "default": "<p>Configura los metafields specs.processor / specs.ram / specs.storage / specs.gpu / specs.display / specs.os para mostrar las especificaciones en formato tabla.</p>" },
-    { "type": "url", "id": "video_url", "label": "URL embed video (YouTube/Vimeo)" },
-    { "type": "text", "id": "review_count", "label": "Cantidad de reseñas (visual)", "default": "124" }
+    { "type": "url", "id": "video_url", "label": "URL embed video (YouTube/Vimeo)" }
   ],
   "blocks": [
     {

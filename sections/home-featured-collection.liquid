@@ -25,14 +25,14 @@
           {% render 'product-card', product: product %}
         {%- endfor -%}
       {%- else -%}
-        {% render 'product-card', demo: true, title: 'Laptop ASUS VivoBook 15 OLED · i7 16GB 512GB', price: 299900000, compare_at: 359900000, badge: 'oferta', brand: 'ASUS', reviews: 47 %}
-        {% render 'product-card', demo: true, title: 'PC Gamer Ryzen 7 + RTX 4060 16GB SSD 1TB', price: 459900000, badge: 'nuevo', brand: 'NANOTRONICS', reviews: 23 %}
-        {% render 'product-card', demo: true, title: 'Monitor LG UltraGear 27" 144Hz 1ms IPS', price: 89900000, compare_at: 110000000, badge: 'oferta', brand: 'LG', reviews: 86 %}
-        {% render 'product-card', demo: true, title: 'Teclado mecánico HyperX Alloy Origins RGB', price: 18990000, badge: 'stock-bajo', brand: 'HYPERX', low_stock: true, reviews: 124 %}
-        {% render 'product-card', demo: true, title: 'Mouse Logitech G502 Hero · 25K DPI', price: 22990000, brand: 'LOGITECH', reviews: 312 %}
-        {% render 'product-card', demo: true, title: 'SSD NVMe Kingston KC3000 1TB · 7000 MB/s', price: 35990000, compare_at: 45990000, badge: 'oferta', brand: 'KINGSTON', reviews: 198 %}
-        {% render 'product-card', demo: true, title: 'Audífonos HyperX Cloud II Wireless', price: 32990000, brand: 'HYPERX', reviews: 256 %}
-        {% render 'product-card', demo: true, title: 'Router TP-Link Archer AX55 WiFi 6 AX3000', price: 33990000, brand: 'TP-LINK', reviews: 67 %}
+        {% render 'product-card', demo: true, title: 'Parlante JBL Flip 6 · Bluetooth', price: 38990000, compare_at: 44990000, badge: 'oferta', brand: 'JBL' %}
+        {% render 'product-card', demo: true, title: 'Portátil ASUS VivoBook 15 · Ryzen 5 16GB', price: 249900000, badge: 'nuevo', brand: 'ASUS' %}
+        {% render 'product-card', demo: true, title: 'Monitor Samsung 24" Full HD', price: 59900000, compare_at: 69900000, badge: 'oferta', brand: 'Samsung' %}
+        {% render 'product-card', demo: true, title: 'Teclado Logitech K380 Multi-Device', price: 12990000, brand: 'Logitech' %}
+        {% render 'product-card', demo: true, title: 'Mouse Logitech M350 Pebble', price: 8990000, brand: 'Logitech' %}
+        {% render 'product-card', demo: true, title: 'SSD Kingston NV2 500GB NVMe', price: 15990000, compare_at: 18990000, badge: 'oferta', brand: 'Kingston' %}
+        {% render 'product-card', demo: true, title: 'Power bank ADATA 10000mAh', price: 4990000, brand: 'ADATA' %}
+        {% render 'product-card', demo: true, title: 'Router Tenda WiFi 6 AX2', price: 19990000, brand: 'Tenda' %}
         <p class="col-span-full text-sm text-ink-muted text-center py-2">
           {{ 'home.select_collection' | t }}
         </p>
@@ -47,7 +47,7 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Top esta semana" },
     { "type": "text", "id": "title", "label": "Título", "default": "Lo que más están comprando" },
-    { "type": "textarea", "id": "description", "label": "Descripción", "default": "Equipos validados por más de 5.000 clientes. Stock real, garantía oficial y despacho en 24 horas." },
+    { "type": "textarea", "id": "description", "label": "Descripción", "default": "Desde 2005 en El Carmen de Viboral. Stock real, garantía mínima de 3 meses y asesoría por WhatsApp." },
     { "type": "collection", "id": "collection", "label": "Colección" },
     { "type": "range", "id": "products_to_show", "min": 4, "max": 12, "step": 2, "default": 8, "label": "Productos a mostrar" }
   ],

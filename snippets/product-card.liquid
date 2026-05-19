@@ -35,9 +35,10 @@
     assign card_installments = ''
   endif
 
-  comment Free shipping threshold (200K COP = 20000000 cents) endcomment
+  assign threshold_cop = settings.free_shipping_threshold | default: 200000
+  assign threshold_cents = threshold_cop | times: 100
   assign free_shipping = false
-  if card_price >= 20000000
+  if card_price >= threshold_cents
     assign free_shipping = true
   endif
 
@@ -112,18 +113,16 @@
       {{ card_title }}
     </a>
 
-    <div class="nt-product-card__rating">
-      <span class="inline-flex items-center gap-0.5">
-        {%- for i in (1..5) -%}
-          {% render 'icon', name: 'star', size: 12, class: 'text-warning fill-warning' %}
-        {%- endfor -%}
-      </span>
-      {%- if card_reviews > 0 -%}
+    {%- if card_reviews > 0 -%}
+      <div class="nt-product-card__rating">
+        <span class="inline-flex items-center gap-0.5">
+          {%- for i in (1..5) -%}
+            {% render 'icon', name: 'star', size: 12, class: 'text-warning fill-warning' %}
+          {%- endfor -%}
+        </span>
         <span>({{ card_reviews }})</span>
-      {%- else -%}
-        <span>({{ card_rating }})</span>
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
 
     {% render 'price', price: card_price, compare_at: card_compare, installments: card_installments %}
 
