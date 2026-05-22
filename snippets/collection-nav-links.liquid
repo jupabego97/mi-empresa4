@@ -1,0 +1,31 @@
+{%- comment -%}
+  Colecciones por handle (settings.nav_collection_handles).
+  Liquid no itera `collections`; solo `collections[handle]`.
+{%- endcomment -%}
+{%- liquid
+  assign handles_source = settings.nav_collection_handles | default: ''
+  if handles_source == blank
+    assign handles_source = 'catalogo-destacado|accesorios|cables|power-bank|parlantes|diademas|belleza'
+    assign handles_lines = handles_source | split: '|'
+  else
+    assign handles_lines = handles_source | newline_to_br | split: '<br />'
+  endif
+  assign link_class = link_class | default: 'nt-megamenu__link'
+-%}
+{%- for line in handles_lines -%}
+  {%- assign handle = line | strip -%}
+  {%- if handle != blank and handle != 'frontpage' -%}
+    {%- assign col = collections[handle] -%}
+    {%- if col != blank -%}
+      <a href="{{ col.url }}" class="{{ link_class }}">
+        {%- if show_icon -%}
+          {% render 'icon', name: 'arrow-right', size: 14, class: 'opacity-60' %}
+        {%- endif -%}
+        <span>{{ col.title }}</span>
+        {%- if show_count -%}
+          <span class="ml-auto text-xs text-ink-subtle">{{ col.products_count }}</span>
+        {%- endif -%}
+      </a>
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
