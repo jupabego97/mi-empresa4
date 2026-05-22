@@ -9,95 +9,18 @@
  */
 {
   "sections": {
-    "page_servicio_tecnico_8GYi8W": {
-      "type": "page-servicio-tecnico",
-      "blocks": {
-        "service_NmjzNR": {
-          "type": "service",
-          "settings": {
-            "icon": "tool",
-            "title": "Reparación de hardware",
-            "text": "Tarjeta madre, fuente, pantalla, teclado, batería.",
-            "price_from": "Consultar",
-            "turnaround": "24-72 h",
-            "warranty_note": "30 días garantía"
-          }
-        },
-        "service_ifyUUK": {
-          "type": "service",
-          "settings": {
-            "icon": "shield-check",
-            "title": "Mantenimiento preventivo",
-            "text": "Limpieza interna y pasta térmica nueva.",
-            "price_from": "Consultar",
-            "turnaround": "24-48 h",
-            "warranty_note": "30 días garantía"
-          }
-        },
-        "service_rYntyP": {
-          "type": "service",
-          "settings": {
-            "icon": "zap",
-            "title": "Upgrades de poder",
-            "text": "Más RAM, SSD o GPU. Sin perder archivos.",
-            "price_from": "Consultar",
-            "turnaround": "24 h",
-            "warranty_note": "30 días garantía"
-          }
-        },
-        "service_HenU8G": {
-          "type": "service",
-          "settings": {
-            "icon": "package",
-            "title": "Migración a SSD",
-            "text": "Windows y programas migrados sin reinstalar.",
-            "price_from": "Consultar",
-            "turnaround": "24 h",
-            "warranty_note": "30 días garantía"
-          }
-        },
-        "service_HnaPXg": {
-          "type": "service",
-          "settings": {
-            "icon": "gamepad",
-            "title": "Armados gamer",
-            "text": "Drivers, RGB y benchmarks incluidos.",
-            "price_from": "Consultar",
-            "turnaround": "48 h",
-            "warranty_note": "30 días garantía"
-          }
-        },
-        "service_ihNMXV": {
-          "type": "service",
-          "settings": {
-            "icon": "monitor",
-            "title": "Recuperación de datos",
-            "text": "Disco dañado o formato accidental.",
-            "price_from": "Cotización previa",
-            "turnaround": "Según caso",
-            "warranty_note": "Presupuesto sin compromiso"
-          }
-        }
-      },
-      "block_order": [
-        "service_NmjzNR",
-        "service_ifyUUK",
-        "service_rYntyP",
-        "service_HenU8G",
-        "service_HnaPXg",
-        "service_ihNMXV"
-      ],
-      "name": "Servicio técnico",
+    "page_nosotros_yTzWwe": {
+      "type": "page-nosotros",
+      "name": "Nosotros",
       "settings": {
-        "heading": "Reparamos lo que otros desisten",
-        "intro": "Diagnóstico gratuito, repuestos originales y garantía sobre la reparación. Atendemos computadores, portátiles, monitores y consolas — cualquier marca, cualquier modelo.",
-        "process_steps": "Nos traes tu equipo o lo recogemos\nDiagnóstico gratuito · sin compromiso\nCotización clara · tú decides si avanzamos\nReparamos con repuestos originales\nPruebas de calidad y entrega con garantía",
-        "turnaround": "Entre 24 y 72 horas según el caso. Te avisamos siempre por WhatsApp.",
-        "cta": "Pedir diagnóstico gratis"
+        "heading": "Desde 2005 en el Parque Principal",
+        "story": "<p>NANOTRONICS nació en 2005 como tienda y servicio técnico en El Carmen de Viboral. Alpidio Betancur fundó un negocio para acercar la tecnología al oriente antioqueño; hoy Juan Pablo Betancur continúa esa visión.</p><p>Somos principalmente tienda — con amplia variedad en accesorios, audio, belleza, cables y tecnología — y mantenemos taller para cuando tu equipo necesita reparación o mantenimiento.</p><p>Nos distinguen el buen precio, la variedad y una atención que genera confianza. Por eso muchos clientes nos eligen por la inmediatez: saben que respondemos.</p>",
+        "mission": "Acercar tecnología y soluciones confiables al oriente antioqueño, con precios justos, variedad real y un servicio que responde cuando lo necesitas.",
+        "values": "Precio justo y transparente\nVariedad para resolver en un solo lugar\nAtención rápida y humana\nCompromiso con El Carmen de Viboral\nServicio técnico cuando el equipo falla\nConfianza desde 2005"
       }
     }
   },
   "order": [
-    "page_servicio_tecnico_8GYi8W"
+    "page_nosotros_yTzWwe"
   ]
 }
