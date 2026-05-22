@@ -17,7 +17,7 @@
     <div class="relative overflow-hidden rounded-2xl bg-brand-deep text-white p-6 md:p-12 mb-12">
       <div class="absolute inset-0 nt-tech-grid opacity-25 pointer-events-none"></div>
       <div class="relative z-10 max-w-3xl">
-        <p class="nt-eyebrow !text-brand-glow mb-2">Nuestra historia</p>
+        <p class="nt-eyebrow !text-brand-glow mb-2">{{ settings.brand_tagline | default: 'Al son de la tecnología' }}</p>
         <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight mb-5">
           {{ section.settings.heading | default: page.title }}
         </h1>
@@ -92,13 +92,36 @@
       </div>
     </div>
 
+    <div class="grid md:grid-cols-3 gap-4 mb-16">
+      <div class="nt-card p-6 text-center">
+        <span class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-brand-sky text-brand-royal mx-auto mb-3">
+          {% render 'icon', name: 'tag', size: 22 %}
+        </span>
+        <p class="font-bold text-ink mb-1">{{ settings.brand_usp_1 | default: 'Buen precio' }}</p>
+        <p class="text-sm text-ink-muted">Relación costo-beneficio competitiva en la región.</p>
+      </div>
+      <div class="nt-card p-6 text-center">
+        <span class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-brand-sky text-brand-royal mx-auto mb-3">
+          {% render 'icon', name: 'package', size: 22 %}
+        </span>
+        <p class="font-bold text-ink mb-1">{{ settings.brand_usp_2 | default: 'Amplia variedad' }}</p>
+        <p class="text-sm text-ink-muted">Tecnología, accesorios, audio, belleza y cables en un solo lugar.</p>
+      </div>
+      <div class="nt-card p-6 text-center">
+        <span class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-brand-sky text-brand-royal mx-auto mb-3">
+          {% render 'icon', name: 'headset', size: 22 %}
+        </span>
+        <p class="font-bold text-ink mb-1">{{ settings.brand_usp_3 | default: 'Excelente atención' }}</p>
+        <p class="text-sm text-ink-muted">WhatsApp con respuesta en ~5 min en horario de tienda.</p>
+      </div>
+    </div>
+
     {%- if section.blocks.size > 0 -%}
       <div class="text-center mb-10">
-        <p class="nt-eyebrow mb-2">Detrás de cada compra</p>
-        <h2 class="nt-section-title text-center">El equipo que te atiende</h2>
-        <p class="text-ink-muted text-sm max-w-xl mx-auto mt-2">Personas reales que aman la tecnología y disfrutan ayudándote a encontrar el equipo correcto.</p>
+        <p class="nt-eyebrow mb-2">Nuestro equipo</p>
+        <h2 class="nt-section-title text-center">Quienes te atienden</h2>
       </div>
-      <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
         {%- for block in section.blocks -%}
           <div class="text-center p-6 rounded-xl border border-line bg-surface" {{ block.shopify_attributes }}>
             {%- if block.settings.photo != blank -%}
@@ -116,7 +139,32 @@
           </div>
         {%- endfor -%}
       </div>
+    {%- else -%}
+      <div class="nt-card p-6 md:p-8 text-center max-w-2xl mx-auto mb-16">
+        <p class="nt-eyebrow mb-2">Equipo</p>
+        <h2 class="text-xl font-bold text-ink mb-2">5 personas, una sola tienda</h2>
+        <p class="text-sm text-ink-muted leading-relaxed">
+          Somos un equipo pequeño y cercano en el Parque Principal. Cuando nos escribes o visitas la tienda, te atiende gente real — no un call center.
+        </p>
+      </div>
     {%- endif -%}
+
+    <div class="relative overflow-hidden rounded-2xl bg-brand-deep text-white p-6 md:p-10 text-center">
+      <div class="absolute inset-0 nt-tech-grid opacity-20 pointer-events-none"></div>
+      <div class="relative z-10 max-w-xl mx-auto space-y-4">
+        <h2 class="text-2xl font-bold">¿Listo para visitarnos o escribirnos?</h2>
+        <p class="text-white/75 text-sm">Horario: {{ settings.store_hours }}</p>
+        {%- liquid
+          assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+          assign wa_text = settings.whatsapp_message | url_encode
+          assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+        -%}
+        <div class="flex flex-wrap justify-center gap-3">
+          {% render 'btn', variant: 'whatsapp', size: 'lg', label: 'WhatsApp', icon: 'whatsapp', href: wa_url, target: '_blank' %}
+          {% render 'btn', variant: 'secondary', size: 'lg', label: 'Ver catálogo', href: '/collections/all', class: '!bg-white/10 !text-white !border-white/20' %}
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 

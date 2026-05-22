@@ -1,0 +1,160 @@
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_text = settings.whatsapp_message | url_encode
+  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+  assign returns_days = settings.returns_days | default: 15
+  assign repair_days = settings.repair_warranty_days | default: 30
+  assign threshold = settings.free_shipping_threshold | default: 200000
+  assign threshold_cents = threshold | times: 100
+-%}
+
+{% render 'breadcrumbs' %}
+
+<section class="nt-section pt-0">
+  <div class="nt-container">
+    <div class="max-w-3xl mb-10">
+      <p class="nt-eyebrow mb-2">{{ section.settings.eyebrow | default: 'Centro de ayuda' }}</p>
+      <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight text-ink mb-4">
+        {{ section.settings.heading | default: page.title }}
+      </h1>
+      <p class="text-lg text-ink-muted">{{ section.settings.intro }}</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+      <a href="{{ wa_url }}" target="_blank" rel="noopener" class="nt-card p-5 hover:border-brand-royal transition-colors group">
+        <span class="flex items-center justify-center w-11 h-11 rounded-lg bg-[#25D366]/10 text-[#25D366] mb-3">
+          {% render 'icon', name: 'whatsapp', size: 22 %}
+        </span>
+        <p class="font-semibold text-ink mb-1">WhatsApp</p>
+        <p class="text-sm text-ink-muted">Respuesta en ~5 min (horario tienda)</p>
+        <span class="text-xs text-brand-royal font-medium mt-2 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+          Escribir {% render 'icon', name: 'arrow-right', size: 12 %}
+        </span>
+      </a>
+      <a href="/pages/servicio-tecnico" class="nt-card p-5 hover:border-brand-royal transition-colors group">
+        <span class="flex items-center justify-center w-11 h-11 rounded-lg bg-brand-sky text-brand-royal mb-3">
+          {% render 'icon', name: 'tool', size: 22 %}
+        </span>
+        <p class="font-semibold text-ink mb-1">Servicio técnico</p>
+        <p class="text-sm text-ink-muted">Reparación y mantenimiento en tienda</p>
+        <span class="text-xs text-brand-royal font-medium mt-2 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+          Ver servicios {% render 'icon', name: 'arrow-right', size: 12 %}
+        </span>
+      </a>
+      <a href="/pages/contacto" class="nt-card p-5 hover:border-brand-royal transition-colors group">
+        <span class="flex items-center justify-center w-11 h-11 rounded-lg bg-brand-sky text-brand-royal mb-3">
+          {% render 'icon', name: 'mail', size: 22 %}
+        </span>
+        <p class="font-semibold text-ink mb-1">Contacto</p>
+        <p class="text-sm text-ink-muted">Formulario, teléfono y correo</p>
+        <span class="text-xs text-brand-royal font-medium mt-2 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+          Ir a contacto {% render 'icon', name: 'arrow-right', size: 12 %}
+        </span>
+      </a>
+      <a href="/pages/nosotros" class="nt-card p-5 hover:border-brand-royal transition-colors group">
+        <span class="flex items-center justify-center w-11 h-11 rounded-lg bg-brand-sky text-brand-royal mb-3">
+          {% render 'icon', name: 'map-pin', size: 22 %}
+        </span>
+        <p class="font-semibold text-ink mb-1">Tienda física</p>
+        <p class="text-sm text-ink-muted">{{ settings.store_street_address }}</p>
+        <span class="text-xs text-brand-royal font-medium mt-2 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+          Conócenos {% render 'icon', name: 'arrow-right', size: 12 %}
+        </span>
+      </a>
+    </div>
+
+    <div class="grid lg:grid-cols-[1fr_320px] gap-10 items-start">
+      <div class="space-y-0 border border-line rounded-xl overflow-hidden bg-surface divide-y divide-line">
+        <div class="p-5 md:p-6 border-b border-line bg-surface-2">
+          <h2 class="text-xl font-bold text-ink">{{ section.settings.faq_title | default: 'Preguntas frecuentes' }}</h2>
+          <p class="text-sm text-ink-muted mt-1">{{ section.settings.faq_subtitle }}</p>
+        </div>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq' -%}
+            <details class="group px-5 md:px-6 py-4" {{ block.shopify_attributes }}>
+              <summary class="flex items-center justify-between gap-4 cursor-pointer list-none font-semibold text-ink marker:content-none">
+                <span>{{ block.settings.question }}</span>
+                <span class="shrink-0 text-ink-muted group-open:rotate-180 transition-transform">
+                  {% render 'icon', name: 'chevron-down', size: 18 %}
+                </span>
+              </summary>
+              <div class="rte text-sm text-ink-muted mt-3 leading-relaxed pb-1">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <aside class="space-y-4 lg:sticky lg:top-28">
+        <div class="nt-card p-5 space-y-3">
+          <p class="font-semibold text-ink">Políticas rápidas</p>
+          <ul class="text-sm text-ink-muted space-y-2">
+            <li class="flex gap-2">
+              {% render 'icon', name: 'shield-check', size: 16, class: 'text-brand-royal shrink-0 mt-0.5' %}
+              <span>{{ settings.product_warranty_note }}</span>
+            </li>
+            <li class="flex gap-2">
+              {% render 'icon', name: 'rotate', size: 16, class: 'text-brand-royal shrink-0 mt-0.5' %}
+              <span>Cambios y devoluciones: {{ returns_days }} días (según política de la tienda).</span>
+            </li>
+            <li class="flex gap-2">
+              {% render 'icon', name: 'tool', size: 16, class: 'text-brand-royal shrink-0 mt-0.5' %}
+              <span>Garantía en reparación: {{ repair_days }} días en mano de obra.</span>
+            </li>
+            <li class="flex gap-2">
+              {% render 'icon', name: 'truck', size: 16, class: 'text-brand-royal shrink-0 mt-0.5' %}
+              <span>Envío gratis desde {{ threshold_cents | money }} · Medellín {{ settings.shipping_medellin }} · Nacional {{ settings.shipping_national }}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="nt-card p-5 space-y-2 text-sm">
+          <p class="font-semibold text-ink">Enlaces legales</p>
+          <a href="/policies/shipping-policy" class="block text-brand-royal hover:underline">{{ 'footer.shipping' | t }}</a>
+          <a href="/policies/refund-policy" class="block text-brand-royal hover:underline">{{ 'footer.returns' | t }}</a>
+          <a href="/policies/privacy-policy" class="block text-brand-royal hover:underline">{{ 'footer.privacy' | t }}</a>
+          <a href="/policies/terms-of-service" class="block text-brand-royal hover:underline">{{ 'footer.terms' | t }}</a>
+        </div>
+        {% render 'btn',
+          variant: 'whatsapp',
+          size: 'md',
+          label: section.settings.cta_whatsapp | default: 'Hablar por WhatsApp',
+          icon: 'whatsapp',
+          href: wa_url,
+          target: '_blank',
+          full: true
+        %}
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Soporte",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Centro de ayuda" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Soporte NANOTRONICS" },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "Resolvemos dudas sobre compras, envíos, garantías y servicio técnico. En horario de tienda respondemos por WhatsApp en aproximadamente 5 minutos."
+    },
+    { "type": "text", "id": "faq_title", "label": "Título FAQ", "default": "Preguntas frecuentes" },
+    { "type": "text", "id": "faq_subtitle", "label": "Subtítulo FAQ", "default": "Información verificada según nuestra operación en El Carmen de Viboral." },
+    { "type": "text", "id": "cta_whatsapp", "label": "CTA WhatsApp", "default": "Hablar por WhatsApp" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Pregunta", "default": "¿Cuál es la garantía de los productos?" },
+        { "type": "richtext", "id": "answer", "label": "Respuesta", "default": "<p>Garantía mínima de 3 meses en productos, según política de la marca y NANOTRONICS.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Soporte" }]
+}
+{% endschema %}

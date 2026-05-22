@@ -113,6 +113,7 @@ npm run theme:dev    # Shopify preview
 |--------|----------|
 | Servicio técnico | `page.servicio-tecnico` |
 | Nosotros | `page.nosotros` |
+| Soporte | `page.soporte` |
 | Contacto | `page.contacto` |
 | Styleguide (interno) | `page.styleguide` |
 

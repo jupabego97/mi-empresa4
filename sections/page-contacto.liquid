@@ -28,12 +28,9 @@
             {% render 'icon', name: 'whatsapp', size: 22 %}
           </span>
           <div class="flex-1">
-            <p class="font-semibold text-ink">WhatsApp · respondemos en minutos</p>
+            <p class="font-semibold text-ink">WhatsApp · ~5 min en horario tienda</p>
             <p class="text-sm text-ink-muted">{{ settings.store_phone }}</p>
-            <p class="text-xs text-success font-medium mt-1 inline-flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-success animate-pulse"></span>
-              En línea ahora
-            </p>
+            <p class="text-xs text-ink-muted mt-1">{{ settings.store_hours }}</p>
           </div>
           <span class="text-[#25D366] group-hover:translate-x-1 transition-transform">
             {% render 'icon', name: 'arrow-right', size: 18 %}
@@ -47,7 +44,7 @@
           <div>
             <p class="font-semibold text-ink">Llámanos directo</p>
             <p class="text-sm text-ink-muted">{{ settings.store_phone }}</p>
-            <p class="text-xs text-ink-muted mt-1">Lun a Sáb · 9 am - 7 pm</p>
+            <p class="text-xs text-ink-muted mt-1">{{ settings.store_hours }}</p>
           </div>
         </a>
 
@@ -133,7 +130,7 @@
   "name": "Contacto",
   "settings": [
     { "type": "text", "id": "heading", "label": "Título", "default": "Hablemos. Estamos para ayudarte." },
-    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Estamos para ayudarte a elegir, cotizar, instalar o reparar. Por WhatsApp respondemos en minutos · por correo en menos de 24 horas. Sin bots, te atiende una persona real." },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Estamos para ayudarte a elegir, cotizar o coordinar servicio técnico. Por WhatsApp respondemos en aproximadamente 5 minutos en horario de tienda. Por correo, en menos de 24 horas hábiles." },
     { "type": "text", "id": "whatsapp_cta", "label": "CTA WhatsApp", "default": "Escribir por WhatsApp" }
   ],
   "presets": [{ "name": "Contacto" }]

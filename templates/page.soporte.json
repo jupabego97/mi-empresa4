@@ -1,0 +1,73 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-soporte",
+      "settings": {
+        "heading": "Soporte NANOTRONICS",
+        "intro": "Resolvemos dudas sobre compras, envíos, garantías y servicio técnico. En horario de tienda respondemos por WhatsApp en aproximadamente 5 minutos.",
+        "faq_title": "Preguntas frecuentes",
+        "faq_subtitle": "Información según nuestra operación en El Carmen de Viboral."
+      },
+      "blocks": {
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuál es la garantía de los productos?",
+            "answer": "<p>Garantía mínima de <strong>3 meses</strong> en productos, según política de la marca y NANOTRONICS. Conserva tu factura y empaque cuando aplique.</p>"
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto tiempo tengo para cambios o devoluciones?",
+            "answer": "<p>Tienes <strong>15 días</strong> para cambios o devoluciones, según nuestra política. El producto debe estar en buen estado y con sus accesorios cuando corresponda.</p>"
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué métodos de pago aceptan?",
+            "answer": "<p><strong>Mercado Pago</strong> en la tienda online, <strong>transferencia bancaria</strong> y <strong>efectivo</strong> en nuestra tienda del Parque Principal. Las cuotas dependen del medio que elijas en checkout.</p>"
+          }
+        },
+        "f4": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Hacen envíos y cuánto tarda?",
+            "answer": "<p>Enviamos a Colombia con transportadoras como Servientrega, Coordinadora e Interrapidísimo. Medellín y área metropolitana: 1-2 días hábiles. Resto del país: 2-5 días hábiles. Envío gratis desde $200.000 (validar en checkout).</p>"
+          }
+        },
+        "f5": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Puedo recoger en tienda?",
+            "answer": "<p>Sí, sin costo adicional. Te avisamos por WhatsApp cuando tu pedido esté listo. Horario: Lun–Sáb 10:00–20:00 · Dom 10:00–19:00. Dirección: Calle 30 # 30-31, Parque Principal, El Carmen de Viboral.</p>"
+          }
+        },
+        "f6": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Ofrecen servicio técnico?",
+            "answer": "<p>Sí. Reparamos y mantenemos equipos en el mismo local. Cotización antes de reparar y <strong>30 días de garantía</strong> en mano de obra. Ver precios en la página de <a href=\"/pages/servicio-tecnico\">Servicio técnico</a>.</p>"
+          }
+        },
+        "f7": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cómo los contacto más rápido?",
+            "answer": "<p>Por <strong>WhatsApp</strong> al 323 682 6910 — respondemos en aproximadamente 5 minutos en horario de tienda. También puedes llamar, escribir a contacto@nanotronics.com.co o usar el formulario en <a href=\"/pages/contacto\">Contacto</a>.</p>"
+          }
+        },
+        "f8": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Dónde están ubicados?",
+            "answer": "<p>NANOTRONICS — Calle 30 # 30-31, Parque Principal, El Carmen de Viboral, Antioquia. NIT 1036402484. Calificación 4.3★ en Google.</p>"
+          }
+        }
+      },
+      "block_order": ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8"]
+    }
+  },
+  "order": ["main"]
+}

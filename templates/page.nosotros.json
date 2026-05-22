@@ -3,9 +3,11 @@
     "main": {
       "type": "page-nosotros",
       "settings": {
-        "heading": "Tecnología honesta, hecha en Antioquia"
-      },
-      "blocks": {}
+        "heading": "Desde 2005 en el Parque Principal",
+        "story": "<p>NANOTRONICS nació en 2005 como tienda y servicio técnico en El Carmen de Viboral. <strong>Alpidio Betancur</strong> fundó un negocio para acercar la tecnología al oriente antioqueño; hoy <strong>Juan Pablo Betancur</strong> continúa esa visión con el mismo compromiso: buen precio, amplia variedad y excelente atención.</p><p>Somos principalmente tienda — con catálogo en accesorios, cables, power bank, parlantes, diademas, belleza y tecnología — y mantenemos taller para cuando tu equipo necesita reparación o mantenimiento.</p><p>No somos un marketplace anónimo: hay tienda física en el Parque Principal, equipo real y una calificación de <strong>4.3★ en Google</strong> construida con los años.</p>",
+        "mission": "Acercar tecnología y soluciones confiables al oriente antioqueño, con precios justos, variedad real y un servicio que responde cuando lo necesitas.",
+        "values": "Precio justo y transparente\nVariedad para resolver en un solo lugar\nAtención rápida y humana\nCompromiso con El Carmen de Viboral\nServicio técnico cuando el equipo falla\nConfianza desde 2005"
+      }
     }
   },
   "order": ["main"]
