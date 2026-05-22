@@ -107,15 +107,23 @@ npm run theme:dev    # Shopify preview
 | Promo | Countdown date, colección de ofertas |
 | Marcas | Subir logos PNG/WebP |
 
-## Páginas a crear en Shopify Admin
+## Páginas Shopify
 
-| Página | Template |
-|--------|----------|
-| Servicio técnico | `page.servicio-tecnico` |
-| Nosotros | `page.nosotros` |
-| Soporte | `page.soporte` |
-| Contacto | `page.contacto` |
-| Styleguide (interno) | `page.styleguide` |
+Asignar plantillas automáticamente (tras `shopify auth login`):
+
+```bash
+npm run pages:assign
+```
+
+Detalle: [`docs/PAGINAS-SHOPIFY.md`](docs/PAGINAS-SHOPIFY.md)
+
+| Página | Handle | Template |
+|--------|--------|----------|
+| Nosotros | `nosotros` | `page.nosotros` |
+| Soporte | `soporte` | `page.soporte` |
+| Contacto | `contacto` | `page.contacto` |
+| Servicio técnico | `servicio-tecnico` | `page.servicio-tecnico` |
+| Styleguide (interno) | `styleguide` | `page.styleguide` |
 
 ## Templates incluidos
 

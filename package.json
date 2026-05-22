@@ -10,6 +10,7 @@
     "build:icons": "node tools/build-icons.mjs",
     "theme:dev": "shopify theme dev",
     "theme:push": "shopify theme push",
+    "pages:assign": "node tools/assign-pages.mjs",
     "postinstall": "node tools/copy-alpine.mjs"
   },
   "devDependencies": {

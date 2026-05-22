@@ -1,0 +1,5 @@
+# Tienda NANOTRONICS (desarrollo)
+# Tras `shopify auth login`, usa: shopify theme dev | theme push
+
+[environments.development]
+store = "gigahertz-emporium-1onmb.myshopify.com"

@@ -1,0 +1,36 @@
+{
+  "pages": [
+    {
+      "handle": "nosotros",
+      "title": "Nosotros",
+      "template": "nosotros",
+      "published": true,
+      "seo_title": "Nosotros — NANOTRONICS",
+      "seo_description": "Conoce NANOTRONICS: tienda y servicio técnico desde 2005 en El Carmen de Viboral."
+    },
+    {
+      "handle": "soporte",
+      "title": "Soporte",
+      "template": "soporte",
+      "published": true,
+      "seo_title": "Soporte — NANOTRONICS",
+      "seo_description": "Preguntas frecuentes, garantías, envíos y ayuda. WhatsApp con respuesta en ~5 min."
+    },
+    {
+      "handle": "contacto",
+      "title": "Contacto",
+      "template": "contacto",
+      "published": true,
+      "seo_title": "Contacto — NANOTRONICS",
+      "seo_description": "WhatsApp, teléfono, correo y tienda en el Parque Principal de Viboral."
+    },
+    {
+      "handle": "servicio-tecnico",
+      "title": "Servicio técnico",
+      "template": "servicio-tecnico",
+      "published": true,
+      "seo_title": "Servicio técnico — NANOTRONICS",
+      "seo_description": "Reparación y mantenimiento de equipos en El Carmen de Viboral. Precios desde y garantía 30 días."
+    }
+  ]
+}
