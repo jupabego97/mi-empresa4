@@ -21,8 +21,9 @@
   {%- endif -%}
   <span class="nt-category-card__overlay" aria-hidden="true"></span>
   <div class="nt-category-card__content">
-    {%- if eyebrow != blank -%}
-      <span class="block text-[10px] font-bold uppercase tracking-wider text-white/70 mb-1">{{ eyebrow }}</span>
+    {%- assign eyebrow_clean = eyebrow | strip -%}
+    {%- if eyebrow_clean != blank -%}
+      <span class="block text-[10px] font-bold uppercase tracking-wider text-white/70 mb-1">{{ eyebrow_clean }}</span>
     {%- endif -%}
     <span class="nt-category-card__title">{{ title }}</span>
     <span class="nt-category-card__cta">
