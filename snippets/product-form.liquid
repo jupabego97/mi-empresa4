@@ -10,33 +10,40 @@
 {%- form 'product', product, id: 'product-form', class: 'space-y-4 ajax-cart' -%}
   {%- if product.options_with_values.size > 0 and product.has_only_default_variant == false -%}
     {%- for option in product.options_with_values -%}
-      <div>
-        <label class="nt-label block mb-2" for="option-{{ option.position }}">
-          {{ option.name }}: <span class="text-ink-muted font-normal" data-option-current-{{ option.position }}>{{ option.selected_value }}</span>
-        </label>
-        <div class="flex flex-wrap gap-2">
+      <fieldset class="border-0 p-0 m-0">
+        <legend class="nt-label block mb-2">
+          {{ option.name }}:
+          <span class="text-ink-muted font-normal" data-option-current="{{ option.position }}">{{ option.selected_value }}</span>
+        </legend>
+        <div class="flex flex-wrap gap-2" data-option-fieldset="{{ option.position }}">
           {%- for value in option.values -%}
-            <label class="cursor-pointer">
+            <label class="cursor-pointer variant-option-label" data-option-value="{{ value | escape }}">
               <input
                 type="radio"
                 name="option-{{ option.position }}"
                 value="{{ value | escape }}"
-                class="peer sr-only"
+                class="peer sr-only variant-option-input"
+                data-option-position="{{ option.position }}"
                 {% if value == option.selected_value %}checked{% endif %}
-                onchange="document.querySelector('[data-option-current-{{ option.position }}]').textContent=this.value"
               >
-              <span class="inline-flex items-center px-3 py-2 text-sm rounded-md border border-line bg-surface peer-checked:border-brand-royal peer-checked:bg-brand-sky peer-checked:text-brand-royal peer-checked:font-semibold transition-colors hover:border-ink-muted">
+              <span class="variant-option-pill inline-flex items-center px-3 py-2 text-sm rounded-md border border-line bg-surface peer-checked:border-brand-royal peer-checked:bg-brand-sky peer-checked:text-brand-royal peer-checked:font-semibold peer-disabled:opacity-40 peer-disabled:cursor-not-allowed transition-colors hover:border-ink-muted">
                 {{ value }}
               </span>
             </label>
           {%- endfor -%}
         </div>
-      </div>
+      </fieldset>
     {%- endfor -%}
 
     <select name="id" id="product-variant-id" class="nt-sr-only" aria-hidden="true" tabindex="-1">
       {%- for variant in product.variants -%}
-        <option value="{{ variant.id }}" {% if variant == current_variant %}selected{% endif %}>{{ variant.title }}</option>
+        <option
+          value="{{ variant.id }}"
+          {% if variant == current_variant %}selected{% endif %}
+          {% unless variant.available %}disabled{% endunless %}
+        >
+          {{ variant.title }}
+        </option>
       {%- endfor -%}
     </select>
   {%- else -%}
@@ -44,10 +51,12 @@
   {%- endif -%}
 
   <div class="flex items-center gap-3 flex-wrap">
-    <div class="max-w-[140px]">
+    <div>
       {% render 'input', type: 'qty', name: 'quantity', id: 'product-qty', label: 'Cantidad', value: 1, min: 1, max: 99 %}
     </div>
-    <p class="text-xs text-ink-muted">SKU: {{ current_variant.sku | default: 'N/A' }}</p>
+    <p class="text-xs text-ink-muted">
+      SKU: <span id="product-sku">{{ current_variant.sku | default: 'N/A' }}</span>
+    </p>
   </div>
 
   {%- capture add_label -%}{{ 'general.add_to_cart' | t }}{%- endcapture -%}
@@ -58,11 +67,12 @@
     <button
       type="submit"
       name="add"
+      id="product-add-btn"
       class="nt-btn nt-btn--primary nt-btn--xl nt-btn--full product-add-btn"
       {% unless current_variant.available %}disabled{% endunless %}
     >
       {% render 'icon', name: 'cart', size: 18 %}
-      {{ add_label }}
+      <span id="product-add-btn-label">{{ add_label }}</span>
     </button>
     <div class="grid grid-cols-2 gap-2">
       {% render 'btn', variant: 'dark', size: 'lg', label: buy_label, type: 'submit', name: 'checkout', icon: 'zap', full: true %}
@@ -73,4 +83,21 @@
 
 <script type="application/json" id="product-json">
   {{ product | json }}
+</script>
+
+<script type="application/json" id="product-variant-images">
+  {
+    {%- for variant in product.variants -%}
+      "{{ variant.id }}": {%- liquid
+        assign img_index = 0
+        if variant.featured_image
+          for image in product.images
+            if image.id == variant.featured_image.id
+              assign img_index = forloop.index0
+            endif
+          endfor
+        endif
+      -%}{{ img_index }}{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  }
 </script>

@@ -30,6 +30,10 @@
   {{ content_for_header }}
 
   <script defer src="{{ 'alpine.min.js' | asset_url }}"></script>
+  <script>
+    window.theme = window.theme || {};
+    window.theme.moneyFormat = {{ shop.money_format | json }};
+  </script>
   <script defer src="{{ 'theme.js' | asset_url }}"></script>
 </head>
 <body

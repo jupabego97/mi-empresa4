@@ -72,10 +72,12 @@
           type="number"
           id="{{ input_id }}"
           name="{{ input_name }}"
-          class="nt-input w-14 text-center border-0 border-x border-line rounded-none min-h-11"
+          class="nt-input nt-qty-input text-center border-0 border-x border-line rounded-none min-h-11 tabular-nums"
           x-model.number="qty"
           min="{{ min | default: 1 }}"
           {% if max != blank %}max="{{ max }}"{% endif %}
+          inputmode="numeric"
+          aria-label="{{ label | default: 'Cantidad' }}"
         >
         <button
           type="button"

@@ -1,4 +1,4 @@
-<div class="nt-pdp-gallery" x-data="{ active: 0, zoomed: false }">
+<div class="nt-pdp-gallery" x-data="{ active: 0, zoomed: false }" @variant-image.window="if ($event.detail !== null && $event.detail >= 0) active = $event.detail">
   <div class="nt-pdp-gallery__main relative group">
     {%- for image in product.images -%}
       {%- if forloop.first -%}
