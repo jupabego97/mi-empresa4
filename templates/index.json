@@ -90,37 +90,49 @@
         "c1": {
           "type": "category",
           "settings": {
-            "title": "Accesorios"
+            "collection": "accesorios",
+            "title": "Accesorios",
+            "icon": "keyboard"
           }
         },
         "c2": {
           "type": "category",
           "settings": {
-            "title": "Cables"
+            "collection": "cables",
+            "title": "Cables",
+            "icon": "wifi"
           }
         },
         "c3": {
           "type": "category",
           "settings": {
-            "title": "Power bank"
+            "collection": "power-bank",
+            "title": "Power bank",
+            "icon": "cpu"
           }
         },
         "c4": {
           "type": "category",
           "settings": {
-            "title": "Parlantes"
+            "collection": "parlantes",
+            "title": "Parlantes",
+            "icon": "headphones"
           }
         },
         "c5": {
           "type": "category",
           "settings": {
-            "title": "Diademas"
+            "collection": "diademas",
+            "title": "Diademas",
+            "icon": "headphones"
           }
         },
         "c6": {
           "type": "category",
           "settings": {
-            "title": "Belleza"
+            "collection": "belleza",
+            "title": "Belleza",
+            "icon": "cpu"
           }
         }
       },

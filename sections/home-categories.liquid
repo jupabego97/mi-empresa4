@@ -12,15 +12,40 @@
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4">
       {%- for block in section.blocks -%}
-        <div {{ block.shopify_attributes }}>
-          {% render 'category-card',
-            title: block.settings.title,
-            url: block.settings.url,
-            image: block.settings.image,
-            icon: block.settings.icon,
-            eyebrow: block.settings.eyebrow
-          %}
-        </div>
+        {%- liquid
+          assign col = collections[block.settings.collection]
+          assign card_title = block.settings.title
+          assign card_url = block.settings.url
+          assign card_image = block.settings.image
+          assign card_icon = block.settings.icon
+          assign card_eyebrow = block.settings.eyebrow
+          if card_eyebrow == '—'
+            assign card_eyebrow = ''
+          endif
+
+          if col != blank
+            if card_title == blank or card_title == 'Categoría'
+              assign card_title = col.title
+            endif
+            if card_url == blank
+              assign card_url = col.url
+            endif
+            if card_image == blank and col.image != blank
+              assign card_image = col.image
+            endif
+          endif
+        -%}
+        {%- if card_title != blank -%}
+          <div {{ block.shopify_attributes }}>
+            {% render 'category-card',
+              title: card_title,
+              url: card_url,
+              image: card_image,
+              icon: card_icon,
+              eyebrow: card_eyebrow
+            %}
+          </div>
+        {%- endif -%}
       {%- endfor -%}
     </div>
   </div>
@@ -38,9 +63,15 @@
       "type": "category",
       "name": "Categoría",
       "settings": [
-        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "" },
-        { "type": "text", "id": "title", "label": "Nombre", "default": "Categoría" },
-        { "type": "url", "id": "url", "label": "Enlace" },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Colección Shopify",
+          "info": "Si eliges una colección, se usan su título, enlace e imagen (salvo que los sobrescribas abajo)."
+        },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow (opcional)", "default": "—", "info": "Usa «—» para ocultar el eyebrow." },
+        { "type": "text", "id": "title", "label": "Nombre (opcional si hay colección)", "default": "Categoría", "info": "Déjalo en «Categoría» para usar el título de la colección." },
+        { "type": "url", "id": "url", "label": "Enlace (opcional si hay colección)" },
         { "type": "image_picker", "id": "image", "label": "Imagen" },
         { "type": "select", "id": "icon", "label": "Ícono fallback", "default": "cpu", "options": [
           { "value": "laptop", "label": "Portátiles" },
