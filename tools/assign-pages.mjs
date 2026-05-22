@@ -1,20 +1,18 @@
 #!/usr/bin/env node
 /**
- * Crea o actualiza páginas en Shopify y asigna templateSuffix según config/pages-manifest.json
+ * Crea o actualiza páginas y asigna templateSuffix según config/pages-manifest.json
+ *
+ * Requisito: Shopify CLI 4+ y sesión de tienda:
+ *   shopify store auth --store TU-TIENDA.myshopify.com --scopes write_content,read_content
  *
  * Uso:
- *   shopify auth login
- *   node tools/assign-pages.mjs
- *   node tools/assign-pages.mjs --store=tu-tienda.myshopify.com
- *
- * Alternativa sin CLI (Custom app en Admin):
- *   $env:SHOPIFY_STORE="tu-tienda.myshopify.com"
- *   $env:SHOPIFY_ADMIN_TOKEN="shpat_..."
- *   node tools/assign-pages.mjs
+ *   npm run pages:assign
+ *   npm run pages:assign -- --store=tu-tienda.myshopify.com
  */
 
-import { readFileSync, existsSync } from 'fs';
-import { homedir } from 'os';
+import { readFileSync, writeFileSync, unlinkSync, mkdtempSync } from 'fs';
+import { execSync } from 'child_process';
+import { homedir, tmpdir } from 'os';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -29,44 +27,85 @@ const store =
   readThemeStore() ||
   'gigahertz-emporium-1onmb.myshopify.com';
 
-const token = process.env.SHOPIFY_ADMIN_TOKEN || readCliToken(store);
-
-if (!token) {
-  console.error(`
-No se encontró token de Admin API.
-
-1) Ejecuta: shopify auth login
-2) Vuelve a correr: npm run pages:assign
-
-O define:
-  SHOPIFY_STORE=tu-tienda.myshopify.com
-  SHOPIFY_ADMIN_TOKEN=shpat_...
-`);
-  process.exit(1);
+function readThemeStore() {
+  const p = join(homedir(), 'AppData', 'Roaming', 'shopify-cli-theme-conf-nodejs', 'Config', 'config.json');
+  try {
+    const cfg = JSON.parse(readFileSync(p, 'utf8'));
+    return cfg.themeStore || null;
+  } catch {
+    return null;
+  }
 }
 
-const API_VERSION = '2024-10';
-const endpoint = `https://${store}/admin/api/${API_VERSION}/graphql.json`;
-
-async function gql(query, variables = {}) {
-  const res = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Access-Token': token,
-    },
-    body: JSON.stringify({ query, variables }),
-  });
-  const json = await res.json();
-  if (!res.ok || json.errors?.length) {
-    throw new Error(JSON.stringify(json.errors || json, null, 2));
+function storeExecute(query, variables = {}, { allowMutations = false } = {}) {
+  const dir = mkdtempSync(join(tmpdir(), 'nt-pages-'));
+  const queryFile = join(dir, 'query.graphql');
+  const varFile = join(dir, 'vars.json');
+  writeFileSync(queryFile, query, 'utf8');
+  if (variables && Object.keys(variables).length > 0) {
+    writeFileSync(varFile, JSON.stringify(variables), 'utf8');
   }
-  return json.data;
+
+  const parts = [
+    'shopify',
+    'store',
+    'execute',
+    '--store',
+    store,
+    '--json',
+    '--query-file',
+    queryFile,
+  ];
+  if (variables && Object.keys(variables).length > 0) {
+    parts.push('--variable-file', varFile);
+  }
+  if (allowMutations) {
+    parts.push('--allow-mutations');
+  }
+
+  try {
+    const raw = execSync(parts.join(' '), {
+      encoding: 'utf8',
+      cwd: root,
+      stdio: ['pipe', 'pipe', 'pipe'],
+    });
+    const cleaned = raw.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, '').trim();
+    const jsonStart = cleaned.indexOf('{');
+    const jsonStr = jsonStart >= 0 ? cleaned.slice(jsonStart) : cleaned;
+    return JSON.parse(jsonStr);
+  } finally {
+    try {
+      unlinkSync(queryFile);
+    } catch {}
+    try {
+      unlinkSync(varFile);
+    } catch {}
+  }
+}
+
+function ensureStoreAuth() {
+  try {
+    storeExecute(`{ shop { name } }`);
+    return true;
+  } catch (err) {
+    const msg = err.stderr?.toString() || err.message || '';
+    if (msg.includes('store auth') || msg.includes('authentication')) {
+      console.error(`
+No hay sesión de tienda. Ejecuta primero:
+
+  shopify store auth --store ${store} --scopes write_content,read_content
+
+Luego: npm run pages:assign
+`);
+      process.exit(1);
+    }
+    throw err;
+  }
 }
 
 async function listPages() {
-  const data = await gql(`
-    query {
+  const data = storeExecute(`
+    query ListPages {
       pages(first: 50) {
         nodes { id handle title templateSuffix }
       }
@@ -75,8 +114,8 @@ async function listPages() {
   return data.pages.nodes;
 }
 
-async function createPage(page) {
-  const data = await gql(
+function createPage(spec) {
+  const data = storeExecute(
     `
     mutation PageCreate($page: PageCreateInput!) {
       pageCreate(page: $page) {
@@ -87,20 +126,21 @@ async function createPage(page) {
   `,
     {
       page: {
-        title: page.title,
-        handle: page.handle,
-        isPublished: page.published !== false,
-        templateSuffix: page.template,
+        title: spec.title,
+        handle: spec.handle,
+        isPublished: spec.published !== false,
+        templateSuffix: spec.template,
       },
-    }
+    },
+    { allowMutations: true }
   );
-  const errs = data.pageCreate.userErrors;
+  const errs = data.pageCreate?.userErrors;
   if (errs?.length) throw new Error(errs.map((e) => e.message).join('; '));
   return data.pageCreate.page;
 }
 
-async function updatePage(id, page) {
-  const data = await gql(
+function updatePage(id, spec) {
+  const data = storeExecute(
     `
     mutation PageUpdate($id: ID!, $page: PageUpdateInput!) {
       pageUpdate(id: $id, page: $page) {
@@ -112,53 +152,22 @@ async function updatePage(id, page) {
     {
       id,
       page: {
-        title: page.title,
-        handle: page.handle,
-        isPublished: page.published !== false,
-        templateSuffix: page.template,
+        title: spec.title,
+        handle: spec.handle,
+        isPublished: spec.published !== false,
+        templateSuffix: spec.template,
       },
-    }
+    },
+    { allowMutations: true }
   );
-  const errs = data.pageUpdate.userErrors;
+  const errs = data.pageUpdate?.userErrors;
   if (errs?.length) throw new Error(errs.map((e) => e.message).join('; '));
   return data.pageUpdate.page;
 }
 
-function readThemeStore() {
-  const p = join(homedir(), 'AppData', 'Roaming', 'shopify-cli-theme-conf-nodejs', 'Config', 'config.json');
-  if (!existsSync(p)) return null;
-  try {
-    const cfg = JSON.parse(readFileSync(p, 'utf8'));
-    return cfg.themeStore || null;
-  } catch {
-    return null;
-  }
-}
-
-function readCliToken(shopDomain) {
-  const p = join(homedir(), 'AppData', 'Roaming', 'shopify-cli-kit-nodejs', 'Config', 'config.json');
-  if (!existsSync(p)) return null;
-  try {
-    const cfg = JSON.parse(readFileSync(p, 'utf8'));
-    const sessions = JSON.parse(cfg.sessionStore || '{}');
-    const accounts = sessions['accounts.shopify.com'] || {};
-    const shopSlug = shopDomain.replace('.myshopify.com', '');
-
-    for (const account of Object.values(accounts)) {
-      if (!account?.applications) continue;
-      for (const [key, app] of Object.entries(account.applications)) {
-        if (key.includes(shopSlug) && app?.accessToken) return app.accessToken;
-      }
-      if (account.identity?.accessToken) return account.identity.accessToken;
-    }
-    return null;
-  } catch {
-    return null;
-  }
-}
-
 async function main() {
   console.log(`Tienda: ${store}`);
+  ensureStoreAuth();
   console.log(`Páginas en manifest: ${manifest.pages.length}\n`);
 
   const existing = await listPages();
@@ -168,11 +177,11 @@ async function main() {
     const found = byHandle[spec.handle];
     try {
       if (found) {
-        const updated = await updatePage(found.id, spec);
-        console.log(`✓ Actualizada: /pages/${updated.handle} → template: page.${updated.templateSuffix}`);
+        const updated = updatePage(found.id, spec);
+        console.log(`✓ Actualizada: /pages/${updated.handle} → page.${updated.templateSuffix}`);
       } else {
-        const created = await createPage(spec);
-        console.log(`✓ Creada: /pages/${created.handle} → template: page.${created.templateSuffix}`);
+        const created = createPage(spec);
+        console.log(`✓ Creada: /pages/${created.handle} → page.${created.templateSuffix}`);
       }
     } catch (err) {
       console.error(`✗ ${spec.handle}: ${err.message}`);

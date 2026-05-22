@@ -109,9 +109,10 @@ npm run theme:dev    # Shopify preview
 
 ## Páginas Shopify
 
-Asignar plantillas automáticamente (tras `shopify auth login`):
+Asignar plantillas automáticamente (Shopify CLI 4+):
 
 ```bash
+shopify store auth --store gigahertz-emporium-1onmb.myshopify.com --scopes write_content,read_content
 npm run pages:assign
 ```
 

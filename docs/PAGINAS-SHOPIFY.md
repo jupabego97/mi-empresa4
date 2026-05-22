@@ -2,9 +2,11 @@
 
 ## Asignación automática (recomendado)
 
-1. Inicia sesión en Shopify CLI:
+Requiere **Shopify CLI 4+**.
+
+1. Autentica la tienda con permisos de páginas:
    ```bash
-   shopify auth login
+   shopify store auth --store gigahertz-emporium-1onmb.myshopify.com --scopes write_content,read_content
    ```
 2. Desde la carpeta `mi-empresa4`:
    ```bash
