@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "logo_width": 160,
@@ -46,6 +55,7 @@
     "returns_days": 15,
     "repair_warranty_days": 30,
     "product_warranty_note": "Garantía mínima de 3 meses en productos, según política de la marca y NANOTRONICS.",
+    "nav_collection_handles": "catalogo-destacado\naccesorios\ncables\npower-bank\nparlantes\ndiademas\nbelleza",
     "seo_local_keywords": "nanotronics viboral, tienda tecnologia carmen de viboral, servicio tecnico viboral, accesorios celular viboral, parlantes viboral",
     "meta_description_default": "NANOTRONICS — Tienda y servicio técnico desde 2005 en el Parque Principal de El Carmen de Viboral. Tecnología, accesorios, audio y más. 4.3★ en Google.",
     "sections": {

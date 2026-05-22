@@ -90,7 +90,18 @@
       <div>
         <p class="nt-footer__title">{{ 'footer.shop' | t }}</p>
         <a href="{{ routes.all_products_collection_url }}" class="nt-footer__link">{{ 'nav.all_products' | t }}</a>
-        <a href="{{ routes.collections_url }}" class="nt-footer__link">{{ 'general.categories' | t }}</a>
+        {%- liquid
+          assign footer_handles = settings.nav_collection_handles | default: '' | newline_to_br | split: '<br />'
+        -%}
+        {%- for line in footer_handles -%}
+          {%- assign fh = line | strip -%}
+          {%- if fh != blank -%}
+            {%- assign fcol = collections[fh] -%}
+            {%- if fcol != blank -%}
+              <a href="{{ fcol.url }}" class="nt-footer__link">{{ fcol.title }}</a>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
         <a href="/collections/ofertas" class="nt-footer__link">{{ 'general.offers' | t }}</a>
         <a href="{{ routes.search_url }}" class="nt-footer__link">{{ 'nav.search' | t }}</a>
       </div>

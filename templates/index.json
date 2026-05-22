@@ -90,43 +90,37 @@
         "c1": {
           "type": "category",
           "settings": {
-            "title": "Accesorios",
-            "url": "/collections/accesorios"
+            "title": "Accesorios"
           }
         },
         "c2": {
           "type": "category",
           "settings": {
-            "title": "Cables",
-            "url": "/collections/cables"
+            "title": "Cables"
           }
         },
         "c3": {
           "type": "category",
           "settings": {
-            "title": "Power bank",
-            "url": "/collections/power-bank"
+            "title": "Power bank"
           }
         },
         "c4": {
           "type": "category",
           "settings": {
-            "title": "Parlantes",
-            "url": "/collections/parlantes"
+            "title": "Parlantes"
           }
         },
         "c5": {
           "type": "category",
           "settings": {
-            "title": "Diademas",
-            "url": "/collections/diademas"
+            "title": "Diademas"
           }
         },
         "c6": {
           "type": "category",
           "settings": {
-            "title": "Belleza",
-            "url": "/collections/belleza"
+            "title": "Belleza"
           }
         }
       },
@@ -148,7 +142,7 @@
         "eyebrow": "Catálogo destacado",
         "title": "Productos que más buscan",
         "description": "Desde 2005 en El Carmen de Viboral. Asigna una colección en el Theme Editor para mostrar stock real.",
-        "collection": "",
+        "collection": "catalogo-destacado",
         "products_to_show": 8
       }
     },

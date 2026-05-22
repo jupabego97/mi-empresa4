@@ -138,24 +138,11 @@
             </a>
           </div>
           <div class="nt-megamenu__grid">
-            {%- assign quick_links = 'laptop:Portátiles|monitor:Monitores|cpu:PC Gamer y componentes|keyboard:Periféricos|wifi:Redes|gamepad:Gaming|headphones:Audio|tag:Ofertas' | split: '|' -%}
-            {%- for collection in collections limit: 8 -%}
-              {%- unless collection.handle == 'frontpage' -%}
-                <a href="{{ collection.url }}" class="nt-megamenu__link">
-                  {% render 'icon', name: 'arrow-right', size: 14, class: 'opacity-60' %}
-                  <span>{{ collection.title }}</span>
-                  <span class="ml-auto text-xs text-ink-subtle">{{ collection.products_count }}</span>
-                </a>
-              {%- endunless -%}
-            {%- else -%}
-              {%- for entry in quick_links -%}
-                {%- assign parts = entry | split: ':' -%}
-                <a href="{{ routes.collections_url }}" class="nt-megamenu__link">
-                  {% render 'icon', name: parts[0], size: 16 %}
-                  <span>{{ parts[1] }}</span>
-                </a>
-              {%- endfor -%}
-            {%- endfor -%}
+            {% render 'collection-nav-links', link_class: 'nt-megamenu__link', show_icon: true, show_count: true %}
+            <a href="{{ routes.all_products_collection_url }}" class="nt-megamenu__link">
+              {% render 'icon', name: 'grid', size: 14, class: 'opacity-60' %}
+              <span>{{ 'nav.all_products' | t }}</span>
+            </a>
           </div>
           <div class="mt-5 pt-4 border-t border-line">
             <a href="/pages/servicio-tecnico" class="flex items-center gap-3 p-3 rounded-lg bg-brand-sky text-brand-deep hover:bg-brand-royal hover:text-white transition-colors">
@@ -215,13 +202,7 @@
     <nav class="nt-container py-4 flex flex-col gap-1" aria-label="{{ 'nav.mobile' | t }}">
       <a href="{{ routes.root_url }}" class="nt-header__nav-link">{{ 'nav.home' | t }}</a>
       <a href="{{ routes.collections_url }}" class="nt-header__nav-link font-semibold">{{ 'general.categories' | t }}</a>
-      {%- for collection in collections limit: 8 -%}
-        {%- unless collection.handle == 'frontpage' -%}
-          <a href="{{ collection.url }}" class="nt-header__nav-link pl-6 text-ink-muted">
-            {{ collection.title }}
-          </a>
-        {%- endunless -%}
-      {%- endfor -%}
+      {% render 'collection-nav-links', link_class: 'nt-header__nav-link pl-6 text-ink-muted' %}
       <a href="{{ routes.all_products_collection_url }}" class="nt-header__nav-link">
         {{ 'nav.all_products' | t }}
       </a>

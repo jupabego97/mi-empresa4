@@ -367,6 +367,22 @@
     ]
   },
   {
+    "name": "Navegación y categorías",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Un handle por línea (ej. parlantes). Deben existir como colecciones en Shopify. Ejecuta npm run collections:sync para crearlas desde tipos de producto."
+      },
+      {
+        "type": "textarea",
+        "id": "nav_collection_handles",
+        "label": "Handles de colecciones (menú y pie)",
+        "default": "catalogo-destacado\naccesorios\ncables\npower-bank\nparlantes\ndiademas\nbelleza",
+        "info": "Orden = orden en mega menú y footer"
+      }
+    ]
+  },
+  {
     "name": "SEO",
     "settings": [
       {
