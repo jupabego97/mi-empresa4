@@ -1,14 +1,103 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main": {
-      "type": "styleguide-hero",
+    "page_servicio_tecnico_8GYi8W": {
+      "type": "page-servicio-tecnico",
+      "blocks": {
+        "service_NmjzNR": {
+          "type": "service",
+          "settings": {
+            "icon": "tool",
+            "title": "Reparación de hardware",
+            "text": "Tarjeta madre, fuente, pantalla, teclado, batería.",
+            "price_from": "Consultar",
+            "turnaround": "24-72 h",
+            "warranty_note": "30 días garantía"
+          }
+        },
+        "service_ifyUUK": {
+          "type": "service",
+          "settings": {
+            "icon": "shield-check",
+            "title": "Mantenimiento preventivo",
+            "text": "Limpieza interna y pasta térmica nueva.",
+            "price_from": "Consultar",
+            "turnaround": "24-48 h",
+            "warranty_note": "30 días garantía"
+          }
+        },
+        "service_rYntyP": {
+          "type": "service",
+          "settings": {
+            "icon": "zap",
+            "title": "Upgrades de poder",
+            "text": "Más RAM, SSD o GPU. Sin perder archivos.",
+            "price_from": "Consultar",
+            "turnaround": "24 h",
+            "warranty_note": "30 días garantía"
+          }
+        },
+        "service_HenU8G": {
+          "type": "service",
+          "settings": {
+            "icon": "package",
+            "title": "Migración a SSD",
+            "text": "Windows y programas migrados sin reinstalar.",
+            "price_from": "Consultar",
+            "turnaround": "24 h",
+            "warranty_note": "30 días garantía"
+          }
+        },
+        "service_HnaPXg": {
+          "type": "service",
+          "settings": {
+            "icon": "gamepad",
+            "title": "Armados gamer",
+            "text": "Drivers, RGB y benchmarks incluidos.",
+            "price_from": "Consultar",
+            "turnaround": "48 h",
+            "warranty_note": "30 días garantía"
+          }
+        },
+        "service_ihNMXV": {
+          "type": "service",
+          "settings": {
+            "icon": "monitor",
+            "title": "Recuperación de datos",
+            "text": "Disco dañado o formato accidental.",
+            "price_from": "Cotización previa",
+            "turnaround": "Según caso",
+            "warranty_note": "Presupuesto sin compromiso"
+          }
+        }
+      },
+      "block_order": [
+        "service_NmjzNR",
+        "service_ifyUUK",
+        "service_rYntyP",
+        "service_HenU8G",
+        "service_HnaPXg",
+        "service_ihNMXV"
+      ],
+      "name": "Servicio técnico",
       "settings": {
-        "title": "Página no encontrada",
-        "subtitle": "El producto o página que buscas no existe.",
-        "cta_primary": "Volver al inicio",
-        "cta_whatsapp": "Contactar soporte"
+        "heading": "Reparamos lo que otros desisten",
+        "intro": "Diagnóstico gratuito, repuestos originales y garantía sobre la reparación. Atendemos computadores, portátiles, monitores y consolas — cualquier marca, cualquier modelo.",
+        "process_steps": "Nos traes tu equipo o lo recogemos\nDiagnóstico gratuito · sin compromiso\nCotización clara · tú decides si avanzamos\nReparamos con repuestos originales\nPruebas de calidad y entrega con garantía",
+        "turnaround": "Entre 24 y 72 horas según el caso. Te avisamos siempre por WhatsApp.",
+        "cta": "Pedir diagnóstico gratis"
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "page_servicio_tecnico_8GYi8W"
+  ]
 }
