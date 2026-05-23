@@ -12,24 +12,25 @@
 >
   <div class="nt-container nt-header__inner">
     <div class="nt-header__row">
-      <a href="{{ routes.root_url }}" class="nt-header__logo" aria-label="{{ shop.name }}">
+      <a href="{{ routes.root_url }}" class="nt-header__logo" style="--logo-width: {{ logo_w }}px;" aria-label="{{ shop.name }}">
+        {%- assign logo_w = settings.logo_width | default: 200 -%}
         {%- if settings.logo != blank -%}
           {{
             settings.logo
-            | image_url: width: settings.logo_width
+            | image_url: width: logo_w
             | image_tag:
               loading: 'eager',
-              width: settings.logo_width,
+              width: logo_w,
               alt: shop.name,
-              class: 'h-9 w-auto'
+              class: 'nt-header__logo-img'
           }}
         {%- else -%}
           <img
             src="{{ 'nano-logo.png' | asset_url }}"
             alt="NANOTRONICS"
-            width="{{ settings.logo_width | default: 160 }}"
-            height="40"
-            class="h-9 w-auto object-contain"
+            width="{{ logo_w }}"
+            height="48"
+            class="nt-header__logo-img"
             loading="eager"
           >
         {%- endif -%}

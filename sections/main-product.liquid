@@ -69,7 +69,7 @@
           {%- endif -%}
         </div>
 
-        <div class="py-2">
+        <div class="py-2" id="product-price-block">
           {% render 'price', product: product, size: 'lg' %}
           <p class="text-xs text-ink-muted mt-1 inline-flex items-center gap-1">
             {% render 'icon', name: 'credit-card', size: 12 %}
@@ -77,13 +77,15 @@
           </p>
         </div>
 
-        <p class="text-sm font-semibold inline-flex items-center gap-2 {% if product.available %}text-success{% else %}text-danger{% endif %}">
-          <span class="w-2 h-2 rounded-full {% if product.available %}bg-success{% else %}bg-danger{% endif %}"></span>
-          {%- if product.available -%}
-            En stock · despacho según disponibilidad (consulta tiempos en checkout)
-          {%- else -%}
-            Agotado por ahora · pregúntanos cuándo vuelve
-          {%- endif -%}
+        <p id="product-stock-status" class="text-sm font-semibold inline-flex items-center gap-2 {% if product.available %}text-success{% else %}text-danger{% endif %}">
+          <span id="product-stock-dot" class="w-2 h-2 rounded-full {% if product.available %}bg-success{% else %}bg-danger{% endif %}"></span>
+          <span id="product-stock-text">
+            {%- if product.available -%}
+              En stock · despacho según disponibilidad (consulta tiempos en checkout)
+            {%- else -%}
+              Agotado por ahora · pregúntanos cuándo vuelve
+            {%- endif -%}
+          </span>
         </p>
 
         {%- if section.settings.show_key_specs and section.blocks.size > 0 -%}
@@ -238,14 +240,26 @@
           >
             <span class="text-base lg:text-lg font-semibold text-ink inline-flex items-center gap-2">
               {% render 'icon', name: 'star', size: 18, class: 'text-warning fill-warning' %}
-              Reseñas y opiniones
+              Calificación en Google
             </span>
             <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
           </button>
           <div class="nt-accordion__content" x-show="open === 5" x-collapse x-cloak>
-            <p class="text-ink-muted mb-3">Nuestra calificación en Google es {{ settings.metric_rating_value | default: '4.3★' }}. Para opiniones sobre este producto, consúltanos por WhatsApp o revisa nuestra ficha en Google Maps.</p>
-            <a href="{{ wa_product_url }}" target="_blank" rel="noopener" class="text-brand-royal text-sm font-medium hover:underline inline-flex items-center gap-1">
-              ¿Tienes una pregunta? Escríbenos {% render 'icon', name: 'arrow-right', size: 12 %}
+            <p class="text-ink-muted mb-3">
+              Promedio {{ settings.metric_rating_value | default: '4.3★' }} en Google Maps (tienda física).
+              Las reseñas las consultas directamente en Google — no publicamos testimonios inventados en este sitio.
+            </p>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query={{ settings.store_geo_lat | default: '6.0823' }}%2C{{ settings.store_geo_lng | default: '-75.3351' }}"
+              target="_blank"
+              rel="noopener"
+              class="text-brand-royal text-sm font-medium hover:underline inline-flex items-center gap-1 mb-3"
+            >
+              Ver reseñas en Google Maps {% render 'icon', name: 'arrow-right', size: 12 %}
+            </a>
+            <p class="text-sm text-ink-muted">¿Dudas sobre este producto?</p>
+            <a href="{{ wa_product_url }}" target="_blank" rel="noopener" class="text-brand-royal text-sm font-medium hover:underline inline-flex items-center gap-1 mt-1">
+              Escríbenos por WhatsApp {% render 'icon', name: 'arrow-right', size: 12 %}
             </a>
           </div>
         </div>
@@ -324,8 +338,8 @@
 {%- capture add_label -%}{{ 'general.add_to_cart' | t }}{%- endcapture -%}
 <div class="nt-sticky-bar pb-safe lg:hidden">
   <div class="flex gap-2 max-w-lg mx-auto items-center">
-    <div class="text-xs">
-      <p class="font-bold text-ink">{{ product.price | money }}</p>
+    <div class="text-xs" id="sticky-product-price">
+      <p class="font-bold text-ink" data-price-current>{{ product.price | money }}</p>
       {%- if product.compare_at_price > product.price -%}
         <p class="text-[10px] text-danger font-semibold">Oferta</p>
       {%- endif -%}

@@ -416,45 +416,12 @@
         "cta": "Solicitar servicio por WhatsApp"
       }
     },
-    "reviews": {
-      "type": "home-reviews",
-      "blocks": {
-        "r1": {
-          "type": "review",
-          "settings": {
-            "quote": "Buena atención y variedad de accesorios. Siempre encuentro lo que busco en el centro.",
-            "author": "Cliente verificado",
-            "location": "El Carmen de Viboral",
-            "rating": 5
-          }
-        },
-        "r2": {
-          "type": "review",
-          "settings": {
-            "quote": "Me arreglaron el portátil y me explicaron el problema antes de cobrar. Precio justo.",
-            "author": "Cliente verificado",
-            "location": "Rionegro, Antioquia",
-            "rating": 4
-          }
-        },
-        "r3": {
-          "type": "review",
-          "settings": {
-            "quote": "Tienda de confianza en Viboral. Responden rápido por WhatsApp.",
-            "author": "Cliente verificado",
-            "location": "La Ceja, Antioquia",
-            "rating": 5
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3"
-      ],
+    "location": {
+      "type": "home-location",
       "settings": {
-        "title": "Lo que dicen en Google",
-        "description": "4.3★ de calificación promedio. Confianza construida desde 2005 en el oriente antioqueño."
+        "eyebrow": "Parque Principal · El Carmen de Viboral",
+        "title": "Visítanos en el corazón de Viboral",
+        "description": "Desde 2005 en la Calle 30 # 30-31, frente al Parque Principal. Tienda y servicio técnico en un solo lugar — recoge tu pedido sin costo."
       }
     }
   },
@@ -467,6 +434,6 @@
     "benefits",
     "brands",
     "service",
-    "reviews"
+    "location"
   ]
 }

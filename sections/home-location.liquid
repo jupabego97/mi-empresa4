@@ -1,0 +1,98 @@
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_text = 'Hola, quiero visitar la tienda NANOTRONICS' | url_encode
+  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+  assign lat = settings.store_geo_lat | default: '6.0823'
+  assign lng = settings.store_geo_lng | default: '-75.3351'
+  assign maps_reviews = 'https://www.google.com/maps/search/?api=1&query=' | append: lat | append: '%2C' | append: lng
+  assign maps_directions = 'https://www.google.com/maps/dir/?api=1&destination=' | append: lat | append: '%2C' | append: lng
+-%}
+
+<section class="nt-section bg-surface-2">
+  <div class="nt-container">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+      <div>
+        <p class="nt-eyebrow mb-2">{{ section.settings.eyebrow | default: 'Tienda física' }}</p>
+        <h2 class="nt-section-title mb-3">{{ section.settings.title }}</h2>
+        <p class="text-ink-muted mb-6 max-w-lg">{{ section.settings.description }}</p>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start gap-3 p-4 rounded-xl border border-line bg-surface">
+            {% render 'icon', name: 'map-pin', size: 20, class: 'text-brand-royal shrink-0 mt-0.5' %}
+            <div>
+              <p class="font-semibold text-ink">Dirección</p>
+              <p class="text-sm text-ink-muted mt-1">{{ settings.store_address }}</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 p-4 rounded-xl border border-line bg-surface">
+            {% render 'icon', name: 'clock', size: 20, class: 'text-brand-royal shrink-0 mt-0.5' %}
+            <div>
+              <p class="font-semibold text-ink">Horario</p>
+              <p class="text-sm text-ink-muted mt-1">{{ settings.store_hours }}</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 p-4 rounded-xl border border-line bg-surface">
+            {% render 'icon', name: 'phone', size: 20, class: 'text-brand-royal shrink-0 mt-0.5' %}
+            <div>
+              <p class="font-semibold text-ink">Teléfono</p>
+              <a href="tel:{{ settings.store_phone | replace: ' ', '' }}" class="text-sm text-brand-royal hover:underline mt-1 inline-block">
+                {{ settings.store_phone }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="nt-card p-5 mb-6">
+          <p class="text-sm font-semibold text-ink mb-2 inline-flex items-center gap-2">
+            {% render 'icon', name: 'star', size: 16, class: 'text-warning fill-warning' %}
+            Calificación en Google
+          </p>
+          <p class="text-2xl font-bold text-ink mb-1">{{ settings.metric_rating_value | default: '4.3★' }}</p>
+          <p class="text-sm text-ink-muted mb-4">
+            Promedio público en Google Maps. Las opiniones las lees directamente en Google — no inventamos testimonios en la web.
+          </p>
+          <a
+            href="{{ maps_reviews }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-medium text-brand-royal hover:underline inline-flex items-center gap-1"
+          >
+            Ver ficha y reseñas en Google Maps
+            {% render 'icon', name: 'arrow-right', size: 14 %}
+          </a>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          {% render 'btn', variant: 'primary', size: 'lg', label: 'Cómo llegar', href: maps_directions, target: '_blank', rel: 'noopener', icon: 'map-pin' %}
+          {% render 'btn', variant: 'whatsapp', size: 'lg', label: 'WhatsApp', href: wa_url, target: '_blank', rel: 'noopener', icon: 'whatsapp' %}
+        </div>
+      </div>
+
+      <div>
+        {% render 'store-map', height: 420, show_links: true, title: section.settings.title %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home — Ubicación",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Parque Principal · El Carmen de Viboral" },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Visítanos en el corazón de Viboral"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción",
+      "default": "Desde 2005 en la Calle 30 # 30-31, frente al Parque Principal. Tienda y servicio técnico en un solo lugar — recoge tu pedido sin costo."
+    }
+  ],
+  "presets": [{ "name": "Home — Ubicación" }]
+}
+{% endschema %}
