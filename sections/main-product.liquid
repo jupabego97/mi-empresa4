@@ -40,7 +40,7 @@
 
         <div class="flex items-center gap-3 flex-wrap">
           <a
-            href="https://www.google.com/maps/search/?api=1&query=NANOTRONICS+El+Carmen+de+Viboral"
+            href="{% render 'google-maps-href', kind: 'search' %}"
             target="_blank"
             rel="noopener"
             class="inline-flex items-center gap-1.5 text-sm hover:text-brand-royal transition-colors"
@@ -250,7 +250,7 @@
               Las reseñas las consultas directamente en Google — no publicamos testimonios inventados en este sitio.
             </p>
             <a
-              href="https://www.google.com/maps/search/?api=1&query={{ settings.store_geo_lat | default: '6.0823' }}%2C{{ settings.store_geo_lng | default: '-75.3351' }}"
+              href="{% render 'google-maps-href', kind: 'place' %}"
               target="_blank"
               rel="noopener"
               class="text-brand-royal text-sm font-medium hover:underline inline-flex items-center gap-1 mb-3"
