@@ -36,17 +36,15 @@
 
     <div class="nt-footer__grid">
       <div class="col-span-2 lg:col-span-2 space-y-4">
-        {%- if settings.logo != blank -%}
-          {%- liquid
-            assign footer_logo_w = settings.logo_width | default: 200
-            if footer_logo_w > 240
-              assign footer_logo_w = 240
-            endif
-          -%}
-          {{ settings.logo | image_url: width: footer_logo_w | image_tag: class: 'nt-footer__logo-img', alt: shop.name, loading: 'lazy', width: footer_logo_w }}
-        {%- else -%}
-          <p class="text-xl font-black tracking-tight">NANO<span class="text-brand-glow">/</span>TRONICS</p>
-        {%- endif -%}
+        {%- liquid
+          assign footer_logo_w = settings.logo_width | default: 220
+          if footer_logo_w > 260
+            assign footer_logo_w = 260
+          endif
+        -%}
+        <a href="{{ routes.root_url }}" class="nt-footer__logo" aria-label="{{ shop.name }}">
+          {% render 'brand-logo', width: footer_logo_w, class: 'nt-footer__logo-img' %}
+        </a>
         <p class="text-sm text-white/65 max-w-xs leading-relaxed">
           Tienda y servicio técnico desde 2005 en el Parque Principal. Tecnología, accesorios y reparación con atención directa.
         </p>
@@ -107,7 +105,7 @@
             <a href="{{ flink }}" class="nt-footer__link">{{ ftitle }}</a>
           {%- endif -%}
         {%- endfor -%}
-        <a href="/collections/ofertas" class="nt-footer__link">{{ 'general.offers' | t }}</a>
+        <a href="{{ routes.collections_url }}/ofertas" class="nt-footer__link">{{ 'general.offers' | t }}</a>
         <a href="{{ routes.search_url }}" class="nt-footer__link">{{ 'nav.search' | t }}</a>
       </div>
 

@@ -1,0 +1,18 @@
+{%- liquid
+  assign logo_width = width | default: settings.logo_width | default: 220
+  assign logo_class = class | default: 'nt-brand-logo__img'
+  assign logo_loading = loading | default: 'lazy'
+-%}
+{%- if settings.logo != blank -%}
+  {{
+    settings.logo
+    | image_url: width: logo_width
+    | image_tag:
+      loading: logo_loading,
+      width: logo_width,
+      alt: shop.name,
+      class: logo_class
+  }}
+{%- else -%}
+  <span class="nt-brand-logo__fallback {{ logo_class }}">NANO<span>/</span>TRONICS</span>
+{%- endif -%}
