@@ -8,12 +8,19 @@
   const LABELS = {
     add: 'Agregar al carrito',
     adding: 'Agregando...',
-    added: 'Agregado',
+    added: '✓ Agregado al carrito',
     error: 'No se pudo agregar',
   };
 
+  const busyForms = new WeakSet();
+
+  function getRoot() {
+    const r = window.Shopify?.routes?.root || '/';
+    return r.endsWith('/') ? r : `${r}/`;
+  }
+
   async function fetchCart() {
-    const res = await fetch(`${root}cart.js`);
+    const res = await fetch(`${getRoot()}cart.js`, { credentials: 'same-origin' });
     if (!res.ok) throw new Error('Cart fetch failed');
     return res.json();
   }
@@ -27,6 +34,32 @@
     if (drawerCount) drawerCount.textContent = `(${count})`;
   }
 
+  function showToast(message, type) {
+    let toast = document.getElementById('nt-cart-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'nt-cart-toast';
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.className = `nt-cart-toast nt-cart-toast--${type || 'info'} is-visible`;
+    clearTimeout(showToast._timer);
+    showToast._timer = setTimeout(() => {
+      toast.classList.remove('is-visible');
+    }, 2600);
+  }
+
+  function openCartDrawerUI() {
+    window.dispatchEvent(new CustomEvent('open-cart'));
+    const drawer = document.getElementById('cart-drawer');
+    if (drawer) {
+      drawer.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+    }
+  }
+
   async function refreshCartDrawer() {
     const drawer = document.getElementById('cart-drawer');
     if (!drawer) return;
@@ -34,7 +67,7 @@
     try {
       const url = new URL(window.location.href);
       url.searchParams.set('section_id', 'cart-drawer');
-      const res = await fetch(url.toString());
+      const res = await fetch(url.toString(), { credentials: 'same-origin' });
       if (!res.ok) return;
 
       const html = await res.text();
@@ -42,13 +75,7 @@
       const newDrawer = doc.getElementById('cart-drawer');
       if (!newDrawer) return;
 
-      const targets = [
-        ['cart-drawer-items', 'cart-drawer-items'],
-        ['cart-drawer-footer', 'cart-drawer-footer'],
-        ['cart-drawer-shipping', 'cart-drawer-shipping'],
-      ];
-
-      targets.forEach(([id]) => {
+      ['cart-drawer-items', 'cart-drawer-footer', 'cart-drawer-shipping'].forEach((id) => {
         const current = document.getElementById(id);
         const next = newDrawer.querySelector(`#${id}`);
         if (current && next) {
@@ -64,19 +91,40 @@
 
       const newCount = newDrawer.querySelector('#cart-drawer-count');
       const currentCount = document.getElementById('cart-drawer-count');
-      if (newCount && currentCount) {
-        currentCount.textContent = newCount.textContent;
-      }
+      if (newCount && currentCount) currentCount.textContent = newCount.textContent;
     } catch (e) {
       console.warn('[NANOTRONICS] cart refresh', e);
     }
   }
 
-  async function addToCart(formData) {
-    const res = await fetch(`${root}cart/add.js`, {
+  function readVariantId(form, btn) {
+    const fromBtn = btn?.dataset?.variantId;
+    if (fromBtn) return fromBtn;
+
+    const idField = form?.querySelector('[name="id"]');
+    if (idField?.value) return idField.value;
+
+    return null;
+  }
+
+  function readQuantity(form) {
+    const qtyField = form?.querySelector('[name="quantity"]');
+    const qty = parseInt(qtyField?.value, 10);
+    return Number.isFinite(qty) && qty > 0 ? qty : 1;
+  }
+
+  async function addVariantToCart(variantId, quantity) {
+    const res = await fetch(`${getRoot()}cart/add.js`, {
       method: 'POST',
-      headers: { Accept: 'application/json' },
-      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        id: Number(variantId),
+        quantity: Number(quantity) || 1,
+      }),
     });
 
     let data = {};
@@ -95,21 +143,6 @@
     openCartDrawerUI();
     await refreshCartDrawer();
     return data;
-  }
-
-  function openCartDrawerUI() {
-    window.dispatchEvent(new CustomEvent('open-cart'));
-    document.getElementById('cart-drawer')?.classList.add('is-open');
-  }
-
-  function resolveAddButton(form, submitter) {
-    if (submitter && (submitter.name === 'add' || submitter.dataset?.addBtn !== undefined || submitter.hasAttribute('data-add-btn'))) {
-      return submitter;
-    }
-    if (form.id === 'product-form') {
-      return document.getElementById('product-add-btn');
-    }
-    return form.querySelector('[data-add-btn]') || form.querySelector('button[type="submit"]');
   }
 
   function getBtnLabelEl(btn) {
@@ -138,7 +171,7 @@
         btn.disabled = false;
         btn.classList.remove('is-added');
         if (labelEl) labelEl.textContent = originalLabel || LABELS.add;
-      }, 1400);
+      }, 1600);
       return;
     }
 
@@ -149,7 +182,7 @@
         btn.disabled = false;
         btn.classList.remove('is-error');
         if (labelEl) labelEl.textContent = originalLabel || LABELS.add;
-      }, 2000);
+      }, 2200);
       return;
     }
 
@@ -157,47 +190,73 @@
     if (labelEl) labelEl.textContent = originalLabel || LABELS.add;
   }
 
-  function isAddToCartForm(form) {
+  function isAddForm(form) {
     if (!form || form.tagName !== 'FORM') return false;
     if (form.classList.contains('ajax-cart-quick')) return true;
     return form.id === 'product-form' && form.classList.contains('ajax-cart');
   }
 
-  async function handleAddToCartSubmit(e) {
-    const form = e.target;
-    if (!isAddToCartForm(form)) return;
-    if (form.id === 'product-form' && e.submitter?.name === 'checkout') return;
+  async function handleAdd(form, btn) {
+    if (!form || busyForms.has(form)) return;
 
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (form.dataset.busy === 'true') return;
-    form.dataset.busy = 'true';
-
-    const btn = resolveAddButton(form, e.submitter);
-
-    if (btn?.disabled) {
-      form.dataset.busy = 'false';
+    const variantId = readVariantId(form, btn);
+    if (!variantId) {
+      showToast('Selecciona una variante', 'error');
       return;
     }
 
+    busyForms.add(form);
     const labelEl = getBtnLabelEl(btn);
     const originalLabel = labelEl?.textContent?.trim() || LABELS.add;
     setBtnState(btn, 'loading', originalLabel);
 
     try {
-      const fd = new FormData(form);
-      if (!fd.get('id')) {
-        throw new Error('Variante no disponible');
-      }
-      await addToCart(fd);
+      await addVariantToCart(variantId, readQuantity(form));
       setBtnState(btn, 'success', originalLabel);
+      showToast(LABELS.added, 'success');
     } catch (err) {
       console.warn('[NANOTRONICS] add to cart', err);
       setBtnState(btn, 'error', originalLabel);
+      showToast(err.message || LABELS.error, 'error');
     } finally {
-      form.dataset.busy = 'false';
+      busyForms.delete(form);
     }
+  }
+
+  function resolveForm(btn) {
+    if (!btn) return null;
+    if (btn.form) return btn.form;
+    return btn.closest('form');
+  }
+
+  function onAddButtonClick(e) {
+    const btn = e.target.closest('[data-add-btn]');
+    if (!btn || btn.disabled) return;
+
+    const form = resolveForm(btn);
+    if (!isAddForm(form)) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    handleAdd(form, btn);
+  }
+
+  function onAddFormSubmit(e) {
+    const form = e.target;
+    if (!isAddForm(form)) return;
+
+    const submitter = e.submitter;
+    if (form.id === 'product-form' && submitter?.name === 'checkout') return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const btn =
+      submitter?.hasAttribute?.('data-add-btn')
+        ? submitter
+        : form.querySelector('[data-add-btn]') || document.getElementById('product-add-btn');
+
+    handleAdd(form, btn);
   }
 
   function formatMoney(cents) {
@@ -234,9 +293,7 @@
 
     const variantSelect = form.querySelector('[name="id"]');
     if (!variantSelect || !product.variants?.length) return;
-
-    const hasVariantPicker = form.querySelector('.variant-option-input');
-    if (!hasVariantPicker) return;
+    if (!form.querySelector('.variant-option-input')) return;
 
     let variantImages = {};
     const variantImagesEl = document.getElementById('product-variant-images');
@@ -252,7 +309,7 @@
     const addBtn = document.getElementById('product-add-btn');
     const addLabel = document.getElementById('product-add-btn-label');
     const addLabelDefault = addLabel?.textContent?.trim() || LABELS.add;
-    const stickyAddBtn = document.querySelector('.nt-sticky-bar button[form="product-form"]');
+    const stickyAddBtn = document.querySelector('.nt-sticky-bar [data-add-btn]');
 
     function getSelectedOptions() {
       const selected = [];
@@ -300,9 +357,7 @@
       [addBtn, stickyAddBtn].forEach((btn) => {
         if (btn) btn.disabled = !available;
       });
-      if (addLabel) {
-        addLabel.textContent = available ? addLabelDefault : 'Agotado';
-      }
+      if (addLabel) addLabel.textContent = available ? addLabelDefault : 'Agotado';
 
       const stockStatus = document.getElementById('product-stock-status');
       const stockDot = document.getElementById('product-stock-dot');
@@ -325,6 +380,7 @@
       }
 
       variantSelect.value = String(variant.id);
+      if (addBtn) addBtn.dataset.variantId = String(variant.id);
 
       const priceBlock = document.getElementById('product-price-block');
       if (priceBlock) {
@@ -363,7 +419,6 @@
         const label = document.querySelector(`[data-option-current="${pos}"]`);
         if (label) label.textContent = changedInput.value;
       }
-
       updateOptionAvailability();
       updateUI(findVariant(getSelectedOptions()));
     }
@@ -376,30 +431,46 @@
     updateUI(findVariant(getSelectedOptions()) || product.variants.find((v) => v.available) || product.variants[0]);
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  function boot() {
     document.documentElement.classList.add('js-ready');
     initProductVariants();
 
-    document.addEventListener('submit', handleAddToCartSubmit, true);
+    document.querySelectorAll('[data-add-btn]').forEach((btn) => {
+      if (btn.type === 'submit') btn.type = 'button';
+    });
 
     window.addEventListener('open-cart', () => {
       document.getElementById('cart-drawer')?.classList.add('is-open');
     });
 
     window.addEventListener('close-cart', () => {
-      document.getElementById('cart-drawer')?.classList.remove('is-open');
+      const drawer = document.getElementById('cart-drawer');
+      if (drawer) {
+        drawer.classList.remove('is-open');
+        drawer.setAttribute('aria-hidden', 'true');
+      }
     });
+  }
 
-    document.addEventListener('change', async (e) => {
-      if (!e.target.classList.contains('cart-qty-input')) return;
-      const key = e.target.dataset.lineKey;
-      const qty = parseInt(e.target.value, 10);
-      await fetch(`${root}cart/change.js`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ id: key, quantity: qty }),
-      });
-      window.location.reload();
+  document.addEventListener('click', onAddButtonClick, true);
+  document.addEventListener('submit', onAddFormSubmit, true);
+
+  document.addEventListener('change', async (e) => {
+    if (!e.target.classList.contains('cart-qty-input')) return;
+    const key = e.target.dataset.lineKey;
+    const qty = parseInt(e.target.value, 10);
+    await fetch(`${getRoot()}cart/change.js`, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ id: key, quantity: qty }),
     });
+    window.location.reload();
   });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
 })();

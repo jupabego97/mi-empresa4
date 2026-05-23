@@ -348,11 +348,12 @@
       {% render 'icon', name: 'whatsapp', size: 20 %}
     </a>
     <button
-      type="submit"
+      type="button"
       form="product-form"
       name="add"
       class="nt-btn nt-btn--primary nt-btn--md flex-1 cursor-pointer"
       data-add-btn
+      data-variant-id="{{ current_variant.id }}"
       {% unless product.available %}disabled{% endunless %}
     >
       {% render 'icon', name: 'cart', size: 16 %}

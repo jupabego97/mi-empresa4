@@ -65,11 +65,12 @@
 
   <div class="flex flex-col gap-3">
     <button
-      type="submit"
+      type="button"
       name="add"
       id="product-add-btn"
       class="nt-btn nt-btn--primary nt-btn--xl nt-btn--full product-add-btn cursor-pointer"
       data-add-btn
+      data-variant-id="{{ current_variant.id }}"
       {% unless current_variant.available %}disabled{% endunless %}
     >
       {% render 'icon', name: 'cart', size: 18 %}

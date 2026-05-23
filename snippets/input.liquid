@@ -76,6 +76,7 @@
           x-model.number="qty"
           min="{{ min | default: 1 }}"
           {% if max != blank %}max="{{ max }}"{% endif %}
+          value="{{ input_value | default: 1 }}"
           inputmode="numeric"
           aria-label="{{ label | default: 'Cantidad' }}"
         >
