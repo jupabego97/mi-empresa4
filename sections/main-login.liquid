@@ -1,0 +1,90 @@
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_text = 'Hola, necesito ayuda para entrar a mi cuenta NANOTRONICS' | url_encode
+  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+-%}
+
+<section class="nt-auth-card">
+  <div class="nt-auth-card__header">
+    <h1 class="nt-auth-card__title">{{ 'account.login_title' | t }}</h1>
+    <p class="nt-auth-card__lead">{{ 'account.login_lead' | t }}</p>
+  </div>
+
+  {%- form 'customer_login', class: 'nt-auth-form space-y-4' -%}
+    {%- if form.errors -%}
+      <div class="nt-auth-alert nt-auth-alert--error" role="alert">
+        {{ form.errors | default_errors }}
+      </div>
+    {%- endif -%}
+
+    <div class="nt-input-wrap">
+      <label class="nt-label" for="customer-email">{{ 'account.email' | t }}</label>
+      <input
+        type="email"
+        id="customer-email"
+        name="customer[email]"
+        class="nt-input"
+        autocomplete="email"
+        required
+        placeholder="tucorreo@ejemplo.com"
+      >
+    </div>
+
+    <div class="nt-input-wrap">
+      <label class="nt-label" for="customer-password">{{ 'account.password' | t }}</label>
+      <input
+        type="password"
+        id="customer-password"
+        name="customer[password]"
+        class="nt-input"
+        autocomplete="current-password"
+        required
+      >
+    </div>
+
+    <button type="submit" class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full">
+      {{ 'account.login_submit' | t }}
+    </button>
+  {%- endform -%}
+
+  <div class="nt-auth-card__links">
+    <a href="{{ routes.account_register_url }}" class="text-sm text-brand-royal hover:underline">
+      {{ 'account.create_account' | t }}
+    </a>
+    <a href="#recover" class="text-sm text-ink-muted hover:text-brand-royal">
+      {{ 'account.forgot_password' | t }}
+    </a>
+  </div>
+
+  <div id="recover" class="nt-auth-card__recover">
+    <h2 class="text-base font-semibold mb-2">{{ 'account.recover_title' | t }}</h2>
+    {%- form 'recover_customer_password', class: 'space-y-3' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="nt-auth-alert nt-auth-alert--success">{{ 'account.recover_success' | t }}</p>
+      {%- else -%}
+        <div class="nt-input-wrap">
+          <label class="nt-label" for="recover-email">{{ 'account.email' | t }}</label>
+          <input type="email" id="recover-email" name="email" class="nt-input" required>
+        </div>
+        <button type="submit" class="nt-btn nt-btn--secondary nt-btn--md nt-btn--full">
+          {{ 'account.recover_submit' | t }}
+        </button>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+
+  <div class="nt-auth-card__help">
+    <p class="text-sm text-ink-muted mb-3">{{ 'account.help_text' | t }}</p>
+    <a href="{{ wa_url }}" class="nt-btn nt-btn--whatsapp nt-btn--md nt-btn--full" target="_blank" rel="noopener">
+      {% render 'icon', name: 'whatsapp', size: 18 %}
+      {{ 'account.help_whatsapp' | t }}
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Login",
+  "settings": []
+}
+{% endschema %}

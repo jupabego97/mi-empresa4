@@ -1,0 +1,122 @@
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_text = 'Hola, necesito ayuda con mi cuenta NANOTRONICS' | url_encode
+  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+-%}
+
+{% render 'breadcrumbs' %}
+
+<section class="nt-section pt-0">
+  <div class="nt-container">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center mb-5">
+          {% render 'brand-logo', variant: 'auth', height: 56, max_width: 300, loading: 'eager' %}
+        </div>
+        <p class="nt-eyebrow mb-2">{{ 'account.eyebrow' | t }}</p>
+        <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight text-ink mb-3">
+          {{ section.settings.heading | default: 'account.title' | t }}
+        </h1>
+        <p class="text-ink-muted text-lg">{{ section.settings.intro | default: 'account.intro' | t }}</p>
+      </div>
+
+      {%- if customer -%}
+        <div class="nt-card p-6 md:p-8 space-y-5 text-center">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-sky text-brand-royal mx-auto">
+            {% render 'icon', name: 'user', size: 28 %}
+          </div>
+          <div>
+            <p class="font-semibold text-lg">{{ 'account.welcome' | t: name: customer.first_name | default: customer.email }}</p>
+            <p class="text-sm text-ink-muted">{{ customer.email }}</p>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <a href="{{ routes.account_url }}" class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full">
+              {{ 'account.view_orders' | t }}
+            </a>
+            <a href="{{ routes.account_addresses_url }}" class="nt-btn nt-btn--secondary nt-btn--lg nt-btn--full">
+              {{ 'account.manage_addresses' | t }}
+            </a>
+          </div>
+          <a href="{{ routes.account_logout_url }}" class="text-sm text-ink-muted hover:text-brand-royal">
+            {{ 'account.logout' | t }}
+          </a>
+        </div>
+      {%- else -%}
+        <div class="grid md:grid-cols-2 gap-4 mb-6">
+          <div class="nt-card p-6 flex flex-col gap-4">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand-sky text-brand-royal">
+              {% render 'icon', name: 'user', size: 22 %}
+            </div>
+            <div>
+              <h2 class="font-semibold text-lg mb-1">{{ 'account.login_title' | t }}</h2>
+              <p class="text-sm text-ink-muted">{{ 'account.login_card_text' | t }}</p>
+            </div>
+            <a href="{{ routes.account_login_url }}" class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full mt-auto">
+              {{ 'account.login_submit' | t }}
+            </a>
+          </div>
+
+          <div class="nt-card p-6 flex flex-col gap-4">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand-sky text-brand-royal">
+              {% render 'icon', name: 'shield-check', size: 22 %}
+            </div>
+            <div>
+              <h2 class="font-semibold text-lg mb-1">{{ 'account.create_account' | t }}</h2>
+              <p class="text-sm text-ink-muted">{{ 'account.register_card_text' | t }}</p>
+            </div>
+            <a href="{{ routes.account_register_url }}" class="nt-btn nt-btn--secondary nt-btn--lg nt-btn--full mt-auto">
+              {{ 'account.register_submit' | t }}
+            </a>
+          </div>
+        </div>
+
+        <ul class="grid sm:grid-cols-3 gap-3 mb-8">
+          <li class="nt-card p-4 text-sm text-ink-muted inline-flex items-start gap-2">
+            {% render 'icon', name: 'package', size: 18, class: 'text-brand-royal shrink-0 mt-0.5' %}
+            {{ 'account.benefit_orders' | t }}
+          </li>
+          <li class="nt-card p-4 text-sm text-ink-muted inline-flex items-start gap-2">
+            {% render 'icon', name: 'map-pin', size: 18, class: 'text-brand-royal shrink-0 mt-0.5' %}
+            {{ 'account.benefit_addresses' | t }}
+          </li>
+          <li class="nt-card p-4 text-sm text-ink-muted inline-flex items-start gap-2">
+            {% render 'icon', name: 'headset', size: 18, class: 'text-brand-royal shrink-0 mt-0.5' %}
+            {{ 'account.benefit_support' | t }}
+          </li>
+        </ul>
+
+        <div class="nt-card p-5 flex flex-col sm:flex-row sm:items-center gap-4 bg-brand-sky/40 border-brand-electric/20">
+          <div class="flex-1">
+            <p class="font-semibold text-ink">{{ 'account.help_title' | t }}</p>
+            <p class="text-sm text-ink-muted">{{ 'account.help_text' | t }}</p>
+          </div>
+          <a href="{{ wa_url }}" class="nt-btn nt-btn--whatsapp nt-btn--md shrink-0" target="_blank" rel="noopener">
+            {% render 'icon', name: 'whatsapp', size: 18 %}
+            {{ 'account.help_whatsapp' | t }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cuenta",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Tu cuenta NANOTRONICS"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "Consulta pedidos, guarda direcciones y compra más rápido con tu cuenta."
+    }
+  ],
+  "presets": [{ "name": "Cuenta" }]
+}
+{% endschema %}

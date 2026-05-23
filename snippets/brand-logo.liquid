@@ -1,18 +1,35 @@
 {%- liquid
-  assign logo_width = width | default: settings.logo_width | default: 280
-  assign logo_class = class | default: 'nt-brand-logo__img'
+  assign logo_variant = variant | default: 'inline'
+  assign logo_height = height | default: settings.logo_height | default: 48
+  assign logo_max_width = max_width | default: settings.logo_width | default: 240
   assign logo_loading = loading | default: 'lazy'
+  assign logo_class = 'nt-brand-logo nt-brand-logo--' | append: logo_variant
+  if class != blank
+    assign logo_class = logo_class | append: ' ' | append: class
+  endif
+  assign fetch_width = logo_max_width | times: 2
+  if fetch_width < 360
+    assign fetch_width = 360
+  endif
+  if fetch_width > 720
+    assign fetch_width = 720
+  endif
+  assign logo_style = '--logo-h: ' | append: logo_height | append: 'px; --logo-max-w: ' | append: logo_max_width | append: 'px;'
 -%}
 {%- if settings.logo != blank -%}
-  {{
-    settings.logo
-    | image_url: width: logo_width
-    | image_tag:
-      loading: logo_loading,
-      width: logo_width,
-      alt: shop.name,
-      class: logo_class
-  }}
+  <span class="nt-brand-logo-wrap" style="{{ logo_style }}">
+    {{
+      settings.logo
+      | image_url: width: fetch_width
+      | image_tag:
+        loading: logo_loading,
+        width: logo_max_width,
+        alt: shop.name,
+        class: logo_class
+    }}
+  </span>
 {%- else -%}
-  <span class="nt-brand-logo__fallback {{ logo_class }}">NANO<span>/</span>TRONICS</span>
+  <span class="nt-brand-logo__fallback {{ logo_class }}" style="{{ logo_style }}">
+    NANO<span>/</span>TRONICS
+  </span>
 {%- endif -%}

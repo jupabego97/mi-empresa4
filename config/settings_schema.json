@@ -17,14 +17,25 @@
       },
       {
         "type": "range",
+        "id": "logo_height",
+        "min": 32,
+        "max": 72,
+        "step": 2,
+        "unit": "px",
+        "label": "Alto del logo",
+        "default": 44,
+        "info": "Controla la altura visible. Ideal para logos horizontales (40–48 px en header)."
+      },
+      {
+        "type": "range",
         "id": "logo_width",
         "min": 120,
         "max": 320,
         "step": 10,
         "unit": "px",
-        "label": "Ancho del logo",
+        "label": "Ancho máximo del logo",
         "default": 220,
-        "info": "Recomendado 200–280 px para buena presencia en header y footer."
+        "info": "Tope horizontal. Sube el logo en PNG horizontal (recomendado 600×120 px)."
       },
       {
         "type": "text",

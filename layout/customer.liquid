@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code | default: 'es' }}">
+<head>
+  {% render 'meta-tags' %}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --color-brand-royal: {{ settings.color_brand_royal | default: '#1D4ED8' }};
+      --color-brand-electric: {{ settings.color_brand_electric | default: '#2D7CFF' }};
+      --color-brand-deep: {{ settings.color_brand_deep | default: '#050B1F' }};
+    }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background: #f4f7fc;
+      color: #0a0f1c;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+
+  {{ 'nanotronics-theme.css' | asset_url | stylesheet_tag: preload: true }}
+  {{ content_for_header }}
+</head>
+<body class="nt-customer-layout">
+  <main class="nt-customer-shell">
+    <a href="{{ routes.root_url }}" class="nt-customer-shell__logo" aria-label="{{ shop.name }}">
+      {% render 'brand-logo', variant: 'auth', height: 52, max_width: 280, loading: 'eager' %}
+    </a>
+    {{ content_for_layout }}
+    <p class="nt-customer-shell__back">
+      <a href="{{ routes.root_url }}" class="text-brand-royal hover:underline inline-flex items-center gap-1">
+        {% render 'icon', name: 'home', size: 14 %}
+        {{ 'account.back_store' | t }}
+      </a>
+    </p>
+  </main>
+  {% render 'icon-sprite' %}
+</body>
+</html>

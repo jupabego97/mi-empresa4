@@ -13,7 +13,7 @@
     <div class="flex items-center justify-between p-4 border-b border-line" id="cart-drawer-header">
       <div class="flex items-center gap-3 min-w-0">
         <a href="{{ routes.root_url }}" class="nt-drawer__logo" aria-label="{{ shop.name }}">
-          {% render 'brand-logo', width: 150, class: 'nt-drawer__logo-img' %}
+          {% render 'brand-logo', variant: 'drawer', height: 36, max_width: 140 %}
         </a>
         <h2 class="text-lg font-semibold inline-flex items-center gap-2">
           {% render 'icon', name: 'cart', size: 20, class: 'text-brand-royal' %}
@@ -42,7 +42,7 @@
       {%- else -%}
         <div class="text-center py-12">
           <div class="inline-flex items-center justify-center nt-cart-empty-logo mb-4">
-            {% render 'brand-logo', width: 170, class: 'nt-cart-empty-logo__img' %}
+            {% render 'brand-logo', variant: 'auth', height: 48, max_width: 220 %}
           </div>
           <p class="font-semibold mb-1">Tu carrito está vacío</p>
           <p class="text-sm text-ink-muted mb-6">Empieza a explorar y arma tu setup ideal</p>

@@ -2,7 +2,9 @@
   assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
   assign wa_text = settings.whatsapp_message | url_encode
   assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
-  assign logo_w = settings.logo_width | default: 280
+  assign logo_h = settings.logo_height | default: 44
+  assign logo_w = settings.logo_width | default: 220
+  assign account_url = '/pages/cuenta'
 -%}
 
 <header
@@ -13,8 +15,8 @@
 >
   <div class="nt-container nt-header__inner">
     <div class="nt-header__row">
-      <a href="{{ routes.root_url }}" class="nt-header__logo" style="--logo-width: {{ logo_w }}px;" aria-label="{{ shop.name }}">
-        {% render 'brand-logo', width: logo_w, loading: 'eager', class: 'nt-header__logo-img' %}
+      <a href="{{ routes.root_url }}" class="nt-header__logo" aria-label="{{ shop.name }}">
+        {% render 'brand-logo', variant: 'header', height: logo_h, max_width: logo_w, loading: 'eager' %}
       </a>
 
       <div class="nt-header__search hidden sm:block">
@@ -68,7 +70,7 @@
         </a>
 
         <a
-          href="{{ routes.account_url }}"
+          href="{{ account_url }}"
           class="nt-header__icon-btn hidden md:flex"
           aria-label="{{ 'general.account' | t }}"
         >
@@ -217,7 +219,7 @@
           {% render 'icon', name: 'instagram', size: 16 %} @{{ ig_handle }}
         </a>
       {%- endif -%}
-      <a href="{{ routes.account_url }}" class="nt-header__nav-link inline-flex items-center gap-2">
+      <a href="{{ account_url }}" class="nt-header__nav-link inline-flex items-center gap-2">
         {% render 'icon', name: 'user', size: 16 %} {{ 'general.account' | t }}
       </a>
     </nav>

@@ -37,13 +37,14 @@
     <div class="nt-footer__grid">
       <div class="col-span-2 lg:col-span-2 space-y-4">
         {%- liquid
+          assign footer_logo_h = settings.logo_height | default: 44
           assign footer_logo_w = settings.logo_width | default: 220
           if footer_logo_w > 260
             assign footer_logo_w = 260
           endif
         -%}
         <a href="{{ routes.root_url }}" class="nt-footer__logo" aria-label="{{ shop.name }}">
-          {% render 'brand-logo', width: footer_logo_w, class: 'nt-footer__logo-img' %}
+          {% render 'brand-logo', variant: 'footer', height: footer_logo_h, max_width: footer_logo_w %}
         </a>
         <p class="text-sm text-white/65 max-w-xs leading-relaxed">
           Tienda y servicio técnico desde 2005 en el Parque Principal. Tecnología, accesorios y reparación con atención directa.

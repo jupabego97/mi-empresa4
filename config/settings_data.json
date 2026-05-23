@@ -10,7 +10,8 @@
 {
   "current": {
     "logo": "shopify://shop_images/logo.jpg",
-    "logo_width": 280,
+    "logo_height": 44,
+    "logo_width": 220,
     "brand_tagline": "Al son de la tecnología",
     "brand_founded_year": "2005",
     "brand_story_short": "Desde 2005, NANOTRONICS acerca la tecnología a las familias del oriente antioqueño. Nacimos como tienda y servicio técnico en el Parque Principal de El Carmen de Viboral.\n\nHoy, bajo la dirección de Juan Pablo Betancur, seguimos con el mismo compromiso que nos fundó Alpidio Betancur: buen precio, amplia variedad y excelente atención.",
