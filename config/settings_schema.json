@@ -18,12 +18,13 @@
       {
         "type": "range",
         "id": "logo_width",
-        "min": 80,
-        "max": 280,
+        "min": 120,
+        "max": 320,
         "step": 10,
         "unit": "px",
         "label": "Ancho del logo",
-        "default": 160
+        "default": 220,
+        "info": "Recomendado 200–280 px para buena presencia en header y footer."
       },
       {
         "type": "text",
@@ -99,16 +100,16 @@
       {
         "type": "text",
         "id": "store_geo_lat",
-        "label": "Latitud (SEO / mapas)",
-        "default": "6.0823",
-        "info": "VALIDAR en Google Maps"
+        "label": "Latitud (SEO / schema)",
+        "default": "6.0834861",
+        "info": "Solo para SEO. Los mapas usan la dirección en Contacto y WhatsApp."
       },
       {
         "type": "text",
         "id": "store_geo_lng",
-        "label": "Longitud (SEO / mapas)",
-        "default": "-75.3351",
-        "info": "VALIDAR en Google Maps"
+        "label": "Longitud (SEO / schema)",
+        "default": "-75.3339518",
+        "info": "Solo para SEO. Los mapas usan la dirección en Contacto y WhatsApp."
       }
     ]
   },
@@ -232,6 +233,27 @@
         "id": "store_email",
         "label": "Email",
         "default": "contacto@nanotronics.com.co"
+      },
+      {
+        "type": "header",
+        "content": "Google Maps"
+      },
+      {
+        "type": "paragraph",
+        "content": "Para que «Cómo llegar» apunte exacto a la tienda: pega el enlace Compartir de tu ficha en Google Maps."
+      },
+      {
+        "type": "textarea",
+        "id": "google_maps_destination",
+        "label": "Destino Google Maps (dirección exacta)",
+        "default": "NANOTRONICS, Calle 30 # 30-31, Parque Principal, El Carmen de Viboral, Antioquia, Colombia",
+        "info": "Usado en «Cómo llegar» y el mapa del home. Debe coincidir con tu ficha en Google."
+      },
+      {
+        "type": "url",
+        "id": "google_maps_place_url",
+        "label": "URL ficha Google Maps (opcional)",
+        "info": "En Google Maps: tu negocio → Compartir → copiar enlace. «Abrir en Maps» usará este pin exacto."
       }
     ]
   },
