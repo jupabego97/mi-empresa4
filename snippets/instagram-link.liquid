@@ -34,7 +34,7 @@
     </a>
   {%- else -%}
     <a href="{{ ig_url }}" target="_blank" rel="noopener noreferrer" class="hover:text-white inline-flex items-center gap-2 {{ extra_class }}" aria-label="Instagram {{ ig_display }}">
-      {% render 'icon', name: 'instagram', size: icon_size | default: 14, class: 'text-brand-glow' %}
+      {% render 'icon', name: 'instagram', size: icon_size | default: 14, class: icon_class | default: 'text-brand-glow' %}
       <span>{{ ig_display }}</span>
     </a>
   {%- endif -%}
