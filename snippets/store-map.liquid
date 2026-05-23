@@ -1,0 +1,59 @@
+{%- comment -%}
+  Mapa embebido + enlaces a Google Maps.
+  {% render 'store-map', height: 400, show_links: true %}
+{%- endcomment -%}
+{%- liquid
+  assign map_height = height | default: 360
+  assign map_title = title | default: 'Ubicación ' | append: shop.name
+-%}
+{%- capture embed_src -%}{% render 'google-maps-href', kind: 'embed' %}{%- endcapture -%}
+{%- capture maps_directions -%}{% render 'google-maps-href', kind: 'directions' %}{%- endcapture -%}
+{%- capture maps_search -%}{% render 'google-maps-href', kind: 'place' %}{%- endcapture -%}
+
+<div class="nt-store-map {% if class != blank %}{{ class }}{% endif %}">
+  <iframe
+    src="{{ embed_src | strip }}"
+    width="100%"
+    height="{{ map_height }}"
+    style="border:0;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    title="{{ map_title | escape }}"
+    class="w-full rounded-xl bg-surface-2"
+  ></iframe>
+  {%- if show_links -%}
+    <div class="flex flex-wrap gap-3 mt-4">
+      {%- assign place_url = settings.google_maps_place_url | strip -%}
+      {%- if place_url != blank -%}
+        <a href="{{ place_url }}" target="_blank" rel="noopener noreferrer" class="nt-btn nt-btn--primary nt-btn--sm inline-flex items-center gap-2">
+          {% render 'icon', name: 'map-pin', size: 16 %}
+          Cómo llegar
+        </a>
+        <a href="{{ place_url }}" target="_blank" rel="noopener noreferrer" class="nt-btn nt-btn--secondary nt-btn--sm inline-flex items-center gap-2">
+          {% render 'icon', name: 'arrow-right', size: 16 %}
+          Abrir en Google Maps
+        </a>
+      {%- else -%}
+        <a
+          href="{{ maps_directions | strip }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="nt-btn nt-btn--primary nt-btn--sm inline-flex items-center gap-2"
+        >
+          {% render 'icon', name: 'map-pin', size: 16 %}
+          Cómo llegar
+        </a>
+        <a
+          href="{{ maps_search | strip }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="nt-btn nt-btn--secondary nt-btn--sm inline-flex items-center gap-2"
+        >
+          {% render 'icon', name: 'arrow-right', size: 16 %}
+          Abrir en Google Maps
+        </a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
