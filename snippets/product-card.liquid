@@ -154,7 +154,7 @@
           <form action="{{ routes.cart_add_url }}" method="post" class="flex-1 ajax-cart-quick" data-product-id="{{ card_product.id }}">
             <input type="hidden" name="id" value="{{ quick_variant_id }}">
             <input type="hidden" name="quantity" value="1">
-            <button type="button" class="nt-btn nt-btn--primary nt-btn--sm w-full cursor-pointer" data-add-btn data-variant-id="{{ quick_variant_id }}">
+            <button type="submit" class="nt-btn nt-btn--primary nt-btn--sm w-full cursor-pointer" data-add-btn data-variant-id="{{ quick_variant_id }}">
               {% render 'icon', name: 'cart', size: 14 %}
               <span data-add-btn-label>{{ add_label }}</span>
             </button>
