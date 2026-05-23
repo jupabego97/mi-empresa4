@@ -10,6 +10,15 @@
         widths: '300,500,700',
         sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw'
     }}
+  {%- elsif image_asset != blank -%}
+    <img
+      src="{{ image_asset | asset_url }}"
+      alt=""
+      class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      loading="lazy"
+      width="400"
+      height="500"
+    >
   {%- else -%}
     <div class="absolute inset-0 bg-gradient-to-br from-brand-royal via-brand-electric to-brand-deep"></div>
     <div class="absolute inset-0 nt-tech-grid opacity-30"></div>

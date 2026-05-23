@@ -92,7 +92,7 @@
           "settings": {
             "collection": "accesorios",
             "title": "Accesorios",
-            "icon": "keyboard"
+            "icon": "plug"
           }
         },
         "c2": {
@@ -100,7 +100,7 @@
           "settings": {
             "collection": "cables",
             "title": "Cables",
-            "icon": "wifi"
+            "icon": "cable"
           }
         },
         "c3": {
@@ -108,7 +108,7 @@
           "settings": {
             "collection": "power-bank",
             "title": "Power bank",
-            "icon": "cpu"
+            "icon": "battery"
           }
         },
         "c4": {
@@ -116,7 +116,7 @@
           "settings": {
             "collection": "parlantes",
             "title": "Parlantes",
-            "icon": "headphones"
+            "icon": "speaker"
           }
         },
         "c5": {
@@ -124,7 +124,7 @@
           "settings": {
             "collection": "diademas",
             "title": "Diademas",
-            "icon": "headphones"
+            "icon": "headset"
           }
         },
         "c6": {
@@ -132,7 +132,7 @@
           "settings": {
             "collection": "belleza",
             "title": "Belleza",
-            "icon": "cpu"
+            "icon": "sparkle"
           }
         }
       },

@@ -39,6 +39,26 @@
               assign card_url = routes.collections_url | append: '/' | append: collection_handle
             endif
           endif
+
+          assign theme_key = collection_handle
+          if theme_key == blank
+            assign theme_key = card_title | handleize
+          endif
+          capture theme_data
+            render 'category-theme', handle: theme_key, title: card_title, icon: card_icon
+          endcapture
+          assign theme_parts = theme_data | strip | split: '|'
+          assign card_image_asset = theme_parts | first
+          assign card_theme_icon = theme_parts | last
+          if card_image_asset == blank
+            assign card_image_asset = ''
+          endif
+          if card_theme_icon != blank
+            assign card_icon = card_theme_icon
+          endif
+          if card_image != blank
+            assign card_image_asset = ''
+          endif
         -%}
         {%- if card_title != blank -%}
           <div {{ block.shopify_attributes }}>
@@ -46,6 +66,7 @@
               title: card_title,
               url: card_url,
               image: card_image,
+              image_asset: card_image_asset,
               icon: card_icon,
               eyebrow: card_eyebrow
             %}
@@ -78,7 +99,13 @@
         { "type": "text", "id": "title", "label": "Nombre (opcional si hay colección)", "default": "Categoría", "info": "Déjalo en «Categoría» para usar el título de la colección." },
         { "type": "url", "id": "url", "label": "Enlace (opcional si hay colección)" },
         { "type": "image_picker", "id": "image", "label": "Imagen" },
-        { "type": "select", "id": "icon", "label": "Ícono fallback", "default": "cpu", "options": [
+        { "type": "select", "id": "icon", "label": "Ícono fallback", "default": "grid", "options": [
+          { "value": "plug", "label": "Accesorios" },
+          { "value": "cable", "label": "Cables" },
+          { "value": "battery", "label": "Power bank" },
+          { "value": "speaker", "label": "Parlantes" },
+          { "value": "headset", "label": "Diademas" },
+          { "value": "sparkle", "label": "Belleza" },
           { "value": "laptop", "label": "Portátiles" },
           { "value": "cpu", "label": "PC / Componentes" },
           { "value": "monitor", "label": "Monitores" },
@@ -86,7 +113,8 @@
           { "value": "wifi", "label": "Redes" },
           { "value": "headphones", "label": "Audio" },
           { "value": "gamepad", "label": "Gaming" },
-          { "value": "tool", "label": "Servicio técnico" }
+          { "value": "tool", "label": "Servicio técnico" },
+          { "value": "grid", "label": "Genérico" }
         ] }
       ]
     }

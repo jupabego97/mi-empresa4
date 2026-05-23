@@ -1,0 +1,36 @@
+{%- comment -%}
+  Devuelve asset|icon para una categoría.
+  {% render 'category-theme', handle: 'parlantes', title: 'Parlantes', icon: 'cpu' %}
+{%- endcomment -%}
+{%- liquid
+  assign h = handle | default: '' | downcase | strip
+  assign t = title | default: '' | downcase | strip
+  assign fallback_icon = icon | default: 'grid'
+  assign theme_asset = ''
+  assign theme_icon = fallback_icon
+
+  if h == 'parlantes' or t contains 'parlante'
+    assign theme_asset = 'category-parlantes.svg'
+    assign theme_icon = 'speaker'
+  elsif h == 'diademas' or t contains 'diadema' or t contains 'audífono' or t contains 'audifono'
+    assign theme_asset = 'category-diademas.svg'
+    assign theme_icon = 'headset'
+  elsif h == 'power-bank' or h == 'powerbank' or t contains 'power bank' or t contains 'batería' or t contains 'bateria'
+    assign theme_asset = 'category-power-bank.svg'
+    assign theme_icon = 'battery'
+  elsif h == 'cables' or t contains 'cable'
+    assign theme_asset = 'category-cables.svg'
+    assign theme_icon = 'cable'
+  elsif h == 'accesorios' or t contains 'accesorio'
+    assign theme_asset = 'category-accesorios.svg'
+    assign theme_icon = 'plug'
+  elsif h == 'belleza' or t contains 'belleza' or t contains 'cuidado personal'
+    assign theme_asset = 'category-belleza.svg'
+    assign theme_icon = 'sparkle'
+  elsif h == 'catalogo-destacado' or t contains 'destacado' or t contains 'oferta'
+    assign theme_asset = 'category-destacados.svg'
+    assign theme_icon = 'star'
+  endif
+
+  echo theme_asset | append: '|' | append: theme_icon
+-%}

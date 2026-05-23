@@ -40,12 +40,20 @@
           {%- else -%}
             {%- assign eyebrow_text = '' -%}
           {%- endif -%}
+          {%- capture theme_data -%}{% render 'category-theme', handle: handle, title: card_title, icon: 'grid' %}{%- endcapture -%}
+          {%- assign theme_parts = theme_data | strip | split: '|' -%}
+          {%- assign card_image_asset = theme_parts | first -%}
+          {%- assign card_icon = theme_parts | last -%}
+          {%- if card_image != blank -%}
+            {%- assign card_image_asset = '' -%}
+          {%- endif -%}
           <div>
             {% render 'category-card',
               title: card_title,
               url: card_url,
               image: card_image,
-              icon: 'cpu',
+              image_asset: card_image_asset,
+              icon: card_icon,
               eyebrow: eyebrow_text
             %}
           </div>
