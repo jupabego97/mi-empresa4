@@ -26,7 +26,7 @@
           {% render 'icon', name: 'whatsapp', size: 22 %}
         </span>
         <p class="font-semibold text-ink mb-1">WhatsApp</p>
-        <p class="text-sm text-ink-muted">Respuesta en ~5 min (horario tienda)</p>
+        <p class="text-sm text-ink-muted">Atención al cliente · ~5 min en horario tienda</p>
         <span class="text-xs text-brand-royal font-medium mt-2 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
           Escribir {% render 'icon', name: 'arrow-right', size: 12 %}
         </span>
@@ -41,16 +41,25 @@
           Ver servicios {% render 'icon', name: 'arrow-right', size: 12 %}
         </span>
       </a>
-      <a href="/pages/contacto" class="nt-card p-5 hover:border-brand-royal transition-colors group">
-        <span class="flex items-center justify-center w-11 h-11 rounded-lg bg-brand-sky text-brand-royal mb-3">
-          {% render 'icon', name: 'mail', size: 22 %}
-        </span>
-        <p class="font-semibold text-ink mb-1">Contacto</p>
-        <p class="text-sm text-ink-muted">Formulario, teléfono y correo</p>
-        <span class="text-xs text-brand-royal font-medium mt-2 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-          Ir a contacto {% render 'icon', name: 'arrow-right', size: 12 %}
-        </span>
-      </a>
+      {%- liquid
+        assign ig_handle = settings.instagram_handle | default: 'nanotronics.com.co' | replace: '@', '' | strip
+        assign ig_url = settings.social_instagram | strip
+        if ig_url == blank and ig_handle != blank
+          assign ig_url = 'https://www.instagram.com/' | append: ig_handle | append: '/'
+        endif
+      -%}
+      {%- if ig_url != blank -%}
+        <a href="{{ ig_url }}" target="_blank" rel="noopener noreferrer" class="nt-card p-5 hover:border-brand-royal transition-colors group">
+          <span class="flex items-center justify-center w-11 h-11 rounded-lg bg-gradient-to-br from-[#833AB4]/15 via-[#FD1D1D]/15 to-[#F77737]/15 text-[#C13584] mb-3">
+            {% render 'icon', name: 'instagram', size: 22 %}
+          </span>
+          <p class="font-semibold text-ink mb-1">Instagram</p>
+          <p class="text-sm text-ink-muted">@{{ ig_handle }} · novedades y promos</p>
+          <span class="text-xs text-brand-royal font-medium mt-2 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+            Seguir {% render 'icon', name: 'arrow-right', size: 12 %}
+          </span>
+        </a>
+      {%- endif -%}
       <a href="/pages/nosotros" class="nt-card p-5 hover:border-brand-royal transition-colors group">
         <span class="flex items-center justify-center w-11 h-11 rounded-lg bg-brand-sky text-brand-royal mb-3">
           {% render 'icon', name: 'map-pin', size: 22 %}
@@ -139,7 +148,7 @@
       "type": "textarea",
       "id": "intro",
       "label": "Intro",
-      "default": "Resolvemos dudas sobre compras, envíos, garantías y servicio técnico. En horario de tienda respondemos por WhatsApp en aproximadamente 5 minutos."
+      "default": "Resolvemos dudas sobre compras, envíos, garantías y servicio técnico. Atención al cliente solo por WhatsApp (~5 min en horario de tienda). Instagram: novedades y promociones."
     },
     { "type": "text", "id": "faq_title", "label": "Título FAQ", "default": "Preguntas frecuentes" },
     { "type": "text", "id": "faq_subtitle", "label": "Subtítulo FAQ", "default": "Información verificada según nuestra operación en El Carmen de Viboral." },

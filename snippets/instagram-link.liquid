@@ -1,0 +1,41 @@
+{%- comment -%}
+  Instagram NANOTRONICS. Uso:
+  {% render 'instagram-link', style: 'icon' %}
+  style: icon | text | card
+{%- endcomment -%}
+{%- liquid
+  assign ig_handle = settings.instagram_handle | default: 'nanotronics.com.co' | replace: '@', '' | strip
+  assign ig_url = settings.social_instagram | strip
+  if ig_url == blank and ig_handle != blank
+    assign ig_url = 'https://www.instagram.com/' | append: ig_handle | append: '/'
+  endif
+  assign ig_display = '@' | append: ig_handle
+  assign link_style = style | default: 'text'
+  assign extra_class = class | default: ''
+-%}
+{%- if ig_url != blank -%}
+  {%- if link_style == 'icon' -%}
+    <a href="{{ ig_url }}" class="nt-footer__social-link {{ extra_class }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram {{ ig_display }}">
+      {% render 'icon', name: 'instagram', size: icon_size | default: 16 %}
+    </a>
+  {%- elsif link_style == 'card' -%}
+    <a href="{{ ig_url }}" target="_blank" rel="noopener noreferrer" class="flex items-start gap-4 p-5 rounded-xl border border-line bg-surface hover:border-brand-royal transition-colors group {{ extra_class }}">
+      <span class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white">
+        {% render 'icon', name: 'instagram', size: 22 %}
+      </span>
+      <div class="flex-1">
+        <p class="font-semibold text-ink">Instagram</p>
+        <p class="text-sm text-ink-muted">{{ ig_display }}</p>
+        <p class="text-xs text-ink-muted mt-1">Novedades, promos y contenido de la tienda</p>
+      </div>
+      <span class="text-brand-royal group-hover:translate-x-1 transition-transform">
+        {% render 'icon', name: 'arrow-right', size: 18 %}
+      </span>
+    </a>
+  {%- else -%}
+    <a href="{{ ig_url }}" target="_blank" rel="noopener noreferrer" class="hover:text-white inline-flex items-center gap-2 {{ extra_class }}" aria-label="Instagram {{ ig_display }}">
+      {% render 'icon', name: 'instagram', size: icon_size | default: 14, class: 'text-brand-glow' %}
+      <span>{{ ig_display }}</span>
+    </a>
+  {%- endif -%}
+{%- endif -%}

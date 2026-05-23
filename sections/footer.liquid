@@ -50,47 +50,39 @@
         <p class="text-sm text-white/65 max-w-xs leading-relaxed">
           Tienda y servicio técnico desde 2005 en el Parque Principal. Tecnología, accesorios y reparación con atención directa.
         </p>
+        {%- if settings.customer_service_note != blank -%}
+          <p class="text-xs text-brand-glow/90 max-w-xs">{{ settings.customer_service_note }}</p>
+        {%- endif -%}
         <div class="space-y-1.5 text-sm text-white/70">
           {%- capture footer_maps -%}{% render 'google-maps-href', kind: 'place' %}{%- endcapture -%}
           {%- assign footer_maps_url = footer_maps | strip -%}
           <p class="inline-flex items-center gap-2">
             {% render 'icon', name: 'map-pin', size: 14, class: 'text-brand-glow' %}
+          {%- assign place_url = settings.google_maps_place_url | strip -%}
+          {%- if place_url != blank -%}
+            <a href="{{ place_url }}" target="_blank" rel="noopener" class="hover:text-white">
+              {{ settings.store_address }}
+            </a>
+          {%- else -%}
             <a href="{{ footer_maps_url }}" target="_blank" rel="noopener" class="hover:text-white">
               {{ settings.store_address }}
             </a>
+          {%- endif -%}
           </p>
           <p class="inline-flex items-center gap-2">
-            {% render 'icon', name: 'phone', size: 14, class: 'text-brand-glow' %}
-            <a href="tel:{{ settings.store_phone | replace: ' ', '' }}" class="hover:text-white">{{ settings.store_phone }}</a>
+            {% render 'icon', name: 'whatsapp', size: 14, class: 'text-[#25D366]' %}
+            <a href="{{ wa_url }}" target="_blank" rel="noopener" class="hover:text-white">
+              WhatsApp · {{ settings.store_phone }}
+            </a>
           </p>
           <p class="inline-flex items-center gap-2">
-            {% render 'icon', name: 'mail', size: 14, class: 'text-brand-glow' %}
-            <a href="mailto:{{ settings.store_email }}" class="hover:text-white">{{ settings.store_email }}</a>
+            {% render 'instagram-link', style: 'text', icon_size: 14 %}
           </p>
           <p class="text-xs text-white/45 pt-1">NIT {{ settings.store_nit }}</p>
         </div>
 
         <div class="nt-footer__social pt-2">
-          {%- if settings.social_facebook != blank -%}
-            <a href="{{ settings.social_facebook }}" class="nt-footer__social-link" target="_blank" rel="noopener" aria-label="Facebook">
-              {% render 'icon', name: 'facebook', size: 16 %}
-            </a>
-          {%- endif -%}
-          {%- if settings.social_instagram != blank -%}
-            <a href="{{ settings.social_instagram }}" class="nt-footer__social-link" target="_blank" rel="noopener" aria-label="Instagram">
-              {% render 'icon', name: 'instagram', size: 16 %}
-            </a>
-          {%- endif -%}
-          {%- if settings.social_tiktok != blank -%}
-            <a href="{{ settings.social_tiktok }}" class="nt-footer__social-link" target="_blank" rel="noopener" aria-label="TikTok">
-              {% render 'icon', name: 'tiktok', size: 16 %}
-            </a>
-          {%- endif -%}
-          {%- if settings.social_youtube != blank -%}
-            <a href="{{ settings.social_youtube }}" class="nt-footer__social-link" target="_blank" rel="noopener" aria-label="YouTube">
-              {% render 'icon', name: 'youtube', size: 16 %}
-            </a>
-          {%- endif -%}
+          {% render 'instagram-link', style: 'icon' %}
           <a href="{{ wa_url }}" class="nt-footer__social-link" target="_blank" rel="noopener" aria-label="WhatsApp">
             {% render 'icon', name: 'whatsapp', size: 16 %}
           </a>

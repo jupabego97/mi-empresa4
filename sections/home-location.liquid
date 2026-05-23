@@ -2,6 +2,7 @@
   assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
   assign wa_text = 'Hola, quiero visitar la tienda NANOTRONICS' | url_encode
   assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+  assign place_url = settings.google_maps_place_url | strip
 -%}
 {%- capture maps_reviews -%}{% render 'google-maps-href', kind: 'place' %}{%- endcapture -%}
 {%- assign maps_reviews_url = maps_reviews | strip -%}
@@ -32,12 +33,20 @@
             </div>
           </div>
           <div class="flex items-start gap-3 p-4 rounded-xl border border-line bg-surface">
-            {% render 'icon', name: 'phone', size: 20, class: 'text-brand-royal shrink-0 mt-0.5' %}
+            {% render 'icon', name: 'whatsapp', size: 20, class: 'text-[#25D366] shrink-0 mt-0.5' %}
             <div>
-              <p class="font-semibold text-ink">Teléfono</p>
-              <a href="tel:{{ settings.store_phone | replace: ' ', '' }}" class="text-sm text-brand-royal hover:underline mt-1 inline-block">
-                {{ settings.store_phone }}
+              <p class="font-semibold text-ink">Atención al cliente</p>
+              <a href="{{ wa_url }}" target="_blank" rel="noopener" class="text-sm text-brand-royal hover:underline mt-1 inline-block">
+                WhatsApp · {{ settings.store_phone }}
               </a>
+              <p class="text-xs text-ink-muted mt-1">{{ settings.customer_service_note | default: 'Atención al cliente solo por WhatsApp.' }}</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 p-4 rounded-xl border border-line bg-surface">
+            {% render 'icon', name: 'instagram', size: 20, class: 'text-brand-royal shrink-0 mt-0.5' %}
+            <div>
+              <p class="font-semibold text-ink">Instagram</p>
+              {% render 'instagram-link', style: 'text', icon_size: 16, class: 'text-sm text-brand-royal hover:underline mt-1' %}
             </div>
           </div>
         </div>
@@ -63,7 +72,14 @@
         </div>
 
         <div class="flex flex-wrap gap-3">
-          {% render 'btn', variant: 'primary', size: 'lg', label: 'Cómo llegar', href: maps_directions_url, target: '_blank', rel: 'noopener', icon: 'map-pin' %}
+          {%- if place_url != blank -%}
+            <a href="{{ place_url }}" target="_blank" rel="noopener noreferrer" class="nt-btn nt-btn--primary nt-btn--lg inline-flex items-center gap-2">
+              {% render 'icon', name: 'map-pin', size: 18 %}
+              Cómo llegar
+            </a>
+          {%- else -%}
+            {% render 'btn', variant: 'primary', size: 'lg', label: 'Cómo llegar', href: maps_directions_url, target: '_blank', rel: 'noopener', icon: 'map-pin' %}
+          {%- endif -%}
           {% render 'btn', variant: 'whatsapp', size: 'lg', label: 'WhatsApp', href: wa_url, target: '_blank', rel: 'noopener', icon: 'whatsapp' %}
         </div>
       </div>

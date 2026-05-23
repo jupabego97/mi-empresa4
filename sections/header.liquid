@@ -63,14 +63,16 @@
 
       <div class="nt-header__actions">
         <a
-          href="tel:{{ settings.store_phone | replace: ' ', '' }}"
+          href="{{ wa_url }}"
+          target="_blank"
+          rel="noopener"
           class="hidden xl:flex items-center gap-2 px-3 py-2 rounded-md hover:bg-surface-2 text-sm shrink-0"
-          aria-label="{{ 'general.call_us' | t }}"
+          aria-label="{{ 'general.whatsapp' | t }}"
         >
-          {% render 'icon', name: 'headset', size: 22, class: 'text-brand-royal' %}
+          {% render 'icon', name: 'whatsapp', size: 22, class: 'text-[#25D366]' %}
           <span class="leading-tight">
             <span class="block text-[10px] uppercase tracking-wider text-ink-muted">{{ 'general.support' | t }}</span>
-            <span class="block font-semibold text-ink">{{ settings.store_phone }}</span>
+            <span class="block font-semibold text-ink">WhatsApp · ~5 min</span>
           </span>
         </a>
 
@@ -222,11 +224,20 @@
       <a href="{{ wa_url }}" class="nt-header__nav-link text-[#25D366] inline-flex items-center gap-2" target="_blank" rel="noopener">
         {% render 'icon', name: 'whatsapp', size: 16 %} {{ 'general.whatsapp' | t }}
       </a>
+      {%- liquid
+        assign ig_handle = settings.instagram_handle | default: 'nanotronics.com.co' | replace: '@', '' | strip
+        assign ig_url = settings.social_instagram | strip
+        if ig_url == blank and ig_handle != blank
+          assign ig_url = 'https://www.instagram.com/' | append: ig_handle | append: '/'
+        endif
+      -%}
+      {%- if ig_url != blank -%}
+        <a href="{{ ig_url }}" class="nt-header__nav-link inline-flex items-center gap-2" target="_blank" rel="noopener noreferrer">
+          {% render 'icon', name: 'instagram', size: 16 %} @{{ ig_handle }}
+        </a>
+      {%- endif -%}
       <a href="{{ routes.account_url }}" class="nt-header__nav-link inline-flex items-center gap-2">
         {% render 'icon', name: 'user', size: 16 %} {{ 'general.account' | t }}
-      </a>
-      <a href="tel:{{ settings.store_phone }}" class="nt-header__nav-link inline-flex items-center gap-2">
-        {% render 'icon', name: 'phone', size: 16 %} {{ settings.store_phone }}
       </a>
     </nav>
   </div>

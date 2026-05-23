@@ -1,143 +1,100 @@
-{%- liquid
-  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
-  assign wa_text = 'Hola, quiero contactar a NANOTRONICS' | url_encode
-  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
--%}
-
-{% render 'breadcrumbs' %}
-
-<section class="nt-section pt-0">
-  <div class="nt-container">
-    <div class="max-w-3xl mb-10">
-      <p class="nt-eyebrow mb-2">Estamos para ayudarte</p>
-      <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight text-ink mb-4">
-        {{ section.settings.heading | default: page.title }}
-      </h1>
-      <p class="text-lg text-ink-muted">{{ section.settings.intro }}</p>
-    </div>
-
-    <div class="grid lg:grid-cols-[1fr_1.2fr] gap-10">
-      <div class="space-y-4">
-        <a
-          href="{{ wa_url }}"
-          target="_blank"
-          rel="noopener"
-          class="flex items-start gap-4 p-5 rounded-xl border border-[#25D366]/30 bg-[#25D366]/5 hover:bg-[#25D366]/10 transition-colors group"
-        >
-          <span class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-[#25D366] text-white">
-            {% render 'icon', name: 'whatsapp', size: 22 %}
-          </span>
-          <div class="flex-1">
-            <p class="font-semibold text-ink">WhatsApp · ~5 min en horario tienda</p>
-            <p class="text-sm text-ink-muted">{{ settings.store_phone }}</p>
-            <p class="text-xs text-ink-muted mt-1">{{ settings.store_hours }}</p>
-          </div>
-          <span class="text-[#25D366] group-hover:translate-x-1 transition-transform">
-            {% render 'icon', name: 'arrow-right', size: 18 %}
-          </span>
-        </a>
-
-        <a href="tel:{{ settings.store_phone | replace: ' ', '' }}" class="flex items-start gap-4 p-5 rounded-xl border border-line bg-surface hover:border-brand-royal transition-colors">
-          <span class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-brand-sky text-brand-royal">
-            {% render 'icon', name: 'phone', size: 22 %}
-          </span>
-          <div>
-            <p class="font-semibold text-ink">Llámanos directo</p>
-            <p class="text-sm text-ink-muted">{{ settings.store_phone }}</p>
-            <p class="text-xs text-ink-muted mt-1">{{ settings.store_hours }}</p>
-          </div>
-        </a>
-
-        <a href="mailto:{{ settings.store_email }}" class="flex items-start gap-4 p-5 rounded-xl border border-line bg-surface hover:border-brand-royal transition-colors">
-          <span class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-brand-sky text-brand-royal">
-            {% render 'icon', name: 'mail', size: 22 %}
-          </span>
-          <div>
-            <p class="font-semibold text-ink">Escríbenos un correo</p>
-            <p class="text-sm text-ink-muted">{{ settings.store_email }}</p>
-            <p class="text-xs text-ink-muted mt-1">Te respondemos en menos de 24 h</p>
-          </div>
-        </a>
-
-        <div class="flex items-start gap-4 p-5 rounded-xl border border-line bg-surface">
-          <span class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-brand-sky text-brand-royal">
-            {% render 'icon', name: 'map-pin', size: 22 %}
-          </span>
-          <div>
-            <p class="font-semibold text-ink">Visítanos en tienda</p>
-            <p class="text-sm text-ink-muted">{{ settings.store_address }}</p>
-            <p class="text-xs text-ink-muted mt-1">NIT {{ settings.store_nit }} · Empresa legalmente constituida</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="nt-card p-6 lg:p-8">
-        <h2 class="font-semibold text-xl mb-1">Cuéntanos cómo te podemos ayudar</h2>
-        <p class="text-sm text-ink-muted mb-6">Escríbenos lo que necesitas y un asesor real te responde lo antes posible.</p>
-        {%- form 'contact', class: 'space-y-4' -%}
-          {%- if form.posted_successfully? -%}
-            <div class="p-4 rounded-lg bg-success-soft text-success text-sm font-medium inline-flex items-center gap-2">
-              {% render 'icon', name: 'check-circle', size: 18 %}
-              ¡Mensaje enviado! Te responderemos pronto.
-            </div>
-          {%- endif -%}
-          {%- if form.errors -%}
-            <div class="p-4 rounded-lg bg-danger-soft text-danger text-sm">
-              {{ form.errors | default_errors }}
-            </div>
-          {%- endif -%}
-          <div class="grid sm:grid-cols-2 gap-4">
-            {% render 'input', type: 'text', name: 'contact[name]', id: 'contact-name', label: 'Nombre completo', placeholder: 'Tu nombre' %}
-            {% render 'input', type: 'text', name: 'contact[phone]', id: 'contact-phone', label: 'Teléfono', placeholder: '+57 300 000 0000' %}
-          </div>
-          {% render 'input', type: 'email', name: 'contact[email]', id: 'contact-email', label: 'Email', placeholder: 'correo@ejemplo.com' %}
-          <div class="nt-input-wrap">
-            <label class="nt-label" for="contact-subject">Asunto</label>
-            <select id="contact-subject" name="contact[subject]" class="nt-input">
-              <option value="ventas">Compra / Asesoría</option>
-              <option value="servicio-tecnico">Servicio técnico</option>
-              <option value="garantia">Garantía / Devolución</option>
-              <option value="empresarial">Empresarial / Corporativo</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-          <div class="nt-input-wrap">
-            <label class="nt-label" for="contact-message">Mensaje</label>
-            <textarea
-              id="contact-message"
-              name="contact[body]"
-              class="nt-input min-h-[140px] py-3"
-              rows="5"
-              placeholder="¿En qué podemos ayudarte?"
-              required
-            ></textarea>
-          </div>
-          <button type="submit" class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full">
-            {% render 'icon', name: 'mail', size: 16 %}
-            {{ 'contact.submit' | t }}
-          </button>
-          <p class="text-xs text-ink-muted text-center">
-            Respondemos en menos de 24h hábiles. Para algo urgente, escríbenos por WhatsApp.
-          </p>
-        {%- endform -%}
-      </div>
-    </div>
-
-    <div class="mt-12">
-      <h2 class="font-semibold text-xl mb-4">Ubicación en Google Maps</h2>
-      {% render 'store-map', height: 400, show_links: true, title: 'NANOTRONICS — El Carmen de Viboral' %}
-    </div>
-  </div>
-</section>
-
-{% schema %}
-{
-  "name": "Contacto",
-  "settings": [
-    { "type": "text", "id": "heading", "label": "Título", "default": "Hablemos. Estamos para ayudarte." },
-    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Estamos para ayudarte a elegir, cotizar o coordinar servicio técnico. Por WhatsApp respondemos en aproximadamente 5 minutos en horario de tienda. Por correo, en menos de 24 horas hábiles." },
-    { "type": "text", "id": "whatsapp_cta", "label": "CTA WhatsApp", "default": "Escribir por WhatsApp" }
-  ],
-  "presets": [{ "name": "Contacto" }]
-}
-{% endschema %}
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_text = 'Hola, quiero contactar a NANOTRONICS' | url_encode
+  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+  assign service_note = settings.customer_service_note | default: 'Atención al cliente solo por WhatsApp.'
+-%}
+
+{% render 'breadcrumbs' %}
+
+<section class="nt-section pt-0">
+  <div class="nt-container">
+    <div class="max-w-3xl mb-10">
+      <p class="nt-eyebrow mb-2">Estamos para ayudarte</p>
+      <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight text-ink mb-4">
+        {{ section.settings.heading | default: page.title }}
+      </h1>
+      <p class="text-lg text-ink-muted">{{ section.settings.intro }}</p>
+    </div>
+
+    <div class="grid lg:grid-cols-[1fr_1.2fr] gap-10">
+      <div class="space-y-4">
+        <a
+          href="{{ wa_url }}"
+          target="_blank"
+          rel="noopener"
+          class="flex items-start gap-4 p-5 rounded-xl border border-[#25D366]/30 bg-[#25D366]/5 hover:bg-[#25D366]/10 transition-colors group"
+        >
+          <span class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-[#25D366] text-white">
+            {% render 'icon', name: 'whatsapp', size: 22 %}
+          </span>
+          <div class="flex-1">
+            <p class="font-semibold text-ink">WhatsApp · canal de atención</p>
+            <p class="text-sm text-ink-muted">{{ settings.store_phone }}</p>
+            <p class="text-xs text-ink-muted mt-1">Respuesta en ~5 min · {{ settings.store_hours }}</p>
+          </div>
+          <span class="text-[#25D366] group-hover:translate-x-1 transition-transform">
+            {% render 'icon', name: 'arrow-right', size: 18 %}
+          </span>
+        </a>
+
+        {% render 'instagram-link', style: 'card' %}
+
+        <div class="flex items-start gap-4 p-5 rounded-xl border border-line bg-surface">
+          <span class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-brand-sky text-brand-royal">
+            {% render 'icon', name: 'map-pin', size: 22 %}
+          </span>
+          <div>
+            <p class="font-semibold text-ink">Visítanos en tienda</p>
+            <p class="text-sm text-ink-muted">{{ settings.store_address }}</p>
+            <p class="text-xs text-ink-muted mt-1">{{ settings.store_hours }} · NIT {{ settings.store_nit }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="nt-card p-6 lg:p-8">
+        <h2 class="font-semibold text-xl mb-1">¿Necesitas ayuda ahora?</h2>
+        <p class="text-sm text-ink-muted mb-2">{{ service_note }}</p>
+        <p class="text-sm text-ink-muted mb-6">
+          Escríbenos por WhatsApp para compras, cotizaciones, garantías y servicio técnico. En Instagram publicamos novedades y promociones.
+        </p>
+        {% render 'btn',
+          variant: 'whatsapp',
+          size: 'lg',
+          label: section.settings.whatsapp_cta | default: 'Escribir por WhatsApp',
+          href: wa_url,
+          target: '_blank',
+          rel: 'noopener',
+          icon: 'whatsapp',
+          full: true,
+          class: 'mb-4'
+        %}
+        <div class="text-center">
+          {% render 'instagram-link', style: 'text', icon_size: 18, class: 'text-brand-royal font-medium justify-center' %}
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="font-semibold text-xl mb-4">Ubicación en Google Maps</h2>
+      {% render 'store-map', height: 400, show_links: true, title: 'NANOTRONICS — El Carmen de Viboral' %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contacto",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Hablemos por WhatsApp" },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "Atención al cliente solo por WhatsApp: compras, cotizaciones, garantías y servicio técnico. Respondemos en aproximadamente 5 minutos en horario de tienda. Síguenos en Instagram para novedades y promos."
+    },
+    { "type": "text", "id": "whatsapp_cta", "label": "CTA WhatsApp", "default": "Escribir por WhatsApp" }
+  ],
+  "presets": [{ "name": "Contacto" }]
+}
+{% endschema %}
