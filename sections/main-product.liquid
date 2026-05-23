@@ -126,7 +126,7 @@
             <span class="text-base lg:text-lg font-semibold text-ink">{{ 'product.description' | t }}</span>
             <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
           </button>
-          <div class="nt-accordion__content rte" x-show="open === 1" x-collapse x-cloak>
+          <div class="nt-accordion__content rte" x-show="open === 1" x-cloak>
             {%- if product.description != blank -%}
               {{ product.description }}
             {%- else -%}
@@ -148,7 +148,7 @@
             </span>
             <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
           </button>
-          <div class="nt-accordion__content" x-show="open === 2" x-collapse x-cloak>
+          <div class="nt-accordion__content" x-show="open === 2" x-cloak>
             {%- if section.settings.specs != blank -%}
               <div class="rte">{{ section.settings.specs }}</div>
             {%- else -%}
@@ -181,7 +181,7 @@
               </span>
               <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
             </button>
-            <div class="nt-accordion__content" x-show="open === 3" x-collapse x-cloak>
+            <div class="nt-accordion__content" x-show="open === 3" x-cloak>
               <div class="aspect-video rounded-lg overflow-hidden bg-ink">
                 <iframe
                   src="{{ section.settings.video_url }}"
@@ -207,7 +207,7 @@
             <span class="text-base lg:text-lg font-semibold text-ink">{{ 'product.faq' | t }}</span>
             <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
           </button>
-          <div class="nt-accordion__content space-y-5" x-show="open === 4" x-collapse x-cloak>
+          <div class="nt-accordion__content space-y-5" x-show="open === 4" x-cloak>
             <div>
               <p class="font-semibold text-ink mb-1">¿Cuánto tarda el envío?</p>
               <p>Despachamos el mismo día si compras antes de las {{ shipping_cutoff }}. Medellín y área metro: {{ shipping_medellin }}. Resto de Colombia: {{ shipping_national }}.</p>
@@ -244,7 +244,7 @@
             </span>
             <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
           </button>
-          <div class="nt-accordion__content" x-show="open === 5" x-collapse x-cloak>
+          <div class="nt-accordion__content" x-show="open === 5" x-cloak>
             <p class="text-ink-muted mb-3">
               Promedio {{ settings.metric_rating_value | default: '4.3★' }} en Google Maps (tienda física).
               Las reseñas las consultas directamente en Google — no publicamos testimonios inventados en este sitio.
@@ -347,9 +347,16 @@
     <a href="{{ wa_product_url }}" class="nt-btn nt-btn--whatsapp nt-btn--md shrink-0" target="_blank" rel="noopener" aria-label="WhatsApp">
       {% render 'icon', name: 'whatsapp', size: 20 %}
     </a>
-    <button type="submit" form="product-form" class="nt-btn nt-btn--primary nt-btn--md flex-1" {% unless product.available %}disabled{% endunless %}>
+    <button
+      type="submit"
+      form="product-form"
+      name="add"
+      class="nt-btn nt-btn--primary nt-btn--md flex-1 cursor-pointer"
+      data-add-btn
+      {% unless product.available %}disabled{% endunless %}
+    >
       {% render 'icon', name: 'cart', size: 16 %}
-      {{ add_label }}
+      <span data-add-btn-label>{{ add_label }}</span>
     </button>
   </div>
 </div>

@@ -8,24 +8,26 @@
   aria-modal="true"
   aria-label="{{ 'cart.title' | t }}"
 >
-  <div class="nt-drawer__backdrop" @click="cartOpen = false"></div>
+  <div class="nt-drawer__backdrop" @click="cartOpen = false; window.dispatchEvent(new CustomEvent('close-cart'))"></div>
   <div class="nt-drawer__panel">
-    <div class="flex items-center justify-between p-4 border-b border-line">
+    <div class="flex items-center justify-between p-4 border-b border-line" id="cart-drawer-header">
       <h2 class="text-lg font-semibold inline-flex items-center gap-2">
         {% render 'icon', name: 'cart', size: 20, class: 'text-brand-royal' %}
         {{ 'cart.title' | t }}
-        <span class="text-sm font-normal text-ink-muted">({{ cart.item_count }})</span>
+        <span class="text-sm font-normal text-ink-muted" id="cart-drawer-count">({{ cart.item_count }})</span>
       </h2>
-      <button type="button" class="nt-header__icon-btn" @click="cartOpen = false" aria-label="{{ 'cart.close' | t }}">
+      <button type="button" class="nt-header__icon-btn" @click="cartOpen = false; window.dispatchEvent(new CustomEvent('close-cart'))" aria-label="{{ 'cart.close' | t }}">
         {% render 'icon', name: 'x', size: 22 %}
       </button>
     </div>
 
-    {%- if cart.item_count > 0 -%}
-      <div class="px-4 pt-4">
-        {% render 'shipping-progress' %}
-      </div>
-    {%- endif -%}
+    <div id="cart-drawer-shipping" class="{% if cart.item_count == 0 %}hidden{% endif %}">
+      {%- if cart.item_count > 0 -%}
+        <div class="px-4 pt-4">
+          {% render 'shipping-progress' %}
+        </div>
+      {%- endif -%}
+    </div>
 
     <div class="flex-1 overflow-y-auto p-4" id="cart-drawer-items">
       {%- if cart.item_count > 0 -%}
@@ -45,7 +47,7 @@
     </div>
 
     {%- if cart.item_count > 0 -%}
-      <div class="p-4 border-t border-line space-y-3">
+      <div class="p-4 border-t border-line space-y-3" id="cart-drawer-footer">
         <div class="flex justify-between items-baseline">
           <span class="text-ink-muted text-sm">{{ 'cart.subtotal' | t }}</span>
           <span class="font-bold text-xl">{{ cart.total_price | money }}</span>
@@ -62,6 +64,8 @@
           {{ 'cart.view_cart' | t }}
         </a>
       </div>
+    {%- else -%}
+      <div id="cart-drawer-footer" class="hidden" aria-hidden="true"></div>
     {%- endif -%}
   </div>
 </div>

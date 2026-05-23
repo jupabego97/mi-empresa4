@@ -92,9 +92,24 @@
 
     const cart = await fetchCart();
     updateCartBadge(cart.item_count);
-    window.dispatchEvent(new CustomEvent('open-cart'));
+    openCartDrawerUI();
     await refreshCartDrawer();
     return data;
+  }
+
+  function openCartDrawerUI() {
+    window.dispatchEvent(new CustomEvent('open-cart'));
+    document.getElementById('cart-drawer')?.classList.add('is-open');
+  }
+
+  function resolveAddButton(form, submitter) {
+    if (submitter && (submitter.name === 'add' || submitter.dataset?.addBtn !== undefined || submitter.hasAttribute('data-add-btn'))) {
+      return submitter;
+    }
+    if (form.id === 'product-form') {
+      return document.getElementById('product-add-btn');
+    }
+    return form.querySelector('[data-add-btn]') || form.querySelector('button[type="submit"]');
   }
 
   function getBtnLabelEl(btn) {
@@ -151,7 +166,7 @@
   async function handleAddToCartSubmit(e) {
     const form = e.target;
     if (!isAddToCartForm(form)) return;
-    if (form.id === 'product-form' && e.submitter?.name !== 'add') return;
+    if (form.id === 'product-form' && e.submitter?.name === 'checkout') return;
 
     e.preventDefault();
     e.stopPropagation();
@@ -159,10 +174,7 @@
     if (form.dataset.busy === 'true') return;
     form.dataset.busy = 'true';
 
-    const isProductForm = form.id === 'product-form';
-    const btn = isProductForm
-      ? document.getElementById('product-add-btn')
-      : form.querySelector('[data-add-btn]') || form.querySelector('button[type="submit"]');
+    const btn = resolveAddButton(form, e.submitter);
 
     if (btn?.disabled) {
       form.dataset.busy = 'false';
@@ -174,7 +186,11 @@
     setBtnState(btn, 'loading', originalLabel);
 
     try {
-      await addToCart(new FormData(form));
+      const fd = new FormData(form);
+      if (!fd.get('id')) {
+        throw new Error('Variante no disponible');
+      }
+      await addToCart(fd);
       setBtnState(btn, 'success', originalLabel);
     } catch (err) {
       console.warn('[NANOTRONICS] add to cart', err);
@@ -217,7 +233,10 @@
     }
 
     const variantSelect = form.querySelector('[name="id"]');
-    if (!variantSelect || !product.variants?.length || !product.options?.length) return;
+    if (!variantSelect || !product.variants?.length) return;
+
+    const hasVariantPicker = form.querySelector('.variant-option-input');
+    if (!hasVariantPicker) return;
 
     let variantImages = {};
     const variantImagesEl = document.getElementById('product-variant-images');
@@ -362,6 +381,14 @@
     initProductVariants();
 
     document.addEventListener('submit', handleAddToCartSubmit, true);
+
+    window.addEventListener('open-cart', () => {
+      document.getElementById('cart-drawer')?.classList.add('is-open');
+    });
+
+    window.addEventListener('close-cart', () => {
+      document.getElementById('cart-drawer')?.classList.remove('is-open');
+    });
 
     document.addEventListener('change', async (e) => {
       if (!e.target.classList.contains('cart-qty-input')) return;

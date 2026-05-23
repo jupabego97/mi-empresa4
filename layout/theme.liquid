@@ -48,8 +48,9 @@
 <body
   class="min-h-screen flex flex-col pb-16 lg:pb-0"
   x-data="{ cartOpen: false }"
-  @keydown.escape.window="cartOpen = false"
+  @keydown.escape.window="cartOpen = false; window.dispatchEvent(new CustomEvent('close-cart'))"
   @open-cart.window="cartOpen = true"
+  @close-cart.window="cartOpen = false"
 >
   <a href="#main-content" class="nt-sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-brand-royal focus:text-white focus:rounded-md">
     {{ 'accessibility.skip_to_content' | t }}
