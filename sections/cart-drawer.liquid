@@ -52,10 +52,12 @@
         </div>
         <p class="text-xs text-ink-muted">{{ 'cart.checkout_note' | t }}</p>
         {% render 'payment-icons' %}
-        <a href="/checkout" class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full">
-          {% render 'icon', name: 'shield-check', size: 18 %}
-          {{ checkout_label }}
-        </a>
+        <form action="{{ routes.cart_url }}" method="post" novalidate class="contents">
+          <button type="submit" name="checkout" class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full">
+            {% render 'icon', name: 'shield-check', size: 18 %}
+            {{ checkout_label }}
+          </button>
+        </form>
         <a href="{{ routes.cart_url }}" class="block text-center text-sm text-brand-royal hover:underline">
           {{ 'cart.view_cart' | t }}
         </a>

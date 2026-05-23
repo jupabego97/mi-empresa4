@@ -226,36 +226,66 @@
     document.documentElement.classList.add('js-ready');
     initProductVariants();
 
+    function flashAdded(btn, originalLabel) {
+      if (!btn) return;
+      const labelEl = btn.querySelector('[data-add-btn-label]') || btn;
+      const original = originalLabel || labelEl.textContent;
+      labelEl.textContent = 'Agregado';
+      btn.classList.add('is-added');
+      setTimeout(() => {
+        labelEl.textContent = original;
+        btn.classList.remove('is-added');
+      }, 1500);
+    }
+
     document.addEventListener('submit', async (e) => {
       const form = e.target;
-      if (form.id !== 'product-form' || !form.classList.contains('ajax-cart')) return;
-      if (e.submitter?.name !== 'add') return;
+      const isProductForm = form.id === 'product-form' && form.classList.contains('ajax-cart');
+      const isQuickAdd = form.classList.contains('ajax-cart-quick');
+      if (!isProductForm && !isQuickAdd) return;
+      if (isProductForm && e.submitter?.name !== 'add') return;
 
       e.preventDefault();
-      const btn = document.getElementById('product-add-btn');
+      const btn = isProductForm
+        ? document.getElementById('product-add-btn')
+        : form.querySelector('[data-add-btn]') || form.querySelector('button[type="submit"]');
       if (btn?.disabled) return;
-      if (btn) btn.disabled = true;
+      const labelEl = btn?.querySelector('[data-add-btn-label]') || btn;
+      const originalLabel = labelEl?.textContent;
+      if (btn) {
+        btn.disabled = true;
+        if (labelEl) labelEl.textContent = 'Agregando...';
+      }
 
       try {
         const fd = new FormData(form);
         await addToCart(fd);
+        if (btn) flashAdded(btn, originalLabel);
       } catch (err) {
+        if (labelEl && originalLabel) labelEl.textContent = originalLabel;
         form.submit();
+        return;
       } finally {
-        const variantSelect = form.querySelector('[name="id"]');
-        const variantId = variantSelect?.value;
-        const productJson = document.getElementById('product-json');
-        let stillAvailable = true;
-        if (productJson && variantId) {
-          try {
-            const product = JSON.parse(productJson.textContent);
-            const variant = product.variants.find((v) => String(v.id) === String(variantId));
-            stillAvailable = variant?.available !== false;
-          } catch {
-            stillAvailable = true;
+        if (isProductForm) {
+          const variantSelect = form.querySelector('[name="id"]');
+          const variantId = variantSelect?.value;
+          const productJson = document.getElementById('product-json');
+          let stillAvailable = true;
+          if (productJson && variantId) {
+            try {
+              const product = JSON.parse(productJson.textContent);
+              const variant = product.variants.find((v) => String(v.id) === String(variantId));
+              stillAvailable = variant?.available !== false;
+            } catch {
+              stillAvailable = true;
+            }
           }
+          if (btn) btn.disabled = !stillAvailable;
+        } else if (btn) {
+          setTimeout(() => {
+            btn.disabled = false;
+          }, 1500);
         }
-        if (btn) btn.disabled = !stillAvailable;
       }
     });
 

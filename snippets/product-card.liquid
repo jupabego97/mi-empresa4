@@ -132,21 +132,22 @@
     </p>
 
     {%- capture add_label -%}{{ 'general.add_to_cart' | t }}{%- endcapture -%}
-    {%- capture quick_label -%}{{ 'general.view_more' | t }}{%- endcapture -%}
+    {%- capture options_label -%}{{ 'general.choose_options' | t }}{%- endcapture -%}
     {%- capture sold_label -%}{{ 'general.out_of_stock' | t }}{%- endcapture -%}
 
     <div class="nt-product-card__actions">
       {%- if card_available -%}
-        {%- if demo == blank and card_product.variants.size == 1 -%}
-          <form action="{{ routes.cart_add_url }}" method="post" class="flex-1 ajax-cart-quick">
+        {%- if demo == blank and card_product.has_only_default_variant -%}
+          <form action="{{ routes.cart_add_url }}" method="post" class="flex-1 ajax-cart-quick" data-redirect-to="{{ routes.cart_url }}">
             <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-            <button type="submit" class="nt-btn nt-btn--primary nt-btn--sm w-full">
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" class="nt-btn nt-btn--primary nt-btn--sm w-full" data-add-btn>
               {% render 'icon', name: 'cart', size: 14 %}
-              {{ add_label }}
+              <span data-add-btn-label>{{ add_label }}</span>
             </button>
           </form>
         {%- elsif demo == blank -%}
-          {% render 'btn', variant: 'primary', size: 'sm', label: add_label, href: card_url, class: 'flex-1', icon: 'cart' %}
+          {% render 'btn', variant: 'primary', size: 'sm', label: options_label, href: card_url, class: 'flex-1', icon: 'arrow-right' %}
         {%- else -%}
           {% render 'btn', variant: 'primary', size: 'sm', label: add_label, type: 'button', class: 'flex-1', icon: 'cart' %}
         {%- endif -%}
