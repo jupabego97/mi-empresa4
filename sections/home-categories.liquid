@@ -23,6 +23,7 @@
             assign card_eyebrow = ''
           endif
 
+          assign collection_handle = block.settings.collection
           if col != blank
             if card_title == blank or card_title == 'Categoría'
               assign card_title = col.title
@@ -32,6 +33,10 @@
             endif
             if card_image == blank and col.image != blank
               assign card_image = col.image
+            endif
+          elsif collection_handle != blank
+            if card_url == blank
+              assign card_url = routes.collections_url | append: '/' | append: collection_handle
             endif
           endif
         -%}

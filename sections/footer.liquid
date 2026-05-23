@@ -97,9 +97,12 @@
           {%- assign fh = line | strip -%}
           {%- if fh != blank -%}
             {%- assign fcol = collections[fh] -%}
-            {%- if fcol != blank -%}
-              <a href="{{ fcol.url }}" class="nt-footer__link">{{ fcol.title }}</a>
+            {%- assign flink = fcol.url -%}
+            {%- if flink == blank -%}
+              {%- assign flink = routes.collections_url | append: '/' | append: fh -%}
             {%- endif -%}
+            {%- assign ftitle = fcol.title | default: fh | replace: '-', ' ' | capitalize -%}
+            <a href="{{ flink }}" class="nt-footer__link">{{ ftitle }}</a>
           {%- endif -%}
         {%- endfor -%}
         <a href="/collections/ofertas" class="nt-footer__link">{{ 'general.offers' | t }}</a>
