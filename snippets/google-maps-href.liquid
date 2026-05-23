@@ -6,16 +6,20 @@
 {%- liquid
   assign map_dest = settings.google_maps_destination | default: settings.store_address | default: 'NANOTRONICS, Calle 30 # 30-31, Parque Principal, El Carmen de Viboral, Antioquia, Colombia'
   assign map_kind = kind | default: 'search'
+  assign place_url = settings.google_maps_place_url | strip
+  assign encoded_dest = map_dest | url_encode
 
-  if map_kind == 'place' and settings.google_maps_place_url != blank
-    echo settings.google_maps_place_url
-  elsif map_kind == 'place'
-    echo 'https://www.google.com/maps/search/?api=1&query=' | append: map_dest | url_encode
+  if place_url != blank
+    if map_kind == 'directions' or map_kind == 'place' or map_kind == 'search'
+      echo place_url
+    elsif map_kind == 'embed'
+      echo 'https://maps.google.com/maps?q=' | append: encoded_dest | append: '&hl=es&z=18&output=embed'
+    endif
   elsif map_kind == 'directions'
-    echo 'https://www.google.com/maps/dir/?api=1&destination=' | append: map_dest | url_encode
+    echo 'https://www.google.com/maps/dir/?api=1&destination=' | append: encoded_dest
   elsif map_kind == 'embed'
-    echo 'https://maps.google.com/maps?q=' | append: map_dest | url_encode | append: '&hl=es&z=18&output=embed'
+    echo 'https://maps.google.com/maps?q=' | append: encoded_dest | append: '&hl=es&z=18&output=embed'
   else
-    echo 'https://www.google.com/maps/search/?api=1&query=' | append: map_dest | url_encode
+    echo 'https://www.google.com/maps/search/?api=1&query=' | append: encoded_dest
   endif
 -%}
