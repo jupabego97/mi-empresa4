@@ -52,7 +52,8 @@
   }
 
   function openCartDrawerUI() {
-    window.dispatchEvent(new CustomEvent('open-cart'));
+    window.dispatchEvent(new CustomEvent('open-cart', { bubbles: true }));
+    document.body?.dispatchEvent(new CustomEvent('open-cart', { bubbles: true }));
     const drawer = document.getElementById('cart-drawer');
     if (drawer) {
       drawer.classList.add('is-open');
@@ -98,7 +99,7 @@
   }
 
   function readVariantId(form, btn) {
-    const fromBtn = btn?.dataset?.variantId;
+    const fromBtn = btn?.dataset?.variantId || btn?.getAttribute?.('data-variant-id');
     if (fromBtn) return fromBtn;
 
     const idField = form?.querySelector('[name="id"]');
@@ -107,7 +108,10 @@
     return null;
   }
 
-  function readQuantity(form) {
+  function readQuantity(form, btn) {
+    const fromBtn = parseInt(btn?.dataset?.quantity, 10);
+    if (Number.isFinite(fromBtn) && fromBtn > 0) return fromBtn;
+
     const qtyField = form?.querySelector('[name="quantity"]');
     const qty = parseInt(qtyField?.value, 10);
     return Number.isFinite(qty) && qty > 0 ? qty : 1;
@@ -196,8 +200,19 @@
     return form.id === 'product-form' && form.classList.contains('ajax-cart');
   }
 
+  function isAddButton(btn) {
+    if (!btn?.hasAttribute?.('data-add-btn')) return false;
+    const form = resolveForm(btn);
+    return isAddForm(form) || Boolean(readVariantId(form, btn));
+  }
+
+  function getBusyKey(form, btn) {
+    return form || btn;
+  }
+
   async function handleAdd(form, btn) {
-    if (!form || busyForms.has(form)) return;
+    const busyKey = getBusyKey(form, btn);
+    if (busyForms.has(busyKey)) return;
 
     const variantId = readVariantId(form, btn);
     if (!variantId) {
@@ -205,40 +220,42 @@
       return;
     }
 
-    busyForms.add(form);
-    const labelEl = getBtnLabelEl(btn);
+    busyForms.add(busyKey);
+    const labelEl = btn ? getBtnLabelEl(btn) : null;
     const originalLabel = labelEl?.textContent?.trim() || LABELS.add;
-    setBtnState(btn, 'loading', originalLabel);
+    if (btn) setBtnState(btn, 'loading', originalLabel);
 
     try {
-      await addVariantToCart(variantId, readQuantity(form));
-      setBtnState(btn, 'success', originalLabel);
+      await addVariantToCart(variantId, readQuantity(form, btn));
+      if (btn) setBtnState(btn, 'success', originalLabel);
       showToast(LABELS.added, 'success');
     } catch (err) {
       console.warn('[NANOTRONICS] add to cart', err);
-      setBtnState(btn, 'error', originalLabel);
+      if (btn) setBtnState(btn, 'error', originalLabel);
       showToast(err.message || LABELS.error, 'error');
     } finally {
-      busyForms.delete(form);
+      busyForms.delete(busyKey);
     }
   }
 
   function resolveForm(btn) {
     if (!btn) return null;
     if (btn.form) return btn.form;
+    const formId = btn.getAttribute('form');
+    if (formId) {
+      const linked = document.getElementById(formId);
+      if (linked?.tagName === 'FORM') return linked;
+    }
     return btn.closest('form');
   }
 
   function onAddButtonClick(e) {
     const btn = e.target.closest('[data-add-btn]');
-    if (!btn || btn.disabled) return;
-
-    const form = resolveForm(btn);
-    if (!isAddForm(form)) return;
+    if (!btn || btn.disabled || !isAddButton(btn)) return;
 
     e.preventDefault();
-    e.stopPropagation();
-    handleAdd(form, btn);
+    e.stopImmediatePropagation();
+    handleAdd(resolveForm(btn), btn);
   }
 
   function onAddFormSubmit(e) {
@@ -249,12 +266,12 @@
     if (form.id === 'product-form' && submitter?.name === 'checkout') return;
 
     e.preventDefault();
-    e.stopPropagation();
+    e.stopImmediatePropagation();
 
     const btn =
-      submitter?.hasAttribute?.('data-add-btn')
-        ? submitter
-        : form.querySelector('[data-add-btn]') || document.getElementById('product-add-btn');
+      submitter ||
+      form.querySelector('[data-add-btn]') ||
+      document.getElementById('product-add-btn');
 
     handleAdd(form, btn);
   }
@@ -381,6 +398,7 @@
 
       variantSelect.value = String(variant.id);
       if (addBtn) addBtn.dataset.variantId = String(variant.id);
+      if (stickyAddBtn) stickyAddBtn.dataset.variantId = String(variant.id);
 
       const priceBlock = document.getElementById('product-price-block');
       if (priceBlock) {
@@ -431,13 +449,24 @@
     updateUI(findVariant(getSelectedOptions()) || product.variants.find((v) => v.available) || product.variants[0]);
   }
 
+  function bindAddButtons() {
+    document.querySelectorAll('[data-add-btn]').forEach((btn) => {
+      if (btn.type === 'submit') btn.type = 'button';
+      if (btn.dataset.ntAddBound === '1') return;
+      btn.dataset.ntAddBound = '1';
+      btn.addEventListener('click', (e) => {
+        if (btn.disabled || !isAddButton(btn)) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        handleAdd(resolveForm(btn), btn);
+      });
+    });
+  }
+
   function boot() {
     document.documentElement.classList.add('js-ready');
     initProductVariants();
-
-    document.querySelectorAll('[data-add-btn]').forEach((btn) => {
-      if (btn.type === 'submit') btn.type = 'button';
-    });
+    bindAddButtons();
 
     window.addEventListener('open-cart', () => {
       document.getElementById('cart-drawer')?.classList.add('is-open');
