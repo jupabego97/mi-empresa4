@@ -54,6 +54,19 @@
     assign stock_class = 'text-warning'
     assign stock_dot = 'bg-warning'
   endif
+
+  assign quick_variant_id = ''
+  assign available_variant_count = 0
+  if demo == blank and card_product != blank
+    for variant in card_product.variants
+      if variant.available
+        assign available_variant_count = available_variant_count | plus: 1
+        if quick_variant_id == ''
+          assign quick_variant_id = variant.id
+        endif
+      endif
+    endfor
+  endif
 -%}
 
 <article class="nt-product-card group"{% if card_available == false %} data-sold-out{% endif %}>
@@ -137,19 +150,19 @@
 
     <div class="nt-product-card__actions">
       {%- if card_available -%}
-        {%- if demo == blank and card_product.has_only_default_variant -%}
-          <form action="{{ routes.cart_add_url }}" method="post" class="flex-1 ajax-cart-quick" data-redirect-to="{{ routes.cart_url }}">
-            <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+        {%- if demo == blank and available_variant_count == 1 and quick_variant_id != '' -%}
+          <form action="{{ routes.cart_add_url }}" method="post" class="flex-1 ajax-cart-quick" data-product-id="{{ card_product.id }}">
+            <input type="hidden" name="id" value="{{ quick_variant_id }}">
             <input type="hidden" name="quantity" value="1">
-            <button type="submit" class="nt-btn nt-btn--primary nt-btn--sm w-full" data-add-btn>
+            <button type="submit" class="nt-btn nt-btn--primary nt-btn--sm w-full cursor-pointer" data-add-btn>
               {% render 'icon', name: 'cart', size: 14 %}
               <span data-add-btn-label>{{ add_label }}</span>
             </button>
           </form>
         {%- elsif demo == blank -%}
-          {% render 'btn', variant: 'primary', size: 'sm', label: options_label, href: card_url, class: 'flex-1', icon: 'arrow-right' %}
+          {% render 'btn', variant: 'primary', size: 'sm', label: options_label, href: card_url, class: 'flex-1 cursor-pointer', icon: 'arrow-right' %}
         {%- else -%}
-          {% render 'btn', variant: 'primary', size: 'sm', label: add_label, type: 'button', class: 'flex-1', icon: 'cart' %}
+          {% render 'btn', variant: 'primary', size: 'sm', label: add_label, type: 'button', class: 'flex-1 cursor-pointer', icon: 'cart', disabled: true %}
         {%- endif -%}
       {%- else -%}
         {% render 'btn', variant: 'secondary', size: 'sm', label: sold_label, disabled: true, class: 'flex-1' %}

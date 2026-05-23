@@ -68,7 +68,8 @@
       type="submit"
       name="add"
       id="product-add-btn"
-      class="nt-btn nt-btn--primary nt-btn--xl nt-btn--full product-add-btn"
+      class="nt-btn nt-btn--primary nt-btn--xl nt-btn--full product-add-btn cursor-pointer"
+      data-add-btn
       {% unless current_variant.available %}disabled{% endunless %}
     >
       {% render 'icon', name: 'cart', size: 18 %}

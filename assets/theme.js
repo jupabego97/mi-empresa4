@@ -5,8 +5,16 @@
   const routes = window.Shopify?.routes || { root: '/' };
   const root = routes.root?.endsWith('/') ? routes.root : `${routes.root || '/'}/`;
 
+  const LABELS = {
+    add: 'Agregar al carrito',
+    adding: 'Agregando...',
+    added: 'Agregado',
+    error: 'No se pudo agregar',
+  };
+
   async function fetchCart() {
     const res = await fetch(`${root}cart.js`);
+    if (!res.ok) throw new Error('Cart fetch failed');
     return res.json();
   }
 
@@ -15,19 +23,49 @@
       el.textContent = count;
       el.style.display = count > 0 ? '' : 'none';
     });
+    const drawerCount = document.getElementById('cart-drawer-count');
+    if (drawerCount) drawerCount.textContent = `(${count})`;
   }
 
   async function refreshCartDrawer() {
     const drawer = document.getElementById('cart-drawer');
     if (!drawer) return;
+
     try {
-      const res = await fetch(`${window.location.pathname}${window.location.search}&section_id=cart-drawer`.replace('?&', '?'));
+      const url = new URL(window.location.href);
+      url.searchParams.set('section_id', 'cart-drawer');
+      const res = await fetch(url.toString());
+      if (!res.ok) return;
+
       const html = await res.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
+      const doc = new DOMParser().parseFromString(html, 'text/html');
       const newDrawer = doc.getElementById('cart-drawer');
-      if (newDrawer) {
-        drawer.outerHTML = newDrawer.outerHTML;
+      if (!newDrawer) return;
+
+      const targets = [
+        ['cart-drawer-items', 'cart-drawer-items'],
+        ['cart-drawer-footer', 'cart-drawer-footer'],
+        ['cart-drawer-shipping', 'cart-drawer-shipping'],
+      ];
+
+      targets.forEach(([id]) => {
+        const current = document.getElementById(id);
+        const next = newDrawer.querySelector(`#${id}`);
+        if (current && next) {
+          current.innerHTML = next.innerHTML;
+          current.className = next.className;
+          if (next.hasAttribute('aria-hidden')) {
+            current.setAttribute('aria-hidden', next.getAttribute('aria-hidden'));
+          } else {
+            current.removeAttribute('aria-hidden');
+          }
+        }
+      });
+
+      const newCount = newDrawer.querySelector('#cart-drawer-count');
+      const currentCount = document.getElementById('cart-drawer-count');
+      if (newCount && currentCount) {
+        currentCount.textContent = newCount.textContent;
       }
     } catch (e) {
       console.warn('[NANOTRONICS] cart refresh', e);
@@ -40,13 +78,110 @@
       headers: { Accept: 'application/json' },
       body: formData,
     });
-    if (!res.ok) throw new Error('Add to cart failed');
-    const data = await res.json();
+
+    let data = {};
+    try {
+      data = await res.json();
+    } catch {
+      data = {};
+    }
+
+    if (!res.ok) {
+      throw new Error(data.description || data.message || LABELS.error);
+    }
+
     const cart = await fetchCart();
     updateCartBadge(cart.item_count);
     window.dispatchEvent(new CustomEvent('open-cart'));
     await refreshCartDrawer();
     return data;
+  }
+
+  function getBtnLabelEl(btn) {
+    if (!btn) return null;
+    return btn.querySelector('[data-add-btn-label]') || btn;
+  }
+
+  function setBtnState(btn, state, originalLabel) {
+    if (!btn) return;
+    const labelEl = getBtnLabelEl(btn);
+    btn.classList.remove('is-added', 'is-error');
+
+    if (state === 'loading') {
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+      if (labelEl) labelEl.textContent = LABELS.adding;
+      return;
+    }
+
+    btn.removeAttribute('aria-busy');
+
+    if (state === 'success') {
+      btn.classList.add('is-added');
+      if (labelEl) labelEl.textContent = LABELS.added;
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.classList.remove('is-added');
+        if (labelEl) labelEl.textContent = originalLabel || LABELS.add;
+      }, 1400);
+      return;
+    }
+
+    if (state === 'error') {
+      btn.classList.add('is-error');
+      if (labelEl) labelEl.textContent = LABELS.error;
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.classList.remove('is-error');
+        if (labelEl) labelEl.textContent = originalLabel || LABELS.add;
+      }, 2000);
+      return;
+    }
+
+    btn.disabled = false;
+    if (labelEl) labelEl.textContent = originalLabel || LABELS.add;
+  }
+
+  function isAddToCartForm(form) {
+    if (!form || form.tagName !== 'FORM') return false;
+    if (form.classList.contains('ajax-cart-quick')) return true;
+    return form.id === 'product-form' && form.classList.contains('ajax-cart');
+  }
+
+  async function handleAddToCartSubmit(e) {
+    const form = e.target;
+    if (!isAddToCartForm(form)) return;
+    if (form.id === 'product-form' && e.submitter?.name !== 'add') return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (form.dataset.busy === 'true') return;
+    form.dataset.busy = 'true';
+
+    const isProductForm = form.id === 'product-form';
+    const btn = isProductForm
+      ? document.getElementById('product-add-btn')
+      : form.querySelector('[data-add-btn]') || form.querySelector('button[type="submit"]');
+
+    if (btn?.disabled) {
+      form.dataset.busy = 'false';
+      return;
+    }
+
+    const labelEl = getBtnLabelEl(btn);
+    const originalLabel = labelEl?.textContent?.trim() || LABELS.add;
+    setBtnState(btn, 'loading', originalLabel);
+
+    try {
+      await addToCart(new FormData(form));
+      setBtnState(btn, 'success', originalLabel);
+    } catch (err) {
+      console.warn('[NANOTRONICS] add to cart', err);
+      setBtnState(btn, 'error', originalLabel);
+    } finally {
+      form.dataset.busy = 'false';
+    }
   }
 
   function formatMoney(cents) {
@@ -97,7 +232,7 @@
     const optionCount = product.options.length;
     const addBtn = document.getElementById('product-add-btn');
     const addLabel = document.getElementById('product-add-btn-label');
-    const addLabelDefault = addLabel?.textContent?.trim() || 'Agregar al carrito';
+    const addLabelDefault = addLabel?.textContent?.trim() || LABELS.add;
     const stickyAddBtn = document.querySelector('.nt-sticky-bar button[form="product-form"]');
 
     function getSelectedOptions() {
@@ -226,68 +361,7 @@
     document.documentElement.classList.add('js-ready');
     initProductVariants();
 
-    function flashAdded(btn, originalLabel) {
-      if (!btn) return;
-      const labelEl = btn.querySelector('[data-add-btn-label]') || btn;
-      const original = originalLabel || labelEl.textContent;
-      labelEl.textContent = 'Agregado';
-      btn.classList.add('is-added');
-      setTimeout(() => {
-        labelEl.textContent = original;
-        btn.classList.remove('is-added');
-      }, 1500);
-    }
-
-    document.addEventListener('submit', async (e) => {
-      const form = e.target;
-      const isProductForm = form.id === 'product-form' && form.classList.contains('ajax-cart');
-      const isQuickAdd = form.classList.contains('ajax-cart-quick');
-      if (!isProductForm && !isQuickAdd) return;
-      if (isProductForm && e.submitter?.name !== 'add') return;
-
-      e.preventDefault();
-      const btn = isProductForm
-        ? document.getElementById('product-add-btn')
-        : form.querySelector('[data-add-btn]') || form.querySelector('button[type="submit"]');
-      if (btn?.disabled) return;
-      const labelEl = btn?.querySelector('[data-add-btn-label]') || btn;
-      const originalLabel = labelEl?.textContent;
-      if (btn) {
-        btn.disabled = true;
-        if (labelEl) labelEl.textContent = 'Agregando...';
-      }
-
-      try {
-        const fd = new FormData(form);
-        await addToCart(fd);
-        if (btn) flashAdded(btn, originalLabel);
-      } catch (err) {
-        if (labelEl && originalLabel) labelEl.textContent = originalLabel;
-        form.submit();
-        return;
-      } finally {
-        if (isProductForm) {
-          const variantSelect = form.querySelector('[name="id"]');
-          const variantId = variantSelect?.value;
-          const productJson = document.getElementById('product-json');
-          let stillAvailable = true;
-          if (productJson && variantId) {
-            try {
-              const product = JSON.parse(productJson.textContent);
-              const variant = product.variants.find((v) => String(v.id) === String(variantId));
-              stillAvailable = variant?.available !== false;
-            } catch {
-              stillAvailable = true;
-            }
-          }
-          if (btn) btn.disabled = !stillAvailable;
-        } else if (btn) {
-          setTimeout(() => {
-            btn.disabled = false;
-          }, 1500);
-        }
-      }
-    });
+    document.addEventListener('submit', handleAddToCartSubmit, true);
 
     document.addEventListener('change', async (e) => {
       if (!e.target.classList.contains('cart-qty-input')) return;
