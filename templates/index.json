@@ -12,7 +12,7 @@
     "hero": {
       "type": "home-hero",
       "settings": {
-        "pill_text": "Desde 2005 · Parque Principal, EL Carmen de Viboral",
+        "pill_text": "Desde 2005 · Parque Principal, El Carmen de Viboral",
         "eyebrow": "Tienda y servicio técnico",
         "heading": "Tecnología con respaldo local",
         "heading_accent": "al son de la tecnología",
@@ -41,7 +41,7 @@
           "type": "trust",
           "settings": {
             "icon": "map-pin",
-            "text": "Parque Principal · Viboral"
+            "text": "Parque Principal · El Carmen"
           }
         },
         "b2": {
@@ -420,8 +420,8 @@
       "type": "home-location",
       "settings": {
         "eyebrow": "Parque Principal · El Carmen de Viboral",
-        "title": "Visítanos en el corazón de Viboral",
-        "description": "Desde 2005 en la Calle 30 # 30-31, frente al Parque Principal. Tienda y servicio técnico en un solo lugar — recoge tu pedido sin costo."
+        "title": "Visítanos en el Carmen",
+        "description": "Desde 2005 en El Carmen de Viboral, Calle 30 # 30-31 frente al Parque Principal. Tienda y servicio técnico en un solo lugar — recoge tu pedido sin costo."
       }
     }
   },
