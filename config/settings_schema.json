@@ -250,10 +250,16 @@
         "info": "Usado en «Cómo llegar» y el mapa del home. Debe coincidir con tu ficha en Google."
       },
       {
-        "type": "url",
+        "type": "text",
         "id": "google_maps_place_url",
         "label": "URL ficha Google Maps (opcional)",
-        "info": "En Google Maps: tu negocio → Compartir → copiar enlace. «Abrir en Maps» usará este pin exacto."
+        "info": "Pega el enlace Compartir de Google Maps (maps.app.goo.gl o google.com/maps/place/...)."
+      },
+      {
+        "type": "text",
+        "id": "customer_service_note",
+        "label": "Nota atención al cliente",
+        "default": "Atención al cliente solo por WhatsApp."
       }
     ]
   },
@@ -312,8 +318,20 @@
   {
     "name": "Redes sociales",
     "settings": [
+      {
+        "type": "text",
+        "id": "instagram_handle",
+        "label": "Instagram (usuario)",
+        "default": "nanotronics.com.co",
+        "info": "Sin @. Ejemplo: nanotronics.com.co"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "URL Instagram (opcional)",
+        "info": "Si está vacío, se usa instagram.com/[usuario]"
+      },
       { "type": "url", "id": "social_facebook", "label": "Facebook" },
-      { "type": "url", "id": "social_instagram", "label": "Instagram" },
       { "type": "url", "id": "social_tiktok", "label": "TikTok" },
       { "type": "url", "id": "social_youtube", "label": "YouTube" }
     ]
