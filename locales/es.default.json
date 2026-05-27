@@ -162,6 +162,7 @@
     "help_whatsapp": "Ayuda por WhatsApp",
     "benefit_orders": "Historial de pedidos y seguimiento",
     "benefit_addresses": "Direcciones guardadas para checkout rápido",
-    "benefit_support": "Soporte directo si algo falla"
+    "benefit_support": "Soporte directo si algo falla",
+    "portal_note": "Accede con el correo que usaste al comprar. Te llevaremos al portal seguro de tu cuenta."
   }
 }

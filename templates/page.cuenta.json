@@ -8,10 +8,14 @@
  * ------------------------------------------------------------
  */
 {
+  "layout": "account",
   "sections": {
     "main": {
       "type": "page-cuenta",
-      "settings": {}
+      "settings": {
+        "heading": "Tu cuenta NANOTRONICS",
+        "intro": "Consulta pedidos, guarda direcciones y compra más rápido con tu cuenta."
+      }
     }
   },
   "order": ["main"]
