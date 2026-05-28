@@ -1,107 +1,158 @@
-{%- liquid
-  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
-  assign wa_text = 'Hola, necesito ayuda para entrar a mi cuenta NANOTRONICS' | url_encode
-  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
-
-  assign heading = section.settings.heading
-  if heading == blank
-    assign heading = 'account.title' | t
-  endif
-
-  assign intro = section.settings.intro
-  if intro == blank
-    assign intro = 'account.intro' | t
-  endif
-
-  assign welcome_name = customer.first_name
-  if welcome_name == blank
-    assign welcome_name = customer.email
-  endif
--%}
-
-<section class="nt-account-page">
-  <div class="nt-account-page__header">
-    <p class="nt-eyebrow mb-2">{{ 'account.eyebrow' | t }}</p>
-    <h1 class="nt-account-page__title">{{ heading }}</h1>
-    <p class="nt-account-page__intro">{{ intro }}</p>
-  </div>
-
-  {%- if customer -%}
-    <div class="nt-account-panel nt-account-panel--logged">
-      <div class="nt-account-panel__icon">
-        {% render 'icon', name: 'user', size: 28 %}
-      </div>
-      <p class="nt-account-panel__name">{{ 'account.welcome' | t: name: welcome_name }}</p>
-      <p class="nt-account-panel__email">{{ customer.email }}</p>
-      <div class="nt-account-panel__actions">
-        <a href="{{ routes.account_url }}" class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full">
-          {{ 'account.view_orders' | t }}
-        </a>
-        <a href="{{ routes.account_addresses_url }}" class="nt-btn nt-btn--secondary nt-btn--lg nt-btn--full">
-          {{ 'account.manage_addresses' | t }}
-        </a>
-      </div>
-      <a href="{{ routes.account_logout_url }}" class="nt-account-panel__logout">
-        {{ 'account.logout' | t }}
-      </a>
-    </div>
-  {%- else -%}
-    <div class="nt-account-panel">
-      <p class="nt-account-panel__note">{{ 'account.portal_note' | t }}</p>
-      <a href="{{ routes.account_login_url }}" class="nt-btn nt-btn--primary nt-btn--xl nt-btn--full">
-        {% render 'icon', name: 'user', size: 18 %}
-        {{ 'account.login_submit' | t }}
-      </a>
-      <a href="{{ routes.account_register_url }}" class="nt-btn nt-btn--secondary nt-btn--lg nt-btn--full">
-        {{ 'account.register_submit' | t }}
-      </a>
-    </div>
-
-    <ul class="nt-account-benefits">
-      <li>
-        {% render 'icon', name: 'package', size: 18, class: 'text-brand-royal shrink-0' %}
-        <span>{{ 'account.benefit_orders' | t }}</span>
-      </li>
-      <li>
-        {% render 'icon', name: 'map-pin', size: 18, class: 'text-brand-royal shrink-0' %}
-        <span>{{ 'account.benefit_addresses' | t }}</span>
-      </li>
-      <li>
-        {% render 'icon', name: 'headset', size: 18, class: 'text-brand-royal shrink-0' %}
-        <span>{{ 'account.benefit_support' | t }}</span>
-      </li>
-    </ul>
-
-    <div class="nt-account-help">
-      <div>
-        <p class="font-semibold text-ink">{{ 'account.help_title' | t }}</p>
-        <p class="text-sm text-ink-muted mt-1">{{ 'account.help_text' | t }}</p>
-      </div>
-      <a href="{{ wa_url }}" class="nt-btn nt-btn--whatsapp nt-btn--md shrink-0" target="_blank" rel="noopener">
-        {% render 'icon', name: 'whatsapp', size: 18 %}
-        {{ 'account.help_whatsapp' | t }}
-      </a>
-    </div>
-  {%- endif -%}
-</section>
-
-{% schema %}
-{
-  "name": "Cuenta",
-  "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Título",
-      "default": "Tu cuenta NANOTRONICS"
-    },
-    {
-      "type": "textarea",
-      "id": "intro",
-      "label": "Intro",
-      "default": "Consulta pedidos, guarda direcciones y compra más rápido con tu cuenta."
-    }
-  ],
-  "presets": [{ "name": "Cuenta" }]
-}
-{% endschema %}
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_help_text = 'Hola, necesito ayuda para entrar a mi cuenta NANOTRONICS' | url_encode
+  assign wa_help_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_help_text
+  assign wa_guest_text = 'Hola, compré en NANOTRONICS y quiero consultar el estado de mi pedido' | url_encode
+  assign wa_guest_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_guest_text
+
+  assign guest_url = section.settings.guest_help_url
+  if guest_url == blank
+    assign guest_url = '/pages/soporte'
+  endif
+
+  assign heading = section.settings.heading
+  if heading == blank
+    assign heading = 'account.title' | t
+  endif
+
+  assign intro = section.settings.intro
+  if intro == blank
+    assign intro = 'account.intro' | t
+  endif
+
+  assign welcome_name = customer.first_name
+  if welcome_name == blank
+    assign welcome_name = customer.email
+  endif
+-%}
+
+<section class="nt-account-page">
+  <div class="nt-account-page__header">
+    <p class="nt-eyebrow mb-2">{{ 'account.eyebrow' | t }}</p>
+    <h1 class="nt-account-page__title">{{ heading }}</h1>
+    <p class="nt-account-page__intro">{{ intro }}</p>
+  </div>
+
+  <ul class="nt-account-trust" aria-label="{{ 'account.trust_label' | t }}">
+    <li>
+      {% render 'icon', name: 'shield', size: 16, class: 'text-brand-royal shrink-0' %}
+      <span>{{ 'account.trust_secure' | t }}</span>
+    </li>
+    <li>
+      {% render 'icon', name: 'package', size: 16, class: 'text-brand-royal shrink-0' %}
+      <span>{{ 'account.trust_warranty' | t }}</span>
+    </li>
+    <li>
+      {% render 'icon', name: 'map-pin', size: 16, class: 'text-brand-royal shrink-0' %}
+      <span>{{ 'account.trust_store' | t }}</span>
+    </li>
+  </ul>
+
+  {%- if customer -%}
+    <div class="nt-account-panel nt-account-panel--logged">
+      <div class="nt-account-panel__icon">
+        {% render 'icon', name: 'user', size: 28 %}
+      </div>
+      <p class="nt-account-panel__name">{{ 'account.welcome' | t: name: welcome_name }}</p>
+      <p class="nt-account-panel__email">{{ customer.email }}</p>
+      <div class="nt-account-panel__actions">
+        <a href="{{ routes.account_url }}" class="nt-btn nt-btn--primary nt-btn--lg nt-btn--full">
+          {{ 'account.view_orders' | t }}
+        </a>
+        <a href="{{ routes.account_addresses_url }}" class="nt-btn nt-btn--secondary nt-btn--lg nt-btn--full">
+          {{ 'account.manage_addresses' | t }}
+        </a>
+      </div>
+      <a href="{{ routes.account_logout_url }}" class="nt-account-panel__logout">
+        {{ 'account.logout' | t }}
+      </a>
+    </div>
+  {%- else -%}
+    <div class="nt-account-panel">
+      <p class="nt-account-panel__note">{{ 'account.portal_note' | t }}</p>
+      <p class="nt-account-panel__otp">{{ 'account.otp_note' | t }}</p>
+      <a href="{{ routes.account_login_url }}" class="nt-btn nt-btn--primary nt-btn--xl nt-btn--full">
+        {% render 'icon', name: 'user', size: 18 %}
+        {{ 'account.continue' | t }}
+      </a>
+      <p class="nt-account-panel__register">
+        {{ 'account.first_time' | t }}
+        <a href="{{ routes.account_register_url }}" class="text-brand-royal font-semibold hover:underline">
+          {{ 'account.register_submit' | t }}
+        </a>
+      </p>
+      <a href="{{ routes.account_url }}" class="nt-btn nt-btn--secondary nt-btn--md nt-btn--full">
+        {% render 'icon', name: 'package', size: 16 %}
+        {{ 'account.portal_orders' | t }}
+      </a>
+    </div>
+
+    <ul class="nt-account-benefits">
+      <li>
+        {% render 'icon', name: 'package', size: 18, class: 'text-brand-royal shrink-0' %}
+        <span>{{ 'account.benefit_orders' | t }}</span>
+      </li>
+      <li>
+        {% render 'icon', name: 'map-pin', size: 18, class: 'text-brand-royal shrink-0' %}
+        <span>{{ 'account.benefit_addresses' | t }}</span>
+      </li>
+      <li>
+        {% render 'icon', name: 'headset', size: 18, class: 'text-brand-royal shrink-0' %}
+        <span>{{ 'account.benefit_support' | t }}</span>
+      </li>
+    </ul>
+
+    <div class="nt-account-guest">
+      <p class="nt-account-guest__title">{{ 'account.guest_title' | t }}</p>
+      <p class="nt-account-guest__text">{{ 'account.guest_text' | t }}</p>
+      <div class="nt-account-guest__actions">
+        <a href="{{ guest_url }}" class="nt-btn nt-btn--secondary nt-btn--sm">
+          {{ 'account.guest_soporte' | t }}
+        </a>
+        <a href="{{ wa_guest_url }}" class="nt-btn nt-btn--whatsapp nt-btn--sm" target="_blank" rel="noopener">
+          {% render 'icon', name: 'whatsapp', size: 16 %}
+          {{ 'account.guest_whatsapp' | t }}
+        </a>
+      </div>
+    </div>
+
+    <div class="nt-account-help">
+      <div>
+        <p class="font-semibold text-ink">{{ 'account.help_title' | t }}</p>
+        <p class="text-sm text-ink-muted mt-1">{{ 'account.help_text' | t }}</p>
+        <p class="text-xs text-ink-muted mt-1">{{ 'account.help_hours' | t }}</p>
+      </div>
+      <a href="{{ wa_help_url }}" class="nt-btn nt-btn--whatsapp nt-btn--md shrink-0" target="_blank" rel="noopener">
+        {% render 'icon', name: 'whatsapp', size: 18 %}
+        {{ 'account.help_whatsapp' | t }}
+      </a>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Cuenta",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Tu cuenta NANOTRONICS"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "Consulta pedidos, guarda direcciones y compra más rápido con tu cuenta."
+    },
+    {
+      "type": "url",
+      "id": "guest_help_url",
+      "label": "Enlace ayuda sin cuenta",
+      "info": "Por defecto /pages/soporte si se deja vacío."
+    }
+  ],
+  "presets": [{ "name": "Cuenta" }]
+}
+{% endschema %}

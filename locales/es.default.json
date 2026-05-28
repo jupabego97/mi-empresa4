@@ -144,6 +144,21 @@
     "login_card_text": "Entra para ver pedidos, garantías y datos guardados.",
     "register_card_text": "Crea tu cuenta en segundos y agiliza tus próximas compras.",
     "login_submit": "Entrar",
+    "continue": "Continuar con mi cuenta",
+    "first_time": "¿Primera vez?",
+    "portal_orders": "Ir a mis pedidos y cuenta",
+    "otp_note": "Te enviaremos un código o enlace seguro al correo que usaste al comprar.",
+    "legacy_redirect": "Usamos el portal seguro de NANOTRONICS para proteger tus datos.",
+    "back_hub": "Volver al centro de cuenta",
+    "trust_label": "Garantías de compra",
+    "trust_secure": "Compra protegida",
+    "trust_warranty": "Garantía respaldada",
+    "trust_store": "Tienda en Viboral",
+    "guest_title": "¿Compraste sin cuenta?",
+    "guest_text": "Revisa el correo de confirmación del pedido o escríbenos por WhatsApp con tu número de orden.",
+    "guest_soporte": "Centro de ayuda",
+    "guest_whatsapp": "Consultar pedido",
+    "help_hours": "WhatsApp · respuesta en ~5 min (horario de tienda)",
     "register_submit": "Crear cuenta",
     "create_account": "Crear cuenta",
     "forgot_password": "¿Olvidaste tu contraseña?",
@@ -163,6 +178,6 @@
     "benefit_orders": "Historial de pedidos y seguimiento",
     "benefit_addresses": "Direcciones guardadas para checkout rápido",
     "benefit_support": "Soporte directo si algo falla",
-    "portal_note": "Accede con el correo que usaste al comprar. Te llevaremos al portal seguro de tu cuenta."
+    "portal_note": "Accede con el correo que usaste al comprar. Te llevaremos al portal seguro de tu cuenta en un solo paso."
   }
 }
