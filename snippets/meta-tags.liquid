@@ -27,6 +27,10 @@
 
 <link rel="canonical" href="{{ canonical_url }}">
 
+{%- if noindex -%}
+  <meta name="robots" content="noindex,follow">
+{%- endif -%}
+
 <meta property="og:site_name" content="{{ shop.name | escape }}">
 <meta property="og:url" content="{{ canonical_url }}">
 <meta property="og:title" content="{{ page_title | escape }}">
@@ -46,6 +50,7 @@
   <meta name="twitter:description" content="{{ page_description | escape }}">
 {%- endif -%}
 
+{%- unless minimal -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -105,3 +110,4 @@
   }
 }
 </script>
+{%- endunless -%}

@@ -4,7 +4,7 @@
   assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
   assign logo_h = settings.logo_height | default: 44
   assign logo_w = settings.logo_width | default: 220
-  assign account_url = '/pages/cuenta'
+  assign account_url = routes.account_url
 -%}
 
 <header

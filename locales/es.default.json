@@ -146,8 +146,6 @@
     "login_submit": "Entrar",
     "continue": "Continuar con mi cuenta",
     "first_time": "¿Primera vez?",
-    "portal_orders": "Ir a mis pedidos y cuenta",
-    "otp_note": "Te enviaremos un código o enlace seguro al correo que usaste al comprar.",
     "legacy_redirect": "Usamos el portal seguro de NANOTRONICS para proteger tus datos.",
     "back_hub": "Volver al centro de cuenta",
     "trust_label": "Garantías de compra",
@@ -178,6 +176,6 @@
     "benefit_orders": "Historial de pedidos y seguimiento",
     "benefit_addresses": "Direcciones guardadas para checkout rápido",
     "benefit_support": "Soporte directo si algo falla",
-    "portal_note": "Accede con el correo que usaste al comprar. Te llevaremos al portal seguro de tu cuenta en un solo paso."
+    "portal_note": "Usa el correo de tu compra. Te enviaremos un código o enlace seguro y entrarás al portal de tu cuenta."
   }
 }
