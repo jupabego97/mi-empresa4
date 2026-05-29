@@ -16,13 +16,21 @@
   {%- assign handle = line | strip -%}
   {%- if handle != blank and handle != 'frontpage' -%}
     {%- assign col = collections[handle] -%}
-    {%- if col != blank -%}
-      <a href="{{ col.url }}" class="{{ link_class }}">
+    {%- assign col_url = col.url -%}
+    {%- if col_url == blank -%}
+      {%- assign col_url = routes.collections_url | append: '/' | append: handle -%}
+    {%- endif -%}
+    {%- if col != blank or handle != blank -%}
+      {%- assign nav_title = col.title | default: handle | replace: '-', ' ' | capitalize -%}
+      <a href="{{ col_url }}" class="{{ link_class }}">
         {%- if show_icon -%}
-          {% render 'icon', name: 'arrow-right', size: 14, class: 'opacity-60' %}
+          {%- capture nav_theme -%}{% render 'category-theme', handle: handle, title: nav_title %}{%- endcapture -%}
+          {%- assign nav_icon = nav_theme | strip | split: '|' | last -%}
+          {%- if nav_icon == blank -%}{%- assign nav_icon = 'grid' -%}{%- endif -%}
+          {% render 'icon', name: nav_icon, size: 16, class: 'text-brand-royal shrink-0' %}
         {%- endif -%}
-        <span>{{ col.title }}</span>
-        {%- if show_count -%}
+        <span>{{ nav_title }}</span>
+        {%- if show_count and col != blank -%}
           <span class="ml-auto text-xs text-ink-subtle">{{ col.products_count }}</span>
         {%- endif -%}
       </a>
