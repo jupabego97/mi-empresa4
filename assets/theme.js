@@ -484,17 +484,48 @@
   document.addEventListener('click', onAddButtonClick, true);
   document.addEventListener('submit', onAddFormSubmit, true);
 
+  async function changeCartLine(key, quantity) {
+    if (!key || Number.isNaN(quantity) || quantity < 0) return false;
+    try {
+      const res = await fetch(`${getRoot()}cart/change.js`, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ id: key, quantity }),
+      });
+      if (!res.ok) throw new Error('Cart change failed');
+      const cart = await res.json();
+      updateCartBadge(cart.item_count || 0);
+      const onCartPage = window.location.pathname.includes('/cart');
+      if (onCartPage) {
+        window.location.reload();
+        return true;
+      }
+      await refreshCartDrawer();
+      openCartDrawerUI();
+      return true;
+    } catch (err) {
+      console.warn('[NANOTRONICS] cart change', err);
+      showToast('No se pudo actualizar el carrito', 'error');
+      return false;
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.cart-increment, .cart-decrement, .cart-remove');
+    if (!btn) return;
+    e.preventDefault();
+    const key = btn.dataset.lineKey;
+    const qty = parseInt(btn.dataset.quantity, 10);
+    changeCartLine(key, qty);
+  });
+
   document.addEventListener('change', async (e) => {
     if (!e.target.classList.contains('cart-qty-input')) return;
     const key = e.target.dataset.lineKey;
     const qty = parseInt(e.target.value, 10);
-    await fetch(`${getRoot()}cart/change.js`, {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ id: key, quantity: qty }),
-    });
-    window.location.reload();
+    const ok = await changeCartLine(key, qty);
+    if (!ok) e.target.value = e.target.defaultValue;
   });
 
   if (document.readyState === 'loading') {

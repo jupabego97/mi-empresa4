@@ -54,6 +54,8 @@
     "view_all": "Ver todos",
     "view_all_categories": "Ver todas",
     "select_collection": "Selecciona una colección en el Theme Editor para mostrar productos reales.",
+    "empty_featured_title": "Catálogo destacado por configurar",
+    "view_catalog": "Ver catálogo",
     "service_short": "Reparación · upgrades · mantenimiento"
   },
   "collection": {
@@ -91,6 +93,7 @@
     "help_whatsapp": "¿Dudas? Escríbenos",
     "continue_shopping": "Seguir comprando",
     "recommended": "Completa tu setup",
+    "no_recommendations": "Asigna una colección de recomendaciones en el Theme Editor.",
     "items_count": "productos"
   },
   "search": {

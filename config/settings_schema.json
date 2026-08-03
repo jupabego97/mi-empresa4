@@ -57,56 +57,56 @@
         "id": "brand_founded_year",
         "label": "Año de fundación",
         "default": "2005",
-        "info": "VALIDAR con el negocio"
+        "info": "Confirmado: docs/01-identidad.md"
       },
       {
         "type": "textarea",
         "id": "brand_story_short",
         "label": "Historia corta (nosotros / SEO)",
-        "default": "NANOTRONICS nació en El Carmen de Viboral con una idea simple: vender tecnología de forma honesta. Hoy acompañamos a clientes en toda Colombia con asesoría real y taller propio."
+        "default": "Desde 2005, NANOTRONICS acerca la tecnología a las familias del oriente antioqueño. Nacimos como tienda y servicio técnico en el Parque Principal de El Carmen de Viboral.\n\nHoy, bajo la dirección de Juan Pablo Betancur, seguimos con el mismo compromiso que nos fundó Alpidio Betancur: buen precio, amplia variedad y excelente atención."
       },
       {
         "type": "textarea",
         "id": "brand_mission",
         "label": "Misión",
-        "default": "Hacer que comprar tecnología en Colombia deje de ser una apuesta. Asesoramos con honestidad, vendemos solo lo que recomendaríamos y respondemos cuando algo falla."
+        "default": "Acercar tecnología y soluciones confiables al oriente antioqueño, con precios justos, variedad real y un servicio que responde cuando lo necesitas."
       },
       {
         "type": "textarea",
         "id": "brand_values",
         "label": "Valores (uno por línea)",
-        "default": "Honestidad ante todo\nSolo productos que usaríamos\nAtención cercana, sin guiones\nCompromiso con Antioquia\nPostventa que sí responde\nConocimiento técnico real"
+        "default": "Precio justo y transparente\nVariedad para resolver en un solo lugar\nAtención rápida y humana\nCompromiso con El Carmen de Viboral\nServicio técnico cuando el equipo falla\nConfianza desde 2005"
       },
       {
         "type": "text",
         "id": "brand_usp_1",
         "label": "USP 1",
-        "default": "Asesoría honesta: te recomendamos lo que necesitas"
+        "default": "Buen precio"
       },
       {
         "type": "text",
         "id": "brand_usp_2",
         "label": "USP 2",
-        "default": "Taller propio con diagnóstico gratuito"
+        "default": "Amplia variedad"
       },
       {
         "type": "text",
         "id": "brand_usp_3",
         "label": "USP 3",
-        "default": "Postventa por WhatsApp con personas reales"
+        "default": "Excelente atención"
       },
       {
         "type": "text",
         "id": "store_hours",
         "label": "Horario tienda",
-        "default": "Lun a Sáb · 9 am - 7 pm"
+        "default": "Lun–Sáb 10:00–20:00 · Dom 10:00–19:00"
       },
       {
         "type": "text",
         "id": "store_street_address",
         "label": "Dirección detallada (calle, barrio)",
-        "default": "El Carmen de Viboral, Antioquia, Colombia",
-        "info": "Completar dirección exacta en docs/01-identidad.md"
+        "default": "Calle 30 # 30-31, Parque Principal, El Carmen de Viboral, Antioquia",
+        "info": "Fuente: docs/01-identidad.md"
       },
       {
         "type": "text",
@@ -135,49 +135,49 @@
         "type": "text",
         "id": "metric_clients_value",
         "label": "Métrica 1 — valor",
-        "default": "+5.000"
+        "default": "Desde 2005"
       },
       {
         "type": "text",
         "id": "metric_clients_label",
         "label": "Métrica 1 — etiqueta",
-        "default": "Clientes en Colombia"
+        "default": "En El Carmen de Viboral"
       },
       {
         "type": "text",
         "id": "metric_rating_value",
         "label": "Métrica 2 — valor",
-        "default": "4.9★"
+        "default": "4.3★"
       },
       {
         "type": "text",
         "id": "metric_rating_label",
         "label": "Métrica 2 — etiqueta",
-        "default": "Calificación Google"
+        "default": "En Google"
       },
       {
         "type": "text",
         "id": "metric_years_value",
         "label": "Métrica 3 — valor",
-        "default": "8 años"
+        "default": "21+ años"
       },
       {
         "type": "text",
         "id": "metric_years_label",
         "label": "Métrica 3 — etiqueta",
-        "default": "De experiencia"
+        "default": "De trayectoria"
       },
       {
         "type": "text",
         "id": "metric_dispatch_value",
         "label": "Métrica 4 — valor",
-        "default": "24h"
+        "default": "~5 min"
       },
       {
         "type": "text",
         "id": "metric_dispatch_label",
         "label": "Métrica 4 — etiqueta",
-        "default": "Despacho garantizado"
+        "default": "Respuesta WhatsApp"
       }
     ]
   },
@@ -413,7 +413,7 @@
         "type": "textarea",
         "id": "seo_local_keywords",
         "label": "Keywords SEO local (referencia interna)",
-        "default": "computadores Carmen de Viboral, PC gamer Antioquia, reparar portátil, portátiles Medellín, servicio técnico oriente antioqueño"
+        "default": "nanotronics viboral, tienda tecnologia carmen de viboral, servicio tecnico viboral, accesorios celular viboral, parlantes viboral"
       }
     ]
   },
@@ -440,7 +440,7 @@
         "type": "textarea",
         "id": "meta_description_default",
         "label": "Meta descripción por defecto",
-        "default": "NANOTRONICS — Computadores, portátiles, componentes gamer y servicio técnico en El Carmen de Viboral, Antioquia. Envíos a toda Colombia."
+        "default": "NANOTRONICS — Tienda y servicio técnico desde 2005 en el Parque Principal de El Carmen de Viboral. Tecnología, accesorios, audio y más. 4.3★ en Google."
       }
     ]
   }

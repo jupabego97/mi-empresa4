@@ -1,6 +1,7 @@
 # Archivos de desarrollo (no forman parte del theme en la tienda)
 src/
 tools/
+docs/
 node_modules/
 package.json
 package-lock.json

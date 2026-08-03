@@ -12,26 +12,16 @@
     "hero": {
       "type": "home-hero",
       "settings": {
-        "pill_text": "Desde 2005 · Parque Principal, El Carmen de Viboral",
-        "eyebrow": "Tienda y servicio técnico",
         "heading": "Tecnología con respaldo local",
         "heading_accent": "al son de la tecnología",
         "subheading": "Buen precio, amplia variedad y atención que responde. En el corazón de El Carmen de Viboral desde 2005.",
         "cta_primary": "Explorar catálogo",
         "cta_primary_url": "/collections/all",
         "cta_whatsapp": "Escribir por WhatsApp",
-        "show_metrics": true,
-        "metric_1_value": "Desde 2005",
-        "metric_1_label": "En El Carmen de Viboral",
-        "metric_2_value": "4.3★",
-        "metric_2_label": "En Google",
-        "metric_3_value": "~5 min",
-        "metric_3_label": "Respuesta WhatsApp",
-        "metric_4_value": "21+ años",
-        "metric_4_label": "De trayectoria",
-        "show_floating_card": true,
-        "floating_title": "Paga como prefieras",
-        "floating_subtitle": "Mercado Pago · Transferencia · Efectivo en tienda"
+        "show_metrics": false,
+        "show_floating_card": false,
+        "pill_text": "",
+        "eyebrow": ""
       }
     },
     "trust": {
@@ -153,7 +143,7 @@
       "settings": {
         "eyebrow": "Catálogo destacado",
         "title": "Productos que más buscan",
-        "description": "Desde 2005 en El Carmen de Viboral. Asigna una colección en el Theme Editor para mostrar stock real.",
+        "description": "Desde 2005 en El Carmen de Viboral. Stock real, garantía mínima de 3 meses y asesoría por WhatsApp.",
         "collection": "catalogo-destacado",
         "products_to_show": 8
       }
