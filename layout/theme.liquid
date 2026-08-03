@@ -41,7 +41,7 @@
     .nt-cart-toast {
       position: fixed;
       left: 50%;
-      bottom: 88px;
+      bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
       transform: translateX(-50%) translateY(12px);
       z-index: 80;
       max-width: min(92vw, 360px);

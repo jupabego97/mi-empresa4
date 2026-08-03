@@ -6,10 +6,11 @@
   assign wa_product_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
 
   assign current_variant = product.selected_or_first_available_variant
+  assign publish_shipping = settings.publish_shipping_claims
   assign threshold_cop = settings.free_shipping_threshold | default: 200000
   assign threshold_cents = threshold_cop | times: 100
   assign free_shipping = false
-  if product.price >= threshold_cents
+  if publish_shipping and product.price >= threshold_cents
     assign free_shipping = true
   endif
 
@@ -17,7 +18,7 @@
   assign shipping_national = settings.shipping_national | default: '2-5 días hábiles'
   assign shipping_medellin = settings.shipping_medellin | default: '1-2 días hábiles'
   assign product_warranty = settings.product_warranty_note | default: 'Garantía mínima de 3 meses en productos, según política de la marca y NANOTRONICS.'
-  assign returns_days = settings.returns_days | default: 5
+  assign returns_days = settings.returns_days | default: 15
 -%}
 
 {% render 'breadcrumbs' %}
@@ -210,7 +211,11 @@
           <div class="nt-accordion__content space-y-5" x-show="open === 4" x-cloak>
             <div>
               <p class="font-semibold text-ink mb-1">¿Cuánto tarda el envío?</p>
-              <p>Despachamos el mismo día si compras antes de las {{ shipping_cutoff }}. Medellín y área metro: {{ shipping_medellin }}. Resto de Colombia: {{ shipping_national }}.</p>
+              {%- if publish_shipping -%}
+                <p>Despachamos el mismo día si compras antes de las {{ shipping_cutoff }}. Medellín y área metro: {{ shipping_medellin }}. Resto de Colombia: {{ shipping_national }}.</p>
+              {%- else -%}
+                <p>El costo y tiempo de envío se confirman en checkout. También puedes recoger sin costo en nuestra tienda del Parque Principal — te avisamos por WhatsApp cuando esté listo.</p>
+              {%- endif -%}
             </div>
             <div>
               <p class="font-semibold text-ink mb-1">¿Qué garantía tiene?</p>
@@ -266,7 +271,7 @@
       </div>
 
       <aside class="space-y-4 lg:sticky lg:top-32 lg:self-start">
-        <div class="nt-card p-5 space-y-3">
+        <div class="nt-card p-5 space-y-3 hidden lg:block">
           <p class="font-semibold text-sm text-ink inline-flex items-center gap-2">
             {% render 'icon', name: 'headset', size: 16, class: 'text-brand-royal' %}
             ¿Dudas antes de comprar?
@@ -336,11 +341,11 @@
 </section>
 
 {%- capture add_label -%}{{ 'general.add_to_cart' | t }}{%- endcapture -%}
-<div class="nt-sticky-bar pb-safe lg:hidden">
+<div class="nt-sticky-bar lg:hidden">
   <div class="flex gap-2 max-w-lg mx-auto items-center">
     <div class="text-xs" id="sticky-product-price">
-      <p class="font-bold text-ink" data-price-current>{{ product.price | money }}</p>
-      {%- if product.compare_at_price > product.price -%}
+      <p class="font-bold text-ink" data-price-current>{{ current_variant.price | money }}</p>
+      {%- if current_variant.compare_at_price > current_variant.price -%}
         <p class="text-[10px] text-danger font-semibold">Oferta</p>
       {%- endif -%}
     </div>
@@ -354,7 +359,7 @@
       class="nt-btn nt-btn--primary nt-btn--md flex-1 cursor-pointer"
       data-add-btn
       data-variant-id="{{ current_variant.id }}"
-      {% unless product.available %}disabled{% endunless %}
+      {% unless current_variant.available %}disabled{% endunless %}
     >
       {% render 'icon', name: 'cart', size: 16 %}
       <span data-add-btn-label>{{ add_label }}</span>

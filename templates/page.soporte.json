@@ -43,7 +43,7 @@
           "type": "faq",
           "settings": {
             "question": "¿Hacen envíos y cuánto tarda?",
-            "answer": "<p>Enviamos a Colombia con transportadoras como Servientrega, Coordinadora e Interrapidísimo. Medellín y área metropolitana: 1-2 días hábiles. Resto del país: 2-5 días hábiles. Envío gratis desde $200.000 (validar en checkout).</p>"
+            "answer": "<p>Enviamos a Colombia. El <strong>costo y tiempo</strong> se confirman en el checkout según tu ciudad. También puedes <strong>recoger sin costo</strong> en nuestra tienda del Parque Principal — te avisamos por WhatsApp cuando esté listo.</p>"
           }
         },
         "f5": {
@@ -64,7 +64,7 @@
           "type": "faq",
           "settings": {
             "question": "¿Cómo los contacto más rápido?",
-            "answer": "<p>Por <strong>WhatsApp</strong> al 323 682 6910 — respondemos en aproximadamente 5 minutos en horario de tienda. También puedes llamar, escribir a contacto@nanotronics.com.co o usar el formulario en <a href=\"/pages/contacto\">Contacto</a>.</p>"
+            "answer": "<p>Por <strong>WhatsApp</strong> (botón en el sitio) — respondemos en aproximadamente 5 minutos en horario de tienda. También puedes llamar al teléfono publicado en Contacto, escribir a <strong>contacto@nanotronics.com.co</strong> o usar el formulario en <a href=\"/pages/contacto\">Contacto</a>.</p>"
           }
         },
         "f8": {

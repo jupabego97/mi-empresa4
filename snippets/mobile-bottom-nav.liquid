@@ -1,9 +1,17 @@
 {%- liquid
   assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
-  assign wa_url = 'https://wa.me/' | append: wa_number
+  assign wa_text = settings.whatsapp_message | url_encode
+  assign wa_url = blank
+  if wa_number != blank
+    assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+  endif
+  assign on_product = false
+  if template.name == 'product'
+    assign on_product = true
+  endif
 -%}
 <nav class="nt-mobile-nav pb-safe" aria-label="{{ 'nav.mobile' | t }}">
-  <div class="nt-mobile-nav__inner">
+  <div class="nt-mobile-nav__inner{% if on_product %} nt-mobile-nav__inner--product{% endif %}">
     <a href="{{ routes.root_url }}" class="nt-mobile-nav__link{% if template.name == 'index' %} is-active{% endif %}">
       {% render 'icon', name: 'home', size: 20 %}
       <span>{{ 'nav.home' | t }}</span>
@@ -16,13 +24,33 @@
       {% render 'icon', name: 'search', size: 20 %}
       <span>{{ 'nav.search' | t }}</span>
     </a>
-    <button type="button" class="nt-mobile-nav__link" @click="cartOpen = true" aria-label="{{ 'general.cart' | t }}">
+    <button
+      type="button"
+      class="nt-mobile-nav__link"
+      @click="window.dispatchEvent(new CustomEvent('open-cart'))"
+      aria-label="{{ 'general.cart' | t }}"
+    >
       {% render 'icon', name: 'cart', size: 20 %}
       <span>{{ 'general.cart' | t }}</span>
+      <span
+        class="nt-cart-pop cart-count-badge absolute top-1 right-[18%]"
+        {% if cart.item_count == 0 %}style="display:none"{% endif %}
+      >
+        {{ cart.item_count }}
+      </span>
     </button>
-    <a href="{{ wa_url }}" class="nt-mobile-nav__link text-[#25D366]" target="_blank" rel="noopener">
-      {% render 'icon', name: 'whatsapp', size: 20 %}
-      <span>WA</span>
-    </a>
+    {%- unless on_product -%}
+      {%- if wa_url != blank -%}
+        <a href="{{ wa_url }}" class="nt-mobile-nav__link text-[#25D366]" target="_blank" rel="noopener">
+          {% render 'icon', name: 'whatsapp', size: 20 %}
+          <span>WA</span>
+        </a>
+      {%- else -%}
+        <a href="/pages/soporte" class="nt-mobile-nav__link{% if template.name == 'page' and page.handle == 'soporte' %} is-active{% endif %}">
+          {% render 'icon', name: 'headset', size: 20 %}
+          <span>{{ 'general.support' | t }}</span>
+        </a>
+      {%- endif -%}
+    {%- endunless -%}
   </div>
 </nav>

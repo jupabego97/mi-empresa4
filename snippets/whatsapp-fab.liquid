@@ -1,4 +1,10 @@
-{%- if settings.show_whatsapp_fab and settings.whatsapp_number != blank -%}
+{%- liquid
+  assign hide_on_product = false
+  if template.name == 'product'
+    assign hide_on_product = true
+  endif
+-%}
+{%- if settings.show_whatsapp_fab and settings.whatsapp_number != blank and hide_on_product == false -%}
   {%- liquid
     assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
     assign wa_text = settings.whatsapp_message | url_encode

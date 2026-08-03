@@ -76,9 +76,11 @@
       {% render 'icon', name: 'cart', size: 18 %}
       <span id="product-add-btn-label">{{ add_label }}</span>
     </button>
-    <div class="grid grid-cols-2 gap-2">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
       {% render 'btn', variant: 'dark', size: 'lg', label: buy_label, type: 'submit', name: 'checkout', icon: 'zap', full: true %}
-      {% render 'btn', variant: 'whatsapp', size: 'lg', label: wa_label, icon: 'whatsapp', href: wa_url, target: '_blank', rel: 'noopener', full: true %}
+      <span class="hidden lg:contents">
+        {% render 'btn', variant: 'whatsapp', size: 'lg', label: wa_label, icon: 'whatsapp', href: wa_url, target: '_blank', rel: 'noopener', full: true %}
+      </span>
     </div>
   </div>
 {%- endform -%}

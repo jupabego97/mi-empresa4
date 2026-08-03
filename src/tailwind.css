@@ -954,7 +954,7 @@
   /* ─── Sticky mobile bar ─── */
   .nt-sticky-bar {
     @apply fixed left-0 right-0 z-40 lg:hidden bg-surface border-t border-line p-3;
-    bottom: 64px;
+    bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
     box-shadow: 0 -8px 20px rgb(5 11 31 / 8%);
   }
 
@@ -964,6 +964,10 @@
 
   .nt-mobile-nav__inner {
     @apply grid grid-cols-5 h-16;
+  }
+
+  .nt-mobile-nav__inner--product {
+    @apply grid-cols-4;
   }
 
   .nt-mobile-nav__link {

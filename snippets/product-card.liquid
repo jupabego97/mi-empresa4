@@ -38,7 +38,7 @@
   assign threshold_cop = settings.free_shipping_threshold | default: 200000
   assign threshold_cents = threshold_cop | times: 100
   assign free_shipping = false
-  if card_price >= threshold_cents
+  if settings.publish_shipping_claims and card_price >= threshold_cents
     assign free_shipping = true
   endif
 

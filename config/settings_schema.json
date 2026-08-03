@@ -310,19 +310,19 @@
         "type": "text",
         "id": "announcement_1",
         "label": "Mensaje 1",
-        "default": "Envío GRATIS en compras desde $200.000"
+        "default": "Tienda en el Parque Principal · El Carmen de Viboral"
       },
       {
         "type": "text",
         "id": "announcement_2",
         "label": "Mensaje 2",
-        "default": "Garantía oficial · Soporte real por WhatsApp"
+        "default": "Buen precio · Amplia variedad · Atención directa"
       },
       {
         "type": "text",
         "id": "announcement_3",
         "label": "Mensaje 3",
-        "default": "Tienda física en El Carmen de Viboral · Antioquia"
+        "default": "WhatsApp con respuesta en ~5 min (horario de tienda)"
       }
     ]
   },
@@ -352,14 +352,21 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Políticas alineadas con docs/03-operacion.md"
+        "content": "Políticas alineadas con docs/03-operacion.md. Umbral, tiempos y transportadoras solo se muestran si activas la publicación (VALIDAR)."
+      },
+      {
+        "type": "checkbox",
+        "id": "publish_shipping_claims",
+        "label": "Publicar umbral, tiempos y transportadoras de envío",
+        "default": false,
+        "info": "Desactivado hasta confirmar en docs/03-operacion.md. Mientras tanto el theme usa copy seguro (checkout / WhatsApp / recogida)."
       },
       {
         "type": "number",
         "id": "free_shipping_threshold",
         "label": "Envío gratis desde (COP, pesos)",
         "default": 200000,
-        "info": "Ej: 200000 = $200.000. El theme convierte a centavos."
+        "info": "Ej: 200000 = $200.000. Solo se usa si 'Publicar…' está activo."
       },
       {
         "type": "text",
@@ -383,7 +390,8 @@
         "type": "text",
         "id": "shipping_carriers",
         "label": "Transportadoras",
-        "default": "Servientrega, Coordinadora, Interrapidísimo"
+        "default": "",
+        "info": "Dejar vacío hasta confirmar. No inventar nombres."
       },
       {
         "type": "range",
