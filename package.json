@@ -5,7 +5,7 @@
   "description": "NANOTRONICS — Shopify theme",
   "scripts": {
     "dev": "tailwindcss -i src/tailwind.css -o assets/theme.css --watch",
-    "build": "node tools/build-icons.mjs && tailwindcss -i src/tailwind.css -o assets/theme.css --minify",
+    "build": "node tools/build-icons.mjs && npm run build:css",
     "build:css": "tailwindcss -i src/tailwind.css -o assets/theme.css --minify",
     "build:icons": "node tools/build-icons.mjs",
     "theme:dev": "shopify theme dev",

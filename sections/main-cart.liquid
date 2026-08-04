@@ -149,10 +149,11 @@
                 {% render 'product-card', product: product %}
               {%- endfor -%}
             {%- else -%}
-              {% render 'product-card', demo: true, title: 'Mouse gamer Logitech G502', price: 24990000, brand: 'LOGITECH' %}
-              {% render 'product-card', demo: true, title: 'SSD NVMe 1TB Kingston', price: 35990000, brand: 'KINGSTON', badge: 'oferta', compare_at: 42990000 %}
-              {% render 'product-card', demo: true, title: 'Audífonos HyperX Cloud II', price: 29990000, brand: 'HYPERX' %}
-              {% render 'product-card', demo: true, title: 'Webcam Logitech C920', price: 27990000, brand: 'LOGITECH' %}
+              {%- for product in collections.all.products limit: 4 -%}
+                {% render 'product-card', product: product %}
+              {%- else -%}
+                <p class="col-span-full text-sm text-ink-muted">{{ 'cart.no_recommendations' | t }}</p>
+              {%- endfor -%}
             {%- endif -%}
           </div>
         </div>

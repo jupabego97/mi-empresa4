@@ -13,7 +13,7 @@ Rama principal: `main` (incluye brand precision: docs + settings + theme).
 ## Identidad
 
 - **Paleta**: azul royal `#1D4ED8` · azul eléctrico `#2D7CFF` · azul oscuro `#050B1F` · acentos luminosos sutiles
-- **Tipografía**: Inter (400-800)
+- **Tipografía**: Space Grotesk (display) + DM Sans (cuerpo)
 - **Inspiración**: Apple + Amazon + Nvidia + Mercado Libre + tiendas gamer premium
 - **Foco**: conversión, velocidad, claridad, confianza, mobile first
 
@@ -23,7 +23,7 @@ Rama principal: `main` (incluye brand precision: docs + settings + theme).
 
 1. **Announcement bar** — envíos, garantía, tienda física
 2. **Header sticky** premium con mega-menu, search prominente, ofertas destacado
-3. **Hero** con tech grid, badges, métricas de confianza, tarjeta flotante
+3. **Hero** full-bleed con marca, un titular, una línea de apoyo y CTAs
 4. **Trust strip** — 5 razones de confianza
 5. **Categorías** destacadas con cards visuales
 6. **Productos destacados** — grid de 8 cards premium
@@ -139,6 +139,7 @@ Detalle: [`docs/PAGINAS-SHOPIFY.md`](docs/PAGINAS-SHOPIFY.md)
 
 ```
 assets/       theme.css, theme.js, alpine.min.js, icons.svg, nano-logo.png
+              (nanotronics-theme.css es legado; el layout usa theme.css)
 config/       settings_schema.json, settings_data.json
 layout/       theme.liquid
 locales/      es.default.json

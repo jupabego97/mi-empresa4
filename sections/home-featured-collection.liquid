@@ -25,17 +25,13 @@
           {% render 'product-card', product: product %}
         {%- endfor -%}
       {%- else -%}
-        {% render 'product-card', demo: true, title: 'Parlante JBL Flip 6 · Bluetooth', price: 38990000, compare_at: 44990000, badge: 'oferta', brand: 'JBL' %}
-        {% render 'product-card', demo: true, title: 'Portátil ASUS VivoBook 15 · Ryzen 5 16GB', price: 249900000, badge: 'nuevo', brand: 'ASUS' %}
-        {% render 'product-card', demo: true, title: 'Monitor Samsung 24" Full HD', price: 59900000, compare_at: 69900000, badge: 'oferta', brand: 'Samsung' %}
-        {% render 'product-card', demo: true, title: 'Teclado Logitech K380 Multi-Device', price: 12990000, brand: 'Logitech' %}
-        {% render 'product-card', demo: true, title: 'Mouse Logitech M350 Pebble', price: 8990000, brand: 'Logitech' %}
-        {% render 'product-card', demo: true, title: 'SSD Kingston NV2 500GB NVMe', price: 15990000, compare_at: 18990000, badge: 'oferta', brand: 'Kingston' %}
-        {% render 'product-card', demo: true, title: 'Power bank ADATA 10000mAh', price: 4990000, brand: 'ADATA' %}
-        {% render 'product-card', demo: true, title: 'Router Tenda WiFi 6 AX2', price: 19990000, brand: 'Tenda' %}
-        <p class="col-span-full text-sm text-ink-muted text-center py-2">
-          {{ 'home.select_collection' | t }}
-        </p>
+        <div class="col-span-full rounded-xl border border-dashed border-line bg-surface px-6 py-12 text-center">
+          <p class="text-ink font-medium mb-1">{{ 'home.empty_featured_title' | t }}</p>
+          <p class="text-sm text-ink-muted max-w-md mx-auto">{{ 'home.select_collection' | t }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="inline-flex mt-5 text-sm font-medium text-brand-royal hover:underline">
+            {{ 'home.view_catalog' | t }}
+          </a>
+        </div>
       {%- endif -%}
     </div>
   </div>

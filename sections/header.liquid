@@ -80,7 +80,7 @@
         <button
           type="button"
           class="nt-header__icon-btn"
-          @click="cartOpen = true"
+          @click="window.dispatchEvent(new CustomEvent('open-cart'))"
           aria-label="{{ 'general.cart' | t }}"
         >
           {% render 'icon', name: 'cart', size: 22 %}
@@ -164,11 +164,15 @@
     <div class="sm:hidden">
       <form action="{{ routes.search_url }}" method="get" role="search" class="relative">
         <input type="hidden" name="type" value="product">
+        <label for="header-search-mobile" class="nt-sr-only">{{ 'general.search' | t }}</label>
         <input
           type="search"
+          id="header-search-mobile"
           name="q"
           class="nt-input w-full pl-10 min-h-11"
           placeholder="{{ 'general.search' | t }}"
+          value="{{ search.terms | escape }}"
+          autocomplete="off"
         >
         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted">
           {% render 'icon', name: 'search', size: 18 %}

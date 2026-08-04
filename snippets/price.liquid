@@ -5,8 +5,9 @@
 {%- endcomment -%}
 {%- liquid
   if product != blank
-    assign current_price = product.price
-    assign compare_price = product.compare_at_price
+    assign price_variant = product.selected_or_first_available_variant
+    assign current_price = price_variant.price
+    assign compare_price = price_variant.compare_at_price
   else
     assign current_price = price | default: 0
     assign compare_price = compare_at | default: 0
