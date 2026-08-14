@@ -180,5 +180,12 @@
     "benefit_addresses": "Direcciones guardadas para checkout rápido",
     "benefit_support": "Soporte directo si algo falla",
     "portal_note": "Usa el correo de tu compra. Te enviaremos un código o enlace seguro y entrarás al portal de tu cuenta."
+  },
+  "shopify": {
+    "checkout": {
+      "contact": {
+        "company_label": "Numero de identificación"
+      }
+    }
   }
 }
