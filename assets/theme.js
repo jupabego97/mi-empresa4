@@ -5,11 +5,17 @@
   const routes = window.Shopify?.routes || { root: '/' };
   const root = routes.root?.endsWith('/') ? routes.root : `${routes.root || '/'}/`;
 
+  const L = window.theme?.labels || {};
   const LABELS = {
-    add: 'Agregar al carrito',
-    adding: 'Agregando...',
-    added: '✓ Agregado al carrito',
-    error: 'No se pudo agregar',
+    add: L.add || 'Agregar al carrito',
+    adding: L.adding || 'Agregando...',
+    added: L.added || 'Agregado al carrito',
+    error: L.error || 'No se pudo agregar',
+    selectVariant: L.selectVariant || 'Selecciona una variante',
+    soldOut: L.soldOut || 'Agotado',
+    stockIn: L.stockIn || 'En stock',
+    stockOut: L.stockOut || 'Agotado por ahora',
+    cartError: L.cartError || 'No se pudo actualizar el carrito',
   };
 
   const busyForms = new WeakSet();
@@ -216,7 +222,7 @@
 
     const variantId = readVariantId(form, btn);
     if (!variantId) {
-      showToast('Selecciona una variante', 'error');
+      showToast(LABELS.selectVariant, 'error');
       return;
     }
 
@@ -374,7 +380,7 @@
       [addBtn, stickyAddBtn].forEach((btn) => {
         if (btn) btn.disabled = !available;
       });
-      if (addLabel) addLabel.textContent = available ? addLabelDefault : 'Agotado';
+      if (addLabel) addLabel.textContent = available ? addLabelDefault : LABELS.soldOut;
 
       const stockStatus = document.getElementById('product-stock-status');
       const stockDot = document.getElementById('product-stock-dot');
@@ -384,9 +390,7 @@
         stockStatus.classList.toggle('text-danger', !available);
         stockDot.classList.toggle('bg-success', available);
         stockDot.classList.toggle('bg-danger', !available);
-        stockText.textContent = available
-          ? 'En stock · despacho según disponibilidad (consulta tiempos en checkout)'
-          : 'Agotado por ahora · pregúntanos cuándo vuelve';
+        stockText.textContent = available ? LABELS.stockIn : LABELS.stockOut;
       }
     }
 
@@ -449,27 +453,58 @@
     updateUI(findVariant(getSelectedOptions()) || product.variants.find((v) => v.available) || product.variants[0]);
   }
 
-  function bindAddButtons() {
-    document.querySelectorAll('[data-add-btn]').forEach((btn) => {
-      if (btn.type === 'submit') btn.type = 'button';
-      if (btn.dataset.ntAddBound === '1') return;
-      btn.dataset.ntAddBound = '1';
-      btn.addEventListener('click', (e) => {
-        if (btn.disabled || !isAddButton(btn)) return;
+  let drawerLastFocus = null;
+  let drawerTrap = null;
+
+  function drawerFocusables(drawer) {
+    return Array.from(
+      drawer.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((el) => el.getClientRects().length > 0);
+  }
+
+  function lockDrawer() {
+    const drawer = document.getElementById('cart-drawer');
+    if (!drawer || drawerTrap) return;
+    drawerLastFocus = document.activeElement;
+    document.body.classList.add('nt-scroll-locked');
+    const closeBtn = drawer.querySelector('.nt-drawer__panel button');
+    (closeBtn || drawerFocusables(drawer)[0])?.focus({ preventScroll: true });
+    drawerTrap = (e) => {
+      if (e.key !== 'Tab') return;
+      const items = drawerFocusables(drawer);
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
-        e.stopImmediatePropagation();
-        handleAdd(resolveForm(btn), btn);
-      });
-    });
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', drawerTrap);
+  }
+
+  function unlockDrawer() {
+    document.body.classList.remove('nt-scroll-locked');
+    if (drawerTrap) document.removeEventListener('keydown', drawerTrap);
+    drawerTrap = null;
+    if (drawerLastFocus && document.contains(drawerLastFocus)) {
+      drawerLastFocus.focus({ preventScroll: true });
+    }
+    drawerLastFocus = null;
   }
 
   function boot() {
     document.documentElement.classList.add('js-ready');
     initProductVariants();
-    bindAddButtons();
 
     window.addEventListener('open-cart', () => {
       document.getElementById('cart-drawer')?.classList.add('is-open');
+      lockDrawer();
     });
 
     window.addEventListener('close-cart', () => {
@@ -478,6 +513,7 @@
         drawer.classList.remove('is-open');
         drawer.setAttribute('aria-hidden', 'true');
       }
+      unlockDrawer();
     });
   }
 
@@ -502,11 +538,12 @@
         return true;
       }
       await refreshCartDrawer();
-      openCartDrawerUI();
+      const drawer = document.getElementById('cart-drawer');
+      if (!drawer?.classList.contains('is-open')) openCartDrawerUI();
       return true;
     } catch (err) {
       console.warn('[NANOTRONICS] cart change', err);
-      showToast('No se pudo actualizar el carrito', 'error');
+      showToast(LABELS.cartError, 'error');
       return false;
     }
   }

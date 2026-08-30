@@ -41,7 +41,8 @@
               }"
               x-init="tick(); setInterval(()=>tick(),1000)"
               class="nt-countdown"
-              aria-label="Tiempo restante de la oferta"
+              role="timer"
+              aria-label="Tiempo restante de la oferta. Termina el {{ section.settings.countdown_end }}."
             >
               <div class="nt-countdown__cell"><span class="nt-countdown__value" x-text="d"></span><span class="nt-countdown__label">días</span></div>
               <div class="nt-countdown__cell"><span class="nt-countdown__value" x-text="h"></span><span class="nt-countdown__label">hrs</span></div>

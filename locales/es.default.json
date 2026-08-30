@@ -23,6 +23,7 @@
     "add_to_cart": "Agregar al carrito",
     "added_to_cart": "Agregado",
     "adding_to_cart": "Agregando...",
+    "add_error": "No se pudo agregar",
     "choose_options": "Ver opciones",
     "buy_now": "Comprar ahora",
     "quick_add": "Agregar",
@@ -73,6 +74,9 @@
     "faq_answer": "Garantía mínima de 3 meses en productos, según política de la marca y NANOTRONICS. Para dudas técnicas, escríbenos por WhatsApp (~5 min en horario de tienda).",
     "related": "También te puede interesar",
     "variant": "Variante",
+    "select_variant": "Selecciona una variante",
+    "stock_in": "En stock · despacho según disponibilidad (consulta tiempos en checkout)",
+    "stock_out": "Agotado por ahora · pregúntanos cuándo vuelve",
     "shipping_colombia": "Envío a toda Colombia",
     "secure_payment": "Compra protegida",
     "returns": "Cambios sin estrés"
@@ -94,6 +98,7 @@
     "continue_shopping": "Seguir comprando",
     "recommended": "Completa tu setup",
     "no_recommendations": "Asigna una colección de recomendaciones en el Theme Editor.",
+    "update_error": "No se pudo actualizar el carrito",
     "items_count": "productos"
   },
   "search": {
@@ -131,6 +136,8 @@
     "returns": "Devoluciones",
     "privacy": "Privacidad",
     "terms": "Términos",
+    "newsletter_success": "¡Listo! Te avisaremos de ofertas y lanzamientos.",
+    "newsletter_error": "Revisa el correo e intenta de nuevo.",
     "rights": "Todos los derechos reservados."
   },
   "accessibility": {

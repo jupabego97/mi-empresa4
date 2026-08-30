@@ -1,5 +1,5 @@
-<div class="nt-pdp-gallery" x-data="{ active: 0, zoomed: false }" @variant-image.window="if ($event.detail !== null && $event.detail >= 0) active = $event.detail">
-  <div class="nt-pdp-gallery__main relative group">
+<div class="nt-pdp-gallery" x-data="{ active: 0 }" @variant-image.window="if ($event.detail !== null && $event.detail >= 0) active = $event.detail">
+  <div class="nt-pdp-gallery__main relative group" role="group" aria-label="{{ product.title | escape }}">
     {%- for image in product.images -%}
       {%- if forloop.first -%}
         {%- assign img_loading = 'eager' -%}
@@ -43,7 +43,7 @@
     {%- if product.images.size > 1 -%}
       <button
         type="button"
-        class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+        class="nt-pdp-gallery__arrow absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center transition-opacity"
         @click="active = (active - 1 + {{ product.images.size }}) % {{ product.images.size }}"
         aria-label="Imagen anterior"
       >
@@ -51,7 +51,7 @@
       </button>
       <button
         type="button"
-        class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+        class="nt-pdp-gallery__arrow absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center transition-opacity"
         @click="active = (active + 1) % {{ product.images.size }}"
         aria-label="Imagen siguiente"
       >
@@ -68,7 +68,8 @@
           class="nt-pdp-gallery__thumb"
           :class="{ 'is-active': active === {{ forloop.index0 }} }"
           @click="active = {{ forloop.index0 }}"
-          aria-label="Imagen {{ forloop.index }}"
+          aria-label="Imagen {{ forloop.index }} de {{ product.images.size }}"
+          :aria-current="active === {{ forloop.index0 }} ? 'true' : null"
         >
           {{ image | image_url: width: 160 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: '' }}
         </button>

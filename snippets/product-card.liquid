@@ -89,16 +89,6 @@
       {%- endif -%}
     </div>
 
-    <button
-      type="button"
-      class="nt-product-card__wishlist"
-      aria-label="Guardar en favoritos"
-      data-wishlist="{{ card_id }}"
-      onclick="event.preventDefault(); this.classList.toggle('!text-danger')"
-    >
-      {% render 'icon', name: 'heart', size: 18 %}
-    </button>
-
     {%- if card_image != blank -%}
       {{
         card_image

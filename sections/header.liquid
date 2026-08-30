@@ -106,10 +106,19 @@
     </div>
 
     <nav class="nt-header__nav" aria-label="{{ 'nav.principal' | t }}">
-      <div class="relative" @mouseenter="megaOpen = true" @mouseleave="megaOpen = false">
+      <div
+        class="relative"
+        @mouseenter="megaOpen = true"
+        @mouseleave="megaOpen = false"
+        @focusin="megaOpen = true"
+        @focusout="if (!$el.contains($event.relatedTarget)) megaOpen = false"
+        @keydown.escape="megaOpen = false"
+      >
         <a
           href="{{ routes.collections_url }}"
           class="nt-header__nav-link inline-flex items-center gap-1"
+          aria-haspopup="true"
+          :aria-expanded="megaOpen"
         >
           {% render 'icon', name: 'grid', size: 16 %}
           {{ 'general.categories' | t }}
