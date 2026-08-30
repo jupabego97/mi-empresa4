@@ -83,7 +83,10 @@
       soldOut: {{ 'general.out_of_stock' | t | json }},
       stockIn: {{ 'product.stock_in' | t | json }},
       stockOut: {{ 'product.stock_out' | t | json }},
-      cartError: {{ 'cart.update_error' | t | json }}
+      cartError: {{ 'cart.update_error' | t | json }},
+      lowStock: {{ 'product.low_stock_count' | t: count: '__COUNT__' | json }},
+      searchAll: {{ 'search.view_all_results' | t | json }},
+      searchEmpty: {{ 'search.no_suggestions' | t | json }}
     };
   </script>
   <script defer src="{{ 'theme.js' | asset_url }}"></script>

@@ -16,7 +16,17 @@
     stockIn: L.stockIn || 'En stock',
     stockOut: L.stockOut || 'Agotado por ahora',
     cartError: L.cartError || 'No se pudo actualizar el carrito',
+    lowStock: L.lowStock || '¡Quedan solo __COUNT__!',
+    notifyMe: L.notifyMe || 'Avísame cuando vuelva',
+    searchAll: L.searchAll || 'Ver todos los resultados',
+    searchEmpty: L.searchEmpty || 'Sin resultados para esta búsqueda',
   };
+
+  function escapeHtml(str) {
+    return String(str ?? '').replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]));
+  }
 
   const busyForms = new WeakSet();
 
@@ -376,11 +386,14 @@
       }
     }
 
-    function setAvailabilityUI(available) {
+    function setAvailabilityUI(available, variant) {
       [addBtn, stickyAddBtn].forEach((btn) => {
         if (btn) btn.disabled = !available;
       });
       if (addLabel) addLabel.textContent = available ? addLabelDefault : LABELS.soldOut;
+
+      const notifyBtn = document.getElementById('product-notify-btn');
+      if (notifyBtn) notifyBtn.classList.toggle('hidden', available);
 
       const stockStatus = document.getElementById('product-stock-status');
       const stockDot = document.getElementById('product-stock-dot');
@@ -392,11 +405,23 @@
         stockDot.classList.toggle('bg-danger', !available);
         stockText.textContent = available ? LABELS.stockIn : LABELS.stockOut;
       }
+
+      const lowEl = document.getElementById('product-low-stock');
+      if (lowEl) {
+        const qty = variant?.inventory_quantity;
+        const tracked = variant?.inventory_management === 'shopify';
+        if (available && tracked && qty > 0 && qty <= 5) {
+          lowEl.textContent = `· ${LABELS.lowStock.replace('__COUNT__', qty)}`;
+          lowEl.hidden = false;
+        } else {
+          lowEl.hidden = true;
+        }
+      }
     }
 
     function updateUI(variant) {
       if (!variant) {
-        setAvailabilityUI(false);
+        setAvailabilityUI(false, null);
         return;
       }
 
@@ -416,7 +441,7 @@
       const skuEl = document.getElementById('product-sku');
       if (skuEl) skuEl.textContent = variant.sku || 'N/A';
 
-      setAvailabilityUI(variant.available);
+      setAvailabilityUI(variant.available, variant);
 
       variant.options.forEach((val, i) => {
         const label = document.querySelector(`[data-option-current="${i + 1}"]`);
@@ -451,6 +476,119 @@
 
     updateOptionAvailability();
     updateUI(findVariant(getSelectedOptions()) || product.variants.find((v) => v.available) || product.variants[0]);
+  }
+
+  function initPredictiveSearch() {
+    document.querySelectorAll('[data-predictive-search]').forEach((form) => {
+      const input = form.querySelector('input[type="search"]');
+      const results = form.querySelector('[data-predictive-results]');
+      if (!input || !results) return;
+
+      let timer = null;
+      let items = [];
+      let active = -1;
+
+      function hide() {
+        results.hidden = true;
+        results.innerHTML = '';
+        items = [];
+        active = -1;
+        input.setAttribute('aria-expanded', 'false');
+      }
+
+      function setActive(next) {
+        items.forEach((el, i) => el.classList.toggle('is-active', i === next));
+        active = next;
+        if (items[active]) items[active].scrollIntoView({ block: 'nearest' });
+      }
+
+      function render(products, q) {
+        active = -1;
+        if (!products.length) {
+          results.innerHTML = `<p class="nt-search-results__empty">${escapeHtml(LABELS.searchEmpty)}</p>`;
+        } else {
+          const rows = products.map((p) => {
+            const priceCents = Math.round(parseFloat(p.price) * 100) || 0;
+            const compareCents = Math.round(parseFloat(p.compare_at_price) * 100) || 0;
+            const img = p.featured_image && p.featured_image.url
+              ? `<img src="${p.featured_image.url}&width=96" alt="" width="48" height="48" loading="lazy">`
+              : '';
+            const compare = compareCents > priceCents ? ` <s>${formatMoney(compareCents)}</s>` : '';
+            return `<a href="${p.url}" class="nt-search-results__item" role="option">
+              <span class="nt-search-results__thumb">${img}</span>
+              <span class="nt-search-results__meta">
+                <span class="nt-search-results__title">${escapeHtml(p.title)}</span>
+                <span class="nt-search-results__price">${formatMoney(priceCents)}${compare}</span>
+              </span>
+            </a>`;
+          }).join('');
+          results.innerHTML = rows + `<a href="${getRoot()}search?q=${encodeURIComponent(q)}&type=product" class="nt-search-results__all">${escapeHtml(LABELS.searchAll)} · “${escapeHtml(q)}”</a>`;
+        }
+        items = Array.from(results.querySelectorAll('a'));
+        results.hidden = false;
+        input.setAttribute('aria-expanded', 'true');
+      }
+
+      async function search(q) {
+        try {
+          const url = `${getRoot()}search/suggest.json?q=${encodeURIComponent(q)}&resources[type]=product&resources[limit]=6&resources[options][unavailable_products]=last`;
+          const res = await fetch(url, { credentials: 'same-origin' });
+          if (!res.ok) return;
+          const data = await res.json();
+          if (input.value.trim() !== q) return;
+          render(data?.resources?.results?.products || [], q);
+        } catch (e) {
+          console.warn('[NANOTRONICS] predictive search', e);
+        }
+      }
+
+      input.setAttribute('role', 'combobox');
+      input.setAttribute('aria-expanded', 'false');
+      input.setAttribute('aria-controls', results.id);
+
+      input.addEventListener('input', () => {
+        clearTimeout(timer);
+        const q = input.value.trim();
+        if (q.length < 2) { hide(); return; }
+        timer = setTimeout(() => search(q), 200);
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (results.hidden) return;
+        if (e.key === 'ArrowDown') { e.preventDefault(); setActive(Math.min(active + 1, items.length - 1)); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(Math.max(active - 1, -1)); }
+        else if (e.key === 'Enter' && active >= 0 && items[active]) { e.preventDefault(); items[active].click(); }
+        else if (e.key === 'Escape') { hide(); }
+      });
+
+      input.addEventListener('focus', () => {
+        if (input.value.trim().length >= 2 && results.innerHTML) {
+          results.hidden = false;
+          input.setAttribute('aria-expanded', 'true');
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!form.contains(e.target)) hide();
+      });
+    });
+  }
+
+  async function initRecommendations() {
+    const wrap = document.querySelector('[data-recommendations-url]');
+    if (!wrap) return;
+    try {
+      const res = await fetch(wrap.dataset.recommendationsUrl, { credentials: 'same-origin' });
+      if (!res.ok) return;
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const fresh = doc.querySelector('#pdp-related');
+      if (fresh && fresh.querySelector('.nt-product-card')) {
+        wrap.innerHTML = fresh.outerHTML;
+      }
+    } catch (e) {
+      console.warn('[NANOTRONICS] recommendations', e);
+    }
   }
 
   let drawerLastFocus = null;
@@ -501,6 +639,8 @@
   function boot() {
     document.documentElement.classList.add('js-ready');
     initProductVariants();
+    initPredictiveSearch();
+    initRecommendations();
 
     window.addEventListener('open-cart', () => {
       document.getElementById('cart-drawer')?.classList.add('is-open');

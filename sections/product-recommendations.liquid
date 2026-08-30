@@ -1,0 +1,26 @@
+{%- comment -%}
+  Sección pensada para /recommendations/products?section_id=product-recommendations
+  El JS de la PDP reemplaza el fallback por colección con estos resultados.
+{%- endcomment -%}
+{%- if recommendations.performed and recommendations.products_count > 0 -%}
+  <div class="mt-16" id="pdp-related">
+    <div class="flex items-end justify-between gap-4 mb-6">
+      <div>
+        <p class="nt-eyebrow mb-1">Completa tu setup</p>
+        <h2 class="nt-section-title mb-0">{{ 'product.related' | t }}</h2>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      {%- for product in recommendations.products -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Recomendados (API)",
+  "settings": []
+}
+{% endschema %}

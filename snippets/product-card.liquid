@@ -100,6 +100,18 @@
           class: 'absolute inset-0 w-full h-full object-contain p-3 transition-transform duration-300 group-hover:scale-105',
           alt: card_title
       }}
+      {%- if demo == blank and card_product != blank and card_product.images.size > 1 -%}
+        {{
+          card_product.images[1]
+          | image_url: width: 700
+          | image_tag:
+            loading: 'lazy',
+            widths: '300,500,700',
+            sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw',
+            class: 'nt-product-card__img-alt absolute inset-0 w-full h-full object-contain p-3',
+            alt: ''
+        }}
+      {%- endif -%}
     {%- else -%}
       <div class="w-full h-full flex items-center justify-center bg-surface-2 text-ink-muted text-sm p-4 text-center">
         {% render 'icon', name: 'package', size: 48, class: 'opacity-30' %}

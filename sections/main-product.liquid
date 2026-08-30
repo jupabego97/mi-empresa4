@@ -87,6 +87,13 @@
               {{ 'product.stock_out' | t }}
             {%- endif -%}
           </span>
+          {%- assign low_stock_initial = false -%}
+          {%- if current_variant.available and current_variant.inventory_management == 'shopify' and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= 5 -%}
+            {%- assign low_stock_initial = true -%}
+          {%- endif -%}
+          <span id="product-low-stock" class="text-warning"{% unless low_stock_initial %} hidden{% endunless %}>
+            · {{ 'product.low_stock_count' | t: count: current_variant.inventory_quantity }}
+          </span>
         </p>
 
         {%- if section.settings.show_key_specs and section.blocks.size > 0 -%}
@@ -319,29 +326,31 @@
       </aside>
     </div>
 
-    {%- if product.collections.size > 0 -%}
-      {%- assign related_col = product.collections.first -%}
-      <div class="mt-16">
-        <div class="flex items-end justify-between gap-4 mb-6">
-          <div>
-            <p class="nt-eyebrow mb-1">Completa tu setup</p>
-            <h2 class="nt-section-title mb-0">{{ 'product.related' | t }}</h2>
+    <div data-recommendations-url="{{ routes.product_recommendations_url }}?product_id={{ product.id }}&section_id=product-recommendations&limit=4&intent=related">
+      {%- if product.collections.size > 0 -%}
+        {%- assign related_col = product.collections.first -%}
+        <div class="mt-16" id="pdp-related">
+          <div class="flex items-end justify-between gap-4 mb-6">
+            <div>
+              <p class="nt-eyebrow mb-1">Completa tu setup</p>
+              <h2 class="nt-section-title mb-0">{{ 'product.related' | t }}</h2>
+            </div>
+            <a href="{{ related_col.url }}" class="text-sm font-medium text-brand-royal hover:underline shrink-0 inline-flex items-center gap-1">
+              Ver toda la categoría {% render 'icon', name: 'arrow-right', size: 14 %}
+            </a>
           </div>
-          <a href="{{ related_col.url }}" class="text-sm font-medium text-brand-royal hover:underline shrink-0 inline-flex items-center gap-1">
-            Ver toda la categoría {% render 'icon', name: 'arrow-right', size: 14 %}
-          </a>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {%- assign shown = 0 -%}
+            {%- for related in related_col.products -%}
+              {%- if related.id != product.id and shown < 4 -%}
+                {% render 'product-card', product: related %}
+                {%- assign shown = shown | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {%- assign shown = 0 -%}
-          {%- for related in related_col.products -%}
-            {%- if related.id != product.id and shown < 4 -%}
-              {% render 'product-card', product: related %}
-              {%- assign shown = shown | plus: 1 -%}
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      </div>
-    {%- endif -%}
+      {%- endif -%}
+    </div>
   </div>
 </section>
 

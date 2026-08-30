@@ -12,7 +12,7 @@
           {% render 'icon', name: 'star', size: 16, class: 'text-warning/35' %}
         </span>
         <span class="text-sm font-bold text-ink">{{ settings.metric_rating_value | default: '4.3★' }}</span>
-        <a href="https://www.google.com/maps/search/?api=1&query=NANOTRONICS+El+Carmen+de+Viboral" target="_blank" rel="noopener" class="text-sm text-brand-royal hover:underline">Google Maps</a>
+        <a href="{% render 'google-maps-href', kind: 'place' %}" target="_blank" rel="noopener" class="text-sm text-brand-royal hover:underline">Google Maps</a>
       </div>
     </div>
     <div class="grid md:grid-cols-3 gap-6">
