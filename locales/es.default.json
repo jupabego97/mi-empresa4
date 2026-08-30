@@ -65,7 +65,9 @@
     "sort": "Ordenar por",
     "empty": "Aún no hay productos en esta categoría. Vuelve pronto o pídenos por WhatsApp lo que buscas.",
     "no_filters": "Sin filtros adicionales",
-    "filters_hint": "Usa el orden para refinar tu búsqueda."
+    "filters_hint": "Usa el orden para refinar tu búsqueda.",
+    "price_min": "Mín",
+    "price_max": "Máx"
   },
   "product": {
     "description": "Descripción",
@@ -77,6 +79,8 @@
     "select_variant": "Selecciona una variante",
     "stock_in": "En stock · despacho según disponibilidad (consulta tiempos en checkout)",
     "stock_out": "Agotado por ahora · pregúntanos cuándo vuelve",
+    "low_stock_count": "¡Quedan solo {{ count }}!",
+    "notify_me": "Avísame por WhatsApp cuando vuelva",
     "shipping_colombia": "Envío a toda Colombia",
     "secure_payment": "Compra protegida",
     "returns": "Cambios sin estrés"
@@ -106,7 +110,15 @@
     "results_for": "Resultados para",
     "results_count": "resultados",
     "no_results": "No encontramos lo que buscas. Pídenoslo por WhatsApp y lo conseguimos.",
-    "browse_all": "Ver todo el catálogo"
+    "browse_all": "Ver todo el catálogo",
+    "view_all_results": "Ver todos los resultados",
+    "no_suggestions": "Sin resultados para esta búsqueda"
+  },
+  "404": {
+    "title": "Esta página se movió o ya no existe",
+    "text": "Busca lo que necesitas o vuelve al catálogo. Si prefieres, te ayudamos por WhatsApp en minutos.",
+    "cta_catalog": "Explorar catálogo",
+    "popular": "Categorías populares"
   },
   "service": {
     "process": "Cómo funciona",

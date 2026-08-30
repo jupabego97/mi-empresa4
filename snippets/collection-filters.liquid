@@ -3,6 +3,7 @@
     type="button"
     class="lg:hidden nt-btn nt-btn--secondary nt-btn--md w-full mb-4"
     @click="open = !open"
+    :aria-expanded="open"
   >
     {{ 'collection.filters' | t }}
   </button>
@@ -37,7 +38,8 @@
                   type="number"
                   name="{{ filter.min_value.param_name }}"
                   value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
-                  placeholder="Min"
+                  placeholder="{{ 'collection.price_min' | t }}"
+                  aria-label="{{ 'collection.price_min' | t }}"
                   class="nt-input min-h-9"
                   form="collection-filters-form"
                 >
@@ -45,7 +47,8 @@
                   type="number"
                   name="{{ filter.max_value.param_name }}"
                   value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
-                  placeholder="Max"
+                  placeholder="{{ 'collection.price_max' | t }}"
+                  aria-label="{{ 'collection.price_max' | t }}"
                   class="nt-input min-h-9"
                   form="collection-filters-form"
                 >

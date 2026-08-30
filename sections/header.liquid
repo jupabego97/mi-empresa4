@@ -20,7 +20,7 @@
       </a>
 
       <div class="nt-header__search hidden sm:block">
-        <form action="{{ routes.search_url }}" method="get" role="search" class="relative">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="relative" data-predictive-search>
           <input type="hidden" name="type" value="product">
           <label for="header-search" class="nt-sr-only">{{ 'general.search' | t }}</label>
           <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none">
@@ -41,6 +41,7 @@
           >
             {{ 'general.search_submit' | t }}
           </button>
+          <div id="header-search-results" class="nt-search-results" data-predictive-results role="listbox" hidden></div>
         </form>
       </div>
 
@@ -171,7 +172,7 @@
     </nav>
 
     <div class="sm:hidden">
-      <form action="{{ routes.search_url }}" method="get" role="search" class="relative">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="relative" data-predictive-search>
         <input type="hidden" name="type" value="product">
         <label for="header-search-mobile" class="nt-sr-only">{{ 'general.search' | t }}</label>
         <input
@@ -186,6 +187,7 @@
         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted">
           {% render 'icon', name: 'search', size: 18 %}
         </span>
+        <div id="header-search-results-mobile" class="nt-search-results" data-predictive-results role="listbox" hidden></div>
       </form>
     </div>
   </div>

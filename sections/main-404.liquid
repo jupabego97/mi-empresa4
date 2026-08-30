@@ -1,0 +1,66 @@
+{%- liquid
+  assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
+  assign wa_text = settings.whatsapp_message | url_encode
+  assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
+-%}
+
+<section class="nt-section">
+  <div class="nt-container">
+    <div class="max-w-2xl mx-auto text-center">
+      <p class="nt-display font-bold text-brand-royal leading-none" style="font-size: clamp(4.5rem, 14vw, 8rem);">404</p>
+      <h1 style="font-size: var(--text-h2)" class="font-bold tracking-tight text-ink mt-2 mb-3">
+        {{ '404.title' | t }}
+      </h1>
+      <p class="text-ink-muted mb-8">{{ '404.text' | t }}</p>
+
+      <form action="{{ routes.search_url }}" method="get" role="search" class="relative max-w-md mx-auto mb-10" data-predictive-search>
+        <input type="hidden" name="type" value="product">
+        <label for="search-404" class="nt-sr-only">{{ 'general.search' | t }}</label>
+        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none">
+          {% render 'icon', name: 'search', size: 18 %}
+        </span>
+        <input
+          type="search"
+          id="search-404"
+          name="q"
+          class="nt-input w-full pl-10 min-h-12"
+          placeholder="{{ 'general.search' | t }}"
+          autocomplete="off"
+        >
+        <div id="search-404-results" class="nt-search-results text-left" data-predictive-results role="listbox" hidden></div>
+      </form>
+
+      {%- capture catalog_label -%}{{ '404.cta_catalog' | t }}{%- endcapture -%}
+      {%- capture wa_label -%}{{ 'general.whatsapp' | t }}{%- endcapture -%}
+      <div class="flex flex-col sm:flex-row gap-3 justify-center mb-12">
+        {% render 'btn', variant: 'primary', size: 'lg', label: catalog_label, href: routes.all_products_collection_url, icon: 'arrow-right' %}
+        {% render 'btn', variant: 'whatsapp', size: 'lg', label: wa_label, href: wa_url, target: '_blank', rel: 'noopener', icon: 'whatsapp' %}
+      </div>
+
+      {%- assign handles = settings.nav_collection_handles | default: '' | newline_to_br | split: '<br />' -%}
+      {%- if handles.size > 0 -%}
+        <p class="nt-eyebrow mb-4">{{ '404.popular' | t }}</p>
+        <div class="flex flex-wrap justify-center gap-2">
+          {%- for line in handles limit: 6 -%}
+            {%- assign h = line | strip -%}
+            {%- if h != blank -%}
+              {%- assign col = collections[h] -%}
+              {%- assign url = col.url | default: routes.collections_url | append: '/' | append: h -%}
+              {%- assign title = col.title | default: h | replace: '-', ' ' | capitalize -%}
+              <a href="{{ url }}" class="inline-flex items-center px-4 py-2 rounded-full border border-line bg-surface text-sm font-medium text-ink hover:border-brand-royal hover:text-brand-royal transition-colors">
+                {{ title }}
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404",
+  "settings": []
+}
+{% endschema %}

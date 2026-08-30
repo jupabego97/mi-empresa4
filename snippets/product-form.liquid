@@ -82,6 +82,16 @@
         {% render 'btn', variant: 'whatsapp', size: 'lg', label: wa_label, icon: 'whatsapp', href: wa_url, target: '_blank', rel: 'noopener', full: true %}
       </span>
     </div>
+    <a
+      href="{{ wa_url }}"
+      id="product-notify-btn"
+      class="nt-btn nt-btn--whatsapp nt-btn--lg nt-btn--full{% if current_variant.available %} hidden{% endif %}"
+      target="_blank"
+      rel="noopener"
+    >
+      {% render 'icon', name: 'whatsapp', size: 18 %}
+      {{ 'product.notify_me' | t }}
+    </a>
   </div>
 {%- endform -%}
 
@@ -97,7 +107,9 @@
           "options": {{ variant.options | json }},
           "price": {{ variant.price }},
           "compare_at_price": {{ variant.compare_at_price | default: 0 }},
-          "sku": {{ variant.sku | json }}
+          "sku": {{ variant.sku | json }},
+          "inventory_management": {{ variant.inventory_management | json }},
+          "inventory_quantity": {{ variant.inventory_quantity | default: 0 }}
         }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
     ]
