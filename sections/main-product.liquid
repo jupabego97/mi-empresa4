@@ -82,9 +82,9 @@
           <span id="product-stock-dot" class="w-2 h-2 rounded-full {% if product.available %}bg-success{% else %}bg-danger{% endif %}"></span>
           <span id="product-stock-text">
             {%- if product.available -%}
-              En stock · despacho según disponibilidad (consulta tiempos en checkout)
+              {{ 'product.stock_in' | t }}
             {%- else -%}
-              Agotado por ahora · pregúntanos cuándo vuelve
+              {{ 'product.stock_out' | t }}
             {%- endif -%}
           </span>
         </p>
@@ -123,11 +123,12 @@
             class="nt-accordion__trigger"
             @click="open = open === 1 ? null : 1"
             :aria-expanded="open === 1"
+            aria-controls="pdp-acc-1"
           >
             <span class="text-base lg:text-lg font-semibold text-ink">{{ 'product.description' | t }}</span>
             <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
           </button>
-          <div class="nt-accordion__content rte" x-show="open === 1" x-cloak>
+          <div class="nt-accordion__content rte" id="pdp-acc-1" x-show="open === 1" x-cloak>
             {%- if product.description != blank -%}
               {{ product.description }}
             {%- else -%}
@@ -142,6 +143,7 @@
             class="nt-accordion__trigger"
             @click="open = open === 2 ? null : 2"
             :aria-expanded="open === 2"
+            aria-controls="pdp-acc-2"
           >
             <span class="text-base lg:text-lg font-semibold text-ink inline-flex items-center gap-2">
               {% render 'icon', name: 'cpu', size: 18, class: 'text-brand-royal' %}
@@ -149,7 +151,7 @@
             </span>
             <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
           </button>
-          <div class="nt-accordion__content" x-show="open === 2" x-cloak>
+          <div class="nt-accordion__content" id="pdp-acc-2" x-show="open === 2" x-cloak>
             {%- if section.settings.specs != blank -%}
               <div class="rte">{{ section.settings.specs }}</div>
             {%- else -%}
@@ -175,6 +177,7 @@
               class="nt-accordion__trigger"
               @click="open = open === 3 ? null : 3"
               :aria-expanded="open === 3"
+              aria-controls="pdp-acc-3"
             >
               <span class="text-base lg:text-lg font-semibold text-ink inline-flex items-center gap-2">
                 {% render 'icon', name: 'play', size: 16, class: 'text-brand-royal' %}
@@ -182,7 +185,7 @@
               </span>
               <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
             </button>
-            <div class="nt-accordion__content" x-show="open === 3" x-cloak>
+            <div class="nt-accordion__content" id="pdp-acc-3" x-show="open === 3" x-cloak>
               <div class="aspect-video rounded-lg overflow-hidden bg-ink">
                 <iframe
                   src="{{ section.settings.video_url }}"
@@ -204,11 +207,12 @@
             class="nt-accordion__trigger"
             @click="open = open === 4 ? null : 4"
             :aria-expanded="open === 4"
+            aria-controls="pdp-acc-4"
           >
             <span class="text-base lg:text-lg font-semibold text-ink">{{ 'product.faq' | t }}</span>
             <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
           </button>
-          <div class="nt-accordion__content space-y-5" x-show="open === 4" x-cloak>
+          <div class="nt-accordion__content space-y-5" id="pdp-acc-4" x-show="open === 4" x-cloak>
             <div>
               <p class="font-semibold text-ink mb-1">¿Cuánto tarda el envío?</p>
               {%- if publish_shipping -%}
@@ -242,6 +246,7 @@
             class="nt-accordion__trigger"
             @click="open = open === 5 ? null : 5"
             :aria-expanded="open === 5"
+            aria-controls="pdp-acc-5"
           >
             <span class="text-base lg:text-lg font-semibold text-ink inline-flex items-center gap-2">
               {% render 'icon', name: 'star', size: 18, class: 'text-warning fill-warning' %}
@@ -249,7 +254,7 @@
             </span>
             <span class="nt-accordion__icon">{% render 'icon', name: 'chevron', size: 18 %}</span>
           </button>
-          <div class="nt-accordion__content" x-show="open === 5" x-cloak>
+          <div class="nt-accordion__content" id="pdp-acc-5" x-show="open === 5" x-cloak>
             <p class="text-ink-muted mb-3">
               Promedio {{ settings.metric_rating_value | default: '4.3★' }} en Google Maps (tienda física).
               Las reseñas las consultas directamente en Google — no publicamos testimonios inventados en este sitio.

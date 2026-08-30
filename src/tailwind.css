@@ -392,20 +392,6 @@
     @apply absolute top-3 left-3 flex flex-col items-start gap-1 z-10;
   }
 
-  .nt-product-card__wishlist {
-    @apply absolute top-3 right-3 flex items-center justify-center w-9 h-9 rounded-full bg-white/95 text-ink-muted shadow-sm opacity-100 translate-y-0 transition-all duration-200 hover:text-danger hover:scale-110 z-10;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .nt-product-card__wishlist {
-      @apply opacity-0 -translate-y-1;
-    }
-
-    .nt-product-card:hover .nt-product-card__wishlist {
-      @apply opacity-100 translate-y-0;
-    }
-  }
-
   .nt-product-card__body {
     @apply flex flex-col flex-1 p-4 gap-2;
   }
@@ -690,7 +676,7 @@
 
   /* ─── Category card ─── */
   .nt-category-card {
-    @apply relative flex flex-col justify-end overflow-hidden rounded-xl aspect-[4/5] sm:aspect-[4/3] bg-brand-deep transition-[transform,box-shadow] duration-250;
+    @apply relative flex flex-col justify-end overflow-hidden rounded-xl aspect-[4/3] sm:aspect-[4/5] bg-brand-deep transition-[transform,box-shadow] duration-250;
     box-shadow: var(--shadow-card);
     transition-timing-function: var(--ease-out);
   }
@@ -835,11 +821,17 @@
 
   /* ─── Cart drawer ─── */
   .nt-drawer {
-    @apply fixed inset-0 z-[60] pointer-events-none;
+    @apply fixed inset-0 z-[60] pointer-events-none invisible;
+    transition: visibility 0s linear 250ms;
   }
 
   .nt-drawer.is-open {
-    @apply pointer-events-auto;
+    @apply pointer-events-auto visible;
+    transition-delay: 0s;
+  }
+
+  body.nt-scroll-locked {
+    overflow: hidden;
   }
 
   .nt-drawer__backdrop {
@@ -896,6 +888,21 @@
 
   .nt-pdp-gallery__main {
     @apply aspect-square rounded-xl overflow-hidden bg-surface-2 border border-line relative;
+  }
+
+  .nt-pdp-gallery__arrow {
+    @apply opacity-100;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .nt-pdp-gallery__arrow {
+      @apply opacity-0;
+    }
+
+    .nt-pdp-gallery__main:hover .nt-pdp-gallery__arrow,
+    .nt-pdp-gallery__arrow:focus-visible {
+      @apply opacity-100;
+    }
   }
 
   .nt-pdp-gallery__thumbs {

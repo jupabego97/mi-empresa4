@@ -14,8 +14,7 @@
           <h3 class="text-2xl font-bold mb-2">Ofertas y lanzamientos en tu correo</h3>
           <p class="text-sm text-white/65">Promociones de la tienda, accesorios destacados y avisos de servicio técnico. Sin spam.</p>
         </div>
-        <form action="/contact#newsletter" method="post" class="flex flex-col sm:flex-row gap-2 w-full lg:w-[420px]">
-          <input type="hidden" name="form_type" value="customer">
+        {%- form 'customer', class: 'flex flex-col sm:flex-row sm:flex-wrap gap-2 w-full lg:w-[420px]' -%}
           <input type="hidden" name="contact[tags]" value="newsletter">
           <label class="nt-sr-only" for="footer-email">Email</label>
           <input
@@ -23,6 +22,7 @@
             id="footer-email"
             name="contact[email]"
             required
+            autocomplete="email"
             placeholder="tucorreo@ejemplo.com"
             class="flex-1 min-h-12 px-4 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:bg-white/15 focus:border-brand-glow focus:outline-none"
           >
@@ -30,7 +30,12 @@
             Quiero unirme
             {% render 'icon', name: 'arrow-right', size: 16 %}
           </button>
-        </form>
+          {%- if form.posted_successfully? -%}
+            <p class="basis-full text-sm font-medium text-brand-glow pt-1" role="status">{{ 'footer.newsletter_success' | t }}</p>
+          {%- elsif form.errors -%}
+            <p class="basis-full text-sm font-medium text-danger-soft pt-1" role="alert">{{ 'footer.newsletter_error' | t }}</p>
+          {%- endif -%}
+        {%- endform -%}
       </div>
     </div>
 
