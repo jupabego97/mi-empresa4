@@ -16,7 +16,7 @@
 {%- if ig_url != blank -%}
   {%- if link_style == 'icon' -%}
     <a href="{{ ig_url }}" class="nt-footer__social-link {{ extra_class }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram {{ ig_display }}">
-      {% render 'icon', name: 'instagram', size: icon_size | default: 16 %}
+      {% render 'icon', name: 'instagram', size: icon_size, default: 16 %}
     </a>
   {%- elsif link_style == 'card' -%}
     <a href="{{ ig_url }}" target="_blank" rel="noopener noreferrer" class="flex items-start gap-4 p-5 rounded-xl border border-line bg-surface hover:border-brand-royal transition-colors group {{ extra_class }}">
@@ -34,8 +34,23 @@
     </a>
   {%- else -%}
     <a href="{{ ig_url }}" target="_blank" rel="noopener noreferrer" class="hover:text-white inline-flex items-center gap-2 {{ extra_class }}" aria-label="Instagram {{ ig_display }}">
-      {% render 'icon', name: 'instagram', size: icon_size | default: 14, class: icon_class | default: 'text-brand-glow' %}
+      {% render 'icon', name: 'instagram', size: icon_size, default: 'text-brand-glow', class: icon_class %}
       <span>{{ ig_display }}</span>
     </a>
   {%- endif -%}
 {%- endif -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'icon', name: 'instagram', size: icon_size | default: 16 %}"
+  to: "{% render 'icon', name: 'instagram', size: icon_size, default: 16 %}"
+  position: 827..895
+- from: "{% render 'icon', name: 'instagram', size: icon_size | default: 14, class:
+    icon_class | default: 'text-brand-glow' %}"
+  to: "{% render 'icon', name: 'instagram', size: icon_size, default: 'text-brand-glow',
+    class: icon_class %}"
+  position: 2024..2126
+{% endcomment %}

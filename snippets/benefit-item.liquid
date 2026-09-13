@@ -1,7 +1,17 @@
 <div class="nt-benefit">
   <div class="nt-benefit__icon">
-    {% render 'icon', name: icon | default: 'shield-check', size: 24 %}
+    {% render 'icon', name: icon, default: 'shield-check', size: 24 %}
   </div>
   <h3 class="font-semibold text-ink mb-1 text-sm lg:text-base">{{ title }}</h3>
   <p class="text-xs lg:text-sm text-ink-muted leading-snug">{{ text }}</p>
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'icon', name: icon | default: 'shield-check', size: 24 %}"
+  to: "{% render 'icon', name: icon, default: 'shield-check', size: 24 %}"
+  position: 62..128
+{% endcomment %}

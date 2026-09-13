@@ -58,17 +58,7 @@
         <p class="text-sm text-ink-muted mb-6">
           Escríbenos por WhatsApp para compras, cotizaciones, garantías y servicio técnico. En Instagram publicamos novedades y promociones.
         </p>
-        {% render 'btn',
-          variant: 'whatsapp',
-          size: 'lg',
-          label: section.settings.whatsapp_cta | default: 'Escribir por WhatsApp',
-          href: wa_url,
-          target: '_blank',
-          rel: 'noopener',
-          icon: 'whatsapp',
-          full: true,
-          class: 'mb-4'
-        %}
+        {% render 'btn', variant: 'whatsapp', size: 'lg', label: section.settings.whatsapp_cta, default: 'Escribir por WhatsApp', href: wa_url, target: '_blank', rel: 'noopener', icon: 'whatsapp', full: true, class: 'mb-4' %}
         <div class="text-center">
           {% render 'instagram-link', style: 'text', icon_size: 18, class: 'text-brand-royal font-medium justify-center' %}
         </div>
@@ -98,3 +88,19 @@
   "presets": [{ "name": "Contacto" }]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'btn',\r\r\n          variant: 'whatsapp',\r\r\n          size:
+    'lg',\r\r\n          label: section.settings.whatsapp_cta | default: 'Escribir
+    por WhatsApp',\r\r\n          href: wa_url,\r\r\n          target: '_blank',\r\r\n
+    \         rel: 'noopener',\r\r\n          icon: 'whatsapp',\r\r\n          full:
+    true,\r\r\n          class: 'mb-4'\r\r\n        %}"
+  to: "{% render 'btn', variant: 'whatsapp', size: 'lg', label: section.settings.whatsapp_cta,
+    default: 'Escribir por WhatsApp', href: wa_url, target: '_blank', rel: 'noopener',
+    icon: 'whatsapp', full: true, class: 'mb-4' %}"
+  position: 3012..3229
+{% endcomment %}

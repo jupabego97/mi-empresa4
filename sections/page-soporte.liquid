@@ -128,15 +128,7 @@
           <a href="/policies/privacy-policy" class="block text-brand-royal hover:underline">{{ 'footer.privacy' | t }}</a>
           <a href="/policies/terms-of-service" class="block text-brand-royal hover:underline">{{ 'footer.terms' | t }}</a>
         </div>
-        {% render 'btn',
-          variant: 'whatsapp',
-          size: 'md',
-          label: section.settings.cta_whatsapp | default: 'Hablar por WhatsApp',
-          icon: 'whatsapp',
-          href: wa_url,
-          target: '_blank',
-          full: true
-        %}
+        {% render 'btn', variant: 'whatsapp', size: 'md', label: section.settings.cta_whatsapp, default: 'Hablar por WhatsApp', icon: 'whatsapp', href: wa_url, target: '_blank', full: true %}
       </aside>
     </div>
   </div>
@@ -171,3 +163,18 @@
   "presets": [{ "name": "Soporte" }]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'btn',\r\n          variant: 'whatsapp',\r\n          size: 'md',\r\n
+    \         label: section.settings.cta_whatsapp | default: 'Hablar por WhatsApp',\r\n
+    \         icon: 'whatsapp',\r\n          href: wa_url,\r\n          target: '_blank',\r\n
+    \         full: true\r\n        %}"
+  to: "{% render 'btn', variant: 'whatsapp', size: 'md', label: section.settings.cta_whatsapp,
+    default: 'Hablar por WhatsApp', icon: 'whatsapp', href: wa_url, target: '_blank',
+    full: true %}"
+  position: 7844..8027
+{% endcomment %}

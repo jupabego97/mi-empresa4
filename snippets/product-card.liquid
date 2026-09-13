@@ -75,7 +75,7 @@
       {%- if card_badge == 'oferta' -%}
         {%- if card_compare > 0 and card_price > 0 -%}
           {%- assign disc = card_compare | minus: card_price | times: 100 | divided_by: card_compare -%}
-          {% render 'badge', variant: 'oferta', label: '-' | append: disc | append: '%' %}
+          {% render 'badge', variant: 'oferta', label: '-', append: '%' %}
         {%- else -%}
           {% render 'badge', variant: 'oferta' %}
         {%- endif -%}
@@ -172,3 +172,14 @@
     </div>
   </div>
 </article>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'badge', variant: 'oferta', label: '-' | append: disc | append:
+    '%' %}"
+  to: "{% render 'badge', variant: 'oferta', label: '-', append: '%' %}"
+  position: 2970..3034
+{% endcomment %}

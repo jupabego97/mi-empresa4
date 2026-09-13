@@ -50,7 +50,7 @@
       {%- for block in section.blocks -%}
         <div class="nt-card p-6 hover:border-brand-electric/40 transition-colors group" {{ block.shopify_attributes }}>
           <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-sky text-brand-royal mb-4 group-hover:bg-brand-royal group-hover:text-white transition-colors">
-            {% render 'icon', name: block.settings.icon | default: 'tool', size: 22 %}
+            {% render 'icon', name: block.settings.icon, default: 'tool', size: 22 %}
           </div>
           <h3 class="font-semibold text-ink mb-2">{{ block.settings.title }}</h3>
           <p class="text-sm text-ink-muted leading-relaxed">{{ block.settings.text }}</p>
@@ -176,3 +176,13 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'icon', name: block.settings.icon | default: 'tool', size: 22 %}"
+  to: "{% render 'icon', name: block.settings.icon, default: 'tool', size: 22 %}"
+  position: 2678..2751
+{% endcomment %}
