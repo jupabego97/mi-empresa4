@@ -5,12 +5,7 @@
       <h2 class="nt-section-title text-center mb-2">{{ section.settings.title }}</h2>
       <p class="text-ink-muted">{{ section.settings.description }}</p>
       <div class="inline-flex items-center gap-2 mt-4">
-        <span class="inline-flex items-center gap-0.5" aria-hidden="true">
-          {%- for i in (1..4) -%}
-            {% render 'icon', name: 'star', size: 16, class: 'text-warning fill-warning' %}
-          {%- endfor -%}
-          {% render 'icon', name: 'star', size: 16, class: 'text-warning/35' %}
-        </span>
+        {% render 'rating-stars', value: settings.metric_rating_value, size: 16 %}
         <span class="text-sm font-bold text-ink">{{ settings.metric_rating_value | default: '4.3★' }}</span>
         <a href="{% render 'google-maps-href', kind: 'place' %}" target="_blank" rel="noopener" class="text-sm text-brand-royal hover:underline">Google Maps</a>
       </div>

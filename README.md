@@ -139,7 +139,6 @@ Detalle: [`docs/PAGINAS-SHOPIFY.md`](docs/PAGINAS-SHOPIFY.md)
 
 ```
 assets/       theme.css, theme.js, alpine.min.js, icons.svg, nano-logo.png
-              (nanotronics-theme.css es legado; el layout usa theme.css)
 config/       settings_schema.json, settings_data.json
 layout/       theme.liquid
 locales/      es.default.json

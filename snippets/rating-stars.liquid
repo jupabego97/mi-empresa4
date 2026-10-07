@@ -1,0 +1,23 @@
+{%- comment -%}
+  Usage: {% render 'rating-stars', value: settings.metric_rating_value, size: 14 %}
+  Acepta números o texto como "4.3★" o "4,3". Las estrellas son decorativas: el valor debe mostrarse como texto al lado.
+{%- endcomment -%}
+{%- liquid
+  assign stars_size = size | default: 14
+  assign stars_value = value | default: '4.3' | append: '' | remove: '★' | replace: ',', '.' | strip | times: 1.0
+  assign stars_full = stars_value | round
+  if stars_full > 5
+    assign stars_full = 5
+  elsif stars_full < 0
+    assign stars_full = 0
+  endif
+-%}
+<span class="inline-flex items-center gap-0.5" aria-hidden="true">
+  {%- for i in (1..5) -%}
+    {%- if i <= stars_full -%}
+      {% render 'icon', name: 'star', size: stars_size, class: 'text-warning fill-warning' %}
+    {%- else -%}
+      {% render 'icon', name: 'star', size: stars_size, class: 'text-warning/35' %}
+    {%- endif -%}
+  {%- endfor -%}
+</span>
