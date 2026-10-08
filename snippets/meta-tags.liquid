@@ -1,5 +1,11 @@
 {%- liquid
   assign page_title = page_title | default: shop.name
+  if request.page_type == 'index' and settings.seo_home_title != blank and page_title == shop.name
+    assign page_title = settings.seo_home_title
+  endif
+  if page_description == blank and request.page_type == 'collection' and collection
+    assign page_description = 'Compra ' | append: collection.title | append: ' en ' | append: shop.name | append: ': ' | append: collection.products_count | append: ' productos con garantía, pago por Mercado Pago o en tienda, y asesoría por WhatsApp. Parque Principal de El Carmen de Viboral.'
+  endif
   assign page_description = page_description | default: settings.meta_description_default | default: shop.description
   assign page_image = page_image | default: settings.logo | default: shop.brand.logo
   assign canonical_url = canonical_url | default: request.origin | append: request.path
@@ -54,7 +60,7 @@
   <meta property="og:image:height" content="630">
 {%- endif -%}
 {%- if is_product -%}
-  <meta property="product:price:amount" content="{{ current_variant.price | money_without_currency | strip_html }}">
+  <meta property="product:price:amount" content="{{ current_variant.price | divided_by: 100.0 }}">
   <meta property="product:price:currency" content="{{ cart.currency.iso_code | default: shop.currency }}">
 {%- endif -%}
 
@@ -167,7 +173,7 @@
     "@type": "Offer",
     "url": {{ offer_url | json }},
     "priceCurrency": {{ cart.currency.iso_code | default: shop.currency | json }},
-    "price": {{ current_variant.price | money_without_currency | replace: ',', '' | strip | json }},
+    "price": {{ current_variant.price | divided_by: 100.0 | json }},
     "availability": {{ availability | json }},
     "itemCondition": "https://schema.org/NewCondition",
     "seller": {
@@ -175,6 +181,63 @@
       "name": {{ shop.name | json }}
     }
   }
+}
+</script>
+{%- endif -%}
+
+{%- if request.page_type == 'index' -%}
+{%- assign search_tpl = shop.url | append: routes.search_url | append: '?q={search_term_string}' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": {{ shop.url | append: '/#website' | json }},
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "inLanguage": "es-CO",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": {{ search_tpl | json }}
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{%- endif -%}
+
+{%- liquid
+  assign crumb_name = blank
+  assign crumb_parent = blank
+  case request.page_type
+    when 'product'
+      assign crumb_name = product.title
+      if collection
+        assign crumb_parent = collection
+      endif
+    when 'collection'
+      assign crumb_name = collection.title
+    when 'page'
+      assign crumb_name = page.title
+    when 'list-collections'
+      assign crumb_name = 'Colecciones'
+  endcase
+-%}
+{%- if crumb_name != blank -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": {{ shop.url | json }} }
+    {%- if crumb_parent != blank -%}
+    ,{ "@type": "ListItem", "position": 2, "name": {{ crumb_parent.title | json }}, "item": {{ request.origin | append: crumb_parent.url | json }} }
+    ,{ "@type": "ListItem", "position": 3, "name": {{ crumb_name | json }}, "item": {{ canonical_url | json }} }
+    {%- else -%}
+    ,{ "@type": "ListItem", "position": 2, "name": {{ crumb_name | json }}, "item": {{ canonical_url | json }} }
+    {%- endif -%}
+  ]
 }
 </script>
 {%- endif -%}

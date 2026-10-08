@@ -456,6 +456,13 @@
     "name": "SEO",
     "settings": [
       {
+        "type": "text",
+        "id": "seo_home_title",
+        "label": "Título SEO de la portada",
+        "default": "NANOTRONICS | Tecnología y servicio técnico en El Carmen de Viboral",
+        "info": "Se usa si en Preferencias de la tienda el título de la página de inicio es solo el nombre de la tienda. Máx. ~60 caracteres."
+      },
+      {
         "type": "textarea",
         "id": "meta_description_default",
         "label": "Meta descripción por defecto",
