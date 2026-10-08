@@ -390,7 +390,6 @@
         "type": "text",
         "id": "shipping_carriers",
         "label": "Transportadoras",
-        "default": "",
         "info": "Dejar vacío hasta confirmar. No inventar nombres."
       },
       {
