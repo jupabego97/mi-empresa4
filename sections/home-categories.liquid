@@ -10,7 +10,7 @@
         {% render 'icon', name: 'arrow-right', size: 14 %}
       </a>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-3 lg:gap-4">
       {%- for block in section.blocks -%}
         {%- liquid
           assign col = collections[block.settings.collection]
@@ -60,7 +60,15 @@
             assign card_image_asset = ''
           endif
         -%}
-        {%- if card_title != blank -%}
+        {%- liquid
+          assign hide_empty = false
+          if collection_handle != blank and block.settings.url == blank
+            if col == blank or col.products_count == 0
+              assign hide_empty = true
+            endif
+          endif
+        -%}
+        {%- if card_title != blank and hide_empty == false -%}
           <div {{ block.shopify_attributes }}>
             {% render 'category-card',
               title: card_title,

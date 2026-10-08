@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" fill="none" role="img" aria-label="Accesorios">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="400" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3730a3"/>
+      <stop offset="0.55" stop-color="#4f46e5"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg)"/>
+  <g transform="translate(200 205)" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="-44" y="-72" width="88" height="144" rx="16" fill="rgba(255,255,255,0.12)"/>
+    <rect x="-36" y="-60" width="72" height="120" rx="10" fill="rgba(255,255,255,0.08)"/>
+    <circle cx="0" cy="52" r="8" fill="rgba(255,255,255,0.25)" stroke="none"/>
+    <g transform="translate(72 -20)">
+      <path d="M0 0v36" />
+      <path d="M-16 36h32" />
+      <path d="M-10 36v12h20v-12" fill="rgba(255,255,255,0.15)"/>
+      <path d="M-4 48h8" opacity="0.7"/>
+    </g>
+    <g transform="translate(-110 -10)" fill="rgba(255,255,255,0.15)">
+      <rect x="0" y="0" width="36" height="56" rx="8"/>
+      <path d="M8 12h20M8 24h20M8 36h12" stroke="#fff" fill="none" opacity="0.6"/>
+    </g>
+  </g>
+</svg>
