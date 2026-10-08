@@ -17,16 +17,29 @@
   assign logo_style = '--logo-h: ' | append: logo_height | append: 'px; --logo-max-w: ' | append: logo_max_width | append: 'px;'
 -%}
 {%- if settings.logo != blank -%}
+  {%- comment -%}Logos verticales (p. ej. formato historia) se recortan a la franja central 4:1 para que la marca sea legible a 44 px.{%- endcomment -%}
   <span class="nt-brand-logo-wrap" style="{{ logo_style }}">
-    {{
-      settings.logo
-      | image_url: width: fetch_width
-      | image_tag:
-        loading: logo_loading,
-        width: logo_max_width,
-        alt: shop.name,
-        class: logo_class
-    }}
+    {%- if settings.logo.aspect_ratio < 1 -%}
+      {%- assign crop_h = fetch_width | divided_by: 4 -%}
+      <img
+        src="{{ settings.logo | image_url: width: fetch_width, height: crop_h, crop: 'center' }}"
+        alt="{{ shop.name | escape }}"
+        width="{{ fetch_width }}"
+        height="{{ crop_h }}"
+        loading="{{ logo_loading }}"
+        class="{{ logo_class }}"
+      >
+    {%- else -%}
+      {{
+        settings.logo
+        | image_url: width: fetch_width
+        | image_tag:
+          loading: logo_loading,
+          width: logo_max_width,
+          alt: shop.name,
+          class: logo_class
+      }}
+    {%- endif -%}
   </span>
 {%- else -%}
   <span class="nt-brand-logo__fallback {{ logo_class }}" style="{{ logo_style }}">
