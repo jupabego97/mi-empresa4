@@ -3,9 +3,17 @@
   assign wa_text = settings.whatsapp_message | url_encode
   assign wa_url = 'https://wa.me/' | append: wa_number | append: '?text=' | append: wa_text
   assign brand_name = shop.name | default: 'NANOTRONICS'
+  assign showcase = section.settings.collection
+  if showcase == blank
+    assign showcase = collections['catalogo-destacado']
+  endif
+  if showcase == blank or showcase.products_count == 0
+    assign showcase = collections['all']
+  endif
+  assign showcase_limit = section.settings.products_to_show | default: 3
 -%}
 
-<section class="nt-hero{% if section.settings.image != blank %} nt-hero--has-media{% endif %}">
+<section class="nt-hero{% if section.settings.image != blank %} nt-hero--has-media{% endif %}{% if section.settings.show_products and showcase.products_count > 0 %} nt-hero--has-products{% endif %}">
   {%- if section.settings.image != blank -%}
     <div class="nt-hero__media" aria-hidden="true">
       {{
@@ -58,6 +66,45 @@
         %}
       </div>
     </div>
+
+    {%- if section.settings.show_products and showcase.products_count > 0 -%}
+      <div class="nt-hero__showcase">
+        <p class="nt-hero__showcase-title">{{ section.settings.products_title | default: 'Lo más pedido' }}</p>
+        <ul class="nt-hero__showcase-list" role="list">
+          {%- for product in showcase.products limit: showcase_limit -%}
+            <li>
+              <a href="{{ product.url }}" class="nt-hero__product">
+                <span class="nt-hero__product-media">
+                  {%- if product.featured_image != blank -%}
+                    {{
+                      product.featured_image
+                      | image_url: width: 240
+                      | image_tag:
+                        loading: 'eager',
+                        widths: '120,240',
+                        sizes: '120px',
+                        alt: product.featured_image.alt | default: product.title,
+                        class: 'nt-hero__product-img'
+                    }}
+                  {%- endif -%}
+                </span>
+                <span class="nt-hero__product-info">
+                  <span class="nt-hero__product-title">{{ product.title }}</span>
+                  <span class="nt-hero__product-price">
+                    {%- if product.price_varies -%}Desde {% endif -%}
+                    {{ product.price_min | money_without_trailing_zeros }}
+                    {%- if product.compare_at_price > product.price -%}
+                      <s class="nt-hero__product-compare">{{ product.compare_at_price | money_without_trailing_zeros }}</s>
+                    {%- endif -%}
+                  </span>
+                  <span class="nt-hero__product-cta">Ver producto {% render 'icon', name: 'arrow-right', size: 12 %}</span>
+                </span>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -72,6 +119,11 @@
     { "type": "text", "id": "cta_primary", "label": "CTA principal", "default": "Explorar catálogo" },
     { "type": "url", "id": "cta_primary_url", "label": "URL CTA principal" },
     { "type": "text", "id": "cta_whatsapp", "label": "CTA WhatsApp", "default": "Escribir por WhatsApp" },
+    { "type": "header", "content": "Productos en el hero" },
+    { "type": "checkbox", "id": "show_products", "label": "Mostrar productos destacados", "default": true },
+    { "type": "text", "id": "products_title", "label": "Título de los productos", "default": "Lo más pedido" },
+    { "type": "collection", "id": "collection", "label": "Colección", "info": "Si se deja vacía se usa catalogo-destacado." },
+    { "type": "range", "id": "products_to_show", "label": "Cantidad", "min": 2, "max": 4, "step": 1, "default": 3 },
     { "type": "header", "content": "Opciones legacy (ocultas por defecto)" },
     { "type": "checkbox", "id": "show_metrics", "label": "Mostrar métricas (no recomendado en hero)", "default": false },
     { "type": "checkbox", "id": "show_floating_card", "label": "Mostrar tarjeta flotante (no recomendado)", "default": false },
