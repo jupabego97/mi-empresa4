@@ -1,20 +1,44 @@
+{%- liquid
+  assign rating_text = settings.metric_rating_value | default: '4.3★'
+  assign rating_num = rating_text | remove: '★' | replace: ',', '.' | strip | plus: 0
+  assign rating_full = rating_num | floor
+  if rating_full > 5
+    assign rating_full = 5
+  endif
+  assign rating_empty = 5 | minus: rating_full
+-%}
+{%- capture reviews_href -%}{% render 'google-maps-href', kind: 'place' %}{%- endcapture -%}
 <section class="nt-section">
   <div class="nt-container">
     <div class="text-center max-w-2xl mx-auto mb-10">
-      <p class="nt-eyebrow mb-2">{{ section.settings.eyebrow | default: 'Reseñas de clientes reales' }}</p>
+      <p class="nt-eyebrow mb-2">{{ section.settings.eyebrow | default: 'Opiniones en Google' }}</p>
       <h2 class="nt-section-title text-center mb-2">{{ section.settings.title }}</h2>
       <p class="text-ink-muted">{{ section.settings.description }}</p>
       <div class="inline-flex items-center gap-2 mt-4">
         <span class="inline-flex items-center gap-0.5" aria-hidden="true">
-          {%- for i in (1..4) -%}
+          {%- for i in (1..rating_full) -%}
             {% render 'icon', name: 'star', size: 16, class: 'text-warning fill-warning' %}
           {%- endfor -%}
-          {% render 'icon', name: 'star', size: 16, class: 'text-warning/35' %}
+          {%- if rating_empty > 0 -%}
+            {%- for i in (1..rating_empty) -%}
+              {% render 'icon', name: 'star', size: 16, class: 'text-warning/35' %}
+            {%- endfor -%}
+          {%- endif -%}
         </span>
-        <span class="text-sm font-bold text-ink">{{ settings.metric_rating_value | default: '4.3★' }}</span>
-        <a href="{% render 'google-maps-href', kind: 'place' %}" target="_blank" rel="noopener" class="text-sm text-brand-royal hover:underline">Google Maps</a>
+        <span class="text-sm font-bold text-ink">{{ rating_text }}</span>
+        {%- if section.settings.review_count != blank -%}
+          <span class="text-sm text-ink-muted">· {{ section.settings.review_count }}</span>
+        {%- endif -%}
       </div>
+      {%- if section.blocks.size == 0 -%}
+        <div class="mt-6">
+          {% render 'btn', variant: 'secondary', size: 'lg', label: section.settings.cta_label, href: reviews_href, icon: 'arrow-right', target: '_blank', rel: 'noopener' %}
+        </div>
+      {%- else -%}
+        <a href="{{ reviews_href }}" target="_blank" rel="noopener" class="inline-block mt-3 text-sm text-brand-royal hover:underline">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
     </div>
+    {%- if section.blocks.size > 0 -%}
     <div class="grid md:grid-cols-3 gap-6">
       {%- for block in section.blocks -%}
         <div {{ block.shopify_attributes }}>
@@ -29,6 +53,7 @@
         </div>
       {%- endfor -%}
     </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -36,10 +61,12 @@
 {
   "name": "Home — Reseñas",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Reseñas de clientes reales" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Opiniones en Google" },
     { "type": "text", "id": "title", "label": "Título", "default": "Lo que dicen en Google" },
     { "type": "textarea", "id": "description", "label": "Descripción", "default": "4.3★ de calificación promedio. Confianza construida desde 2005 en el oriente antioqueño." },
-    { "type": "text", "id": "review_count", "label": "Total reseñas (visual)" }
+    { "type": "text", "id": "review_count", "label": "Total reseñas (ej. 120 reseñas)" },
+    { "type": "text", "id": "cta_label", "label": "Texto del enlace a Google", "default": "Leer reseñas en Google" },
+    { "type": "paragraph", "content": "Añade como bloques solo reseñas reales copiadas de Google, con el nombre que aparece allí. Sin bloques se muestra la calificación y el enlace a Google." }
   ],
   "blocks": [
     {
@@ -55,15 +82,6 @@
       ]
     }
   ],
-  "presets": [
-    {
-      "name": "Home — Reseñas",
-      "blocks": [
-        { "type": "review", "settings": { "quote": "Buena atención y variedad de accesorios. Siempre encuentro lo que busco en el centro.", "author": "Cliente verificado", "location": "El Carmen de Viboral", "rating": 5 } },
-        { "type": "review", "settings": { "quote": "Me arreglaron el portátil y me explicaron el problema antes de cobrar. Precio justo.", "author": "Cliente verificado", "location": "Rionegro, Antioquia", "product": "Servicio técnico", "rating": 4 } },
-        { "type": "review", "settings": { "quote": "Tienda de confianza en Viboral. Responden rápido por WhatsApp.", "author": "Cliente verificado", "location": "La Ceja, Antioquia", "rating": 5 } }
-      ]
-    }
-  ]
+  "presets": [{ "name": "Home — Reseñas" }]
 }
 {% endschema %}

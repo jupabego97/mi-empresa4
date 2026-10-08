@@ -251,6 +251,15 @@
         "title": "Visítanos en el Carmen",
         "description": "Desde 2005 en El Carmen de Viboral, Calle 30 # 30-31 frente al Parque Principal. Tienda y servicio técnico en un solo lugar — recoge tu pedido sin costo."
       }
+    },
+    "reviews": {
+      "type": "home-reviews",
+      "settings": {
+        "eyebrow": "Opiniones en Google",
+        "title": "Lo que dicen nuestros clientes",
+        "description": "Calificación promedio de nuestra tienda física en Google Maps. Confianza construida desde 2005 en El Carmen de Viboral.",
+        "cta_label": "Leer reseñas en Google"
+      }
     }
   },
   "order": [
@@ -258,6 +267,7 @@
     "trust",
     "categories",
     "featured",
+    "reviews",
     "promo",
     "benefits",
     "brands",
