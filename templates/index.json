@@ -156,8 +156,8 @@
         "text": "Accesorios, audio y tecnología con buen precio. Escríbenos por WhatsApp y te contamos qué hay en promoción.",
         "show_countdown": false,
         "countdown_end": "2026-12-31",
-        "cta": "Ver catálogo",
-        "cta_url": "/collections/all",
+        "cta": "Ver ofertas",
+        "cta_url": "",
         "collection": ""
       }
     },
@@ -229,172 +229,10 @@
     },
     "brands": {
       "type": "home-brands",
-      "blocks": {
-        "m1": {
-          "type": "brand",
-          "settings": {
-            "name": "JBL",
-            "url": ""
-          }
-        },
-        "m2": {
-          "type": "brand",
-          "settings": {
-            "name": "Samsung",
-            "url": ""
-          }
-        },
-        "m3": {
-          "type": "brand",
-          "settings": {
-            "name": "ASUS",
-            "url": ""
-          }
-        },
-        "m4": {
-          "type": "brand",
-          "settings": {
-            "name": "Lenovo",
-            "url": ""
-          }
-        },
-        "m5": {
-          "type": "brand",
-          "settings": {
-            "name": "HP",
-            "url": ""
-          }
-        },
-        "m6": {
-          "type": "brand",
-          "settings": {
-            "name": "Dell",
-            "url": ""
-          }
-        },
-        "m7": {
-          "type": "brand",
-          "settings": {
-            "name": "MSI",
-            "url": ""
-          }
-        },
-        "m8": {
-          "type": "brand",
-          "settings": {
-            "name": "Acer",
-            "url": ""
-          }
-        },
-        "m9": {
-          "type": "brand",
-          "settings": {
-            "name": "Logitech",
-            "url": ""
-          }
-        },
-        "m10": {
-          "type": "brand",
-          "settings": {
-            "name": "Kingston",
-            "url": ""
-          }
-        },
-        "m11": {
-          "type": "brand",
-          "settings": {
-            "name": "ADATA",
-            "url": ""
-          }
-        },
-        "m12": {
-          "type": "brand",
-          "settings": {
-            "name": "Epson",
-            "url": ""
-          }
-        },
-        "m13": {
-          "type": "brand",
-          "settings": {
-            "name": "TCL",
-            "url": ""
-          }
-        },
-        "m14": {
-          "type": "brand",
-          "settings": {
-            "name": "Tenda",
-            "url": ""
-          }
-        },
-        "m15": {
-          "type": "brand",
-          "settings": {
-            "name": "Genius",
-            "url": ""
-          }
-        },
-        "m16": {
-          "type": "brand",
-          "settings": {
-            "name": "Janus",
-            "url": ""
-          }
-        },
-        "m17": {
-          "type": "brand",
-          "settings": {
-            "name": "Jaltech",
-            "url": ""
-          }
-        },
-        "m18": {
-          "type": "brand",
-          "settings": {
-            "name": "JYR",
-            "url": ""
-          }
-        },
-        "m19": {
-          "type": "brand",
-          "settings": {
-            "name": "Movisun",
-            "url": ""
-          }
-        },
-        "m20": {
-          "type": "brand",
-          "settings": {
-            "name": "1 Hora",
-            "url": ""
-          }
-        }
-      },
-      "block_order": [
-        "m1",
-        "m2",
-        "m3",
-        "m4",
-        "m5",
-        "m6",
-        "m7",
-        "m8",
-        "m9",
-        "m10",
-        "m11",
-        "m12",
-        "m13",
-        "m14",
-        "m15",
-        "m16",
-        "m17",
-        "m18",
-        "m19",
-        "m20"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
-        "title": "Marcas con respaldo oficial"
+        "title": "Marcas que vendemos"
       }
     },
     "service": {

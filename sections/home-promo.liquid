@@ -1,6 +1,14 @@
 {%- liquid
-  assign promo_collection = collections[section.settings.collection]
+  assign promo_collection = section.settings.collection
+  if promo_collection == blank
+    assign promo_collection = settings.offers_collection
+  endif
+  if promo_collection == blank
+    assign promo_collection = collections['ofertas']
+  endif
+  assign promo_cta_url = section.settings.cta_url | default: promo_collection.url
 -%}
+{%- if promo_collection != blank and promo_collection.products_count > 0 -%}
 <section class="nt-section">
   <div class="nt-container">
     <div class="relative overflow-hidden rounded-2xl bg-brand-deep text-white p-6 lg:p-10">
@@ -54,22 +62,21 @@
             variant: 'primary',
             size: 'lg',
             label: section.settings.cta,
-            href: section.settings.cta_url,
+            href: promo_cta_url,
             icon: 'arrow-right'
           %}
         </div>
       </div>
     </div>
 
-    {%- if promo_collection != blank and promo_collection.products.size > 0 -%}
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mt-6">
-        {%- for product in promo_collection.products limit: 4 -%}
-          {% render 'product-card', product: product %}
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mt-6">
+      {%- for product in promo_collection.products limit: 4 -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    </div>
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
@@ -82,7 +89,7 @@
     { "type": "text", "id": "countdown_end", "label": "Fecha fin (YYYY-MM-DD)", "default": "2026-12-31" },
     { "type": "text", "id": "cta", "label": "CTA", "default": "Aprovechar ofertas" },
     { "type": "url", "id": "cta_url", "label": "URL CTA" },
-    { "type": "collection", "id": "collection", "label": "Colección de productos en oferta" }
+    { "type": "collection", "id": "collection", "label": "Colección de productos en oferta", "info": "Si se deja vacía se usa la colección de ofertas del theme. La sección se oculta mientras la colección no tenga productos." }
   ],
   "presets": [{ "name": "Home — Promo" }]
 }
