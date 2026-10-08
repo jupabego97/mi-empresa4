@@ -26,7 +26,7 @@ for (const file of files) {
 
   const attrs = FILLED.has(name)
     ? 'fill="currentColor"'
-    : 'fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"';
+    : 'stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"';
 
   symbols += `  <symbol id="icon-${name}" viewBox="0 0 24 24" ${attrs}>${inner}</symbol>\n`;
 }

@@ -54,8 +54,8 @@
     <div>
       {% render 'input', type: 'qty', name: 'quantity', id: 'product-qty', label: 'Cantidad', value: 1, min: 1, max: 99 %}
     </div>
-    <p class="text-xs text-ink-muted">
-      SKU: <span id="product-sku">{{ current_variant.sku | default: 'N/A' }}</span>
+    <p class="text-xs text-ink-muted" id="product-sku-wrap"{% if current_variant.sku == blank %} hidden{% endif %}>
+      SKU: <span id="product-sku">{{ current_variant.sku }}</span>
     </p>
   </div>
 

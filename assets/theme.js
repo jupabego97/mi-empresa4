@@ -439,7 +439,11 @@
       if (stickyPrice) stickyPrice.textContent = formatMoney(variant.price);
 
       const skuEl = document.getElementById('product-sku');
-      if (skuEl) skuEl.textContent = variant.sku || 'N/A';
+      if (skuEl) {
+        skuEl.textContent = variant.sku || '';
+        const skuWrap = document.getElementById('product-sku-wrap');
+        if (skuWrap) skuWrap.hidden = !variant.sku;
+      }
 
       setAvailabilityUI(variant.available, variant);
 
