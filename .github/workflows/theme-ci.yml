@@ -1,0 +1,34 @@
+name: Theme CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint de compatibilidad con Shopify
+        run: npm run lint:shopify
+
+      - name: Theme Check
+        run: npm run theme:check
+
+      - name: CSS y sprite compilados están al día
+        run: |
+          npm run build
+          if ! git diff --quiet -- assets/theme.css assets/icons.svg; then
+            echo "::error::assets/theme.css o assets/icons.svg no coinciden con src/. Si se editaron desde Shopify, pasa esos cambios a src/ y ejecuta npm run build."
+            git diff --stat -- assets/theme.css assets/icons.svg
+            exit 1
+          fi
