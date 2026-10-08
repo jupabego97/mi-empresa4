@@ -8,7 +8,7 @@
     {{ 'collection.filters' | t }}
   </button>
 
-  <div class="space-y-6" :class="open ? 'block' : 'hidden lg:block'">
+  <div class="space-y-6 hidden lg:block" :class="{ 'max-lg:block': open }">
     {%- if collection.filters.size > 0 -%}
       {%- for filter in collection.filters -%}
         <div class="nt-filter-group">
@@ -37,7 +37,10 @@
                 <input
                   type="number"
                   name="{{ filter.min_value.param_name }}"
-                  value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                  value="{% if filter.min_value.value != nil %}{{ filter.min_value.value | divided_by: 100 }}{% endif %}"
+                  min="0"
+                  step="1000"
+                  inputmode="numeric"
                   placeholder="{{ 'collection.price_min' | t }}"
                   aria-label="{{ 'collection.price_min' | t }}"
                   class="nt-input min-h-9"
@@ -46,7 +49,10 @@
                 <input
                   type="number"
                   name="{{ filter.max_value.param_name }}"
-                  value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                  value="{% if filter.max_value.value != nil %}{{ filter.max_value.value | divided_by: 100 }}{% endif %}"
+                  min="0"
+                  step="1000"
+                  inputmode="numeric"
                   placeholder="{{ 'collection.price_max' | t }}"
                   aria-label="{{ 'collection.price_max' | t }}"
                   class="nt-input min-h-9"
