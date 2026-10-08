@@ -9,13 +9,11 @@
     assign card_price = price | default: 199900000
     assign card_compare = compare_at | default: 0
     assign card_available = available | default: true
-    assign card_rating = rating | default: 4.8
-    assign card_reviews = reviews | default: 27
+    assign card_reviews = reviews | default: 0
     assign card_badge = badge | default: ''
     assign card_brand = brand | default: ''
     assign card_installments = installments | default: ''
     assign card_image = image
-    assign card_id = forloop.index | default: 0
   else
     assign card_product = product
     assign card_title = card_product.title
@@ -23,7 +21,6 @@
     assign card_price = card_product.price
     assign card_compare = card_product.compare_at_price
     assign card_available = card_product.available
-    assign card_rating = 5
     assign card_reviews = 0
     assign card_badge = ''
     assign card_brand = card_product.vendor
@@ -31,7 +28,6 @@
       assign card_badge = 'oferta'
     endif
     assign card_image = card_product.featured_image
-    assign card_id = card_product.id
     assign card_installments = ''
   endif
 
@@ -75,7 +71,8 @@
       {%- if card_badge == 'oferta' -%}
         {%- if card_compare > 0 and card_price > 0 -%}
           {%- assign disc = card_compare | minus: card_price | times: 100 | divided_by: card_compare -%}
-          {% render 'badge', variant: 'oferta', label: '-', append: '%' %}
+          {%- assign disc_label = '-' | append: disc | append: '%' -%}
+          {% render 'badge', variant: 'oferta', label: disc_label %}
         {%- else -%}
           {% render 'badge', variant: 'oferta' %}
         {%- endif -%}
@@ -172,14 +169,3 @@
     </div>
   </div>
 </article>
-{% comment %}
-
-This file has been rewritten to preserve the original behavior.
-
----
-Changes:
-- from: "{% render 'badge', variant: 'oferta', label: '-' | append: disc | append:
-    '%' %}"
-  to: "{% render 'badge', variant: 'oferta', label: '-', append: '%' %}"
-  position: 2970..3034
-{% endcomment %}
