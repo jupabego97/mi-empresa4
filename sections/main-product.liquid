@@ -18,7 +18,6 @@
   assign shipping_national = settings.shipping_national | default: '2-5 días hábiles'
   assign shipping_medellin = settings.shipping_medellin | default: '1-2 días hábiles'
   assign product_warranty = settings.product_warranty_note | default: 'Garantía mínima de 3 meses en productos, según política de la marca y NANOTRONICS.'
-  assign returns_days = settings.returns_days | default: 15
 -%}
 
 {% render 'breadcrumbs' %}
