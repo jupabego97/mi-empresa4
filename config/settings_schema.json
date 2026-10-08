@@ -16,6 +16,12 @@
         "label": "Logo"
       },
       {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Imagen cuadrada (mín. 96×96 px). Si no se elige, se usa el logo."
+      },
+      {
         "type": "range",
         "id": "logo_height",
         "min": 32,
@@ -436,7 +442,13 @@
         "id": "nav_collection_handles",
         "label": "Handles de colecciones (menú y pie)",
         "default": "catalogo-destacado\naccesorios\ncables\npower-bank\nparlantes\ndiademas\nbelleza",
-        "info": "Orden = orden en mega menú y footer"
+        "info": "Orden = orden en mega menú y footer. Las colecciones vacías o inexistentes no se muestran."
+      },
+      {
+        "type": "collection",
+        "id": "offers_collection",
+        "label": "Colección de ofertas",
+        "info": "Se enlaza desde \"Ofertas\" en el menú, el pie y el carrito vacío. Si no se elige, se usa la colección con handle \"ofertas\". Si no existe o está vacía, el enlace se oculta."
       }
     ]
   },

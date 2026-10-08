@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./shopify-editor.css";
 
 /* ─── Design tokens (NANOTRONICS) ─── */
 @theme {
@@ -551,7 +552,38 @@
   }
 
   .nt-header__logo {
-    @apply shrink-0 font-bold text-lg text-brand-deep tracking-tight;
+    @apply shrink-0 inline-flex items-center font-bold text-lg text-brand-deep tracking-tight;
+  }
+
+  .nt-brand-logo-wrap,
+  .nt-footer__logo,
+  .nt-drawer__logo,
+  .nt-cart-empty-logo {
+    @apply inline-flex items-center;
+  }
+
+  .nt-brand-logo {
+    @apply block w-auto object-contain object-left;
+    height: var(--logo-h, 44px);
+    max-width: var(--logo-max-w, 220px);
+  }
+
+  .nt-brand-logo--auth {
+    @apply object-center mx-auto;
+  }
+
+  .nt-brand-logo__fallback {
+    @apply inline-flex items-center font-black leading-none tracking-tight text-brand-deep;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    max-width: var(--logo-max-w, 220px);
+  }
+
+  .nt-brand-logo__fallback span {
+    @apply text-brand-royal;
+  }
+
+  .nt-customer-shell__logo {
+    @apply flex justify-center mb-6;
   }
 
   .nt-header__search {
@@ -738,7 +770,7 @@
 
   /* ─── Category card ─── */
   .nt-category-card {
-    @apply relative flex flex-col justify-end overflow-hidden rounded-xl aspect-[4/3] sm:aspect-[4/5] bg-brand-deep transition-[transform,box-shadow] duration-250;
+    @apply relative flex flex-col justify-end overflow-hidden rounded-xl aspect-square sm:aspect-[4/5] bg-brand-deep transition-[transform,box-shadow] duration-250;
     box-shadow: var(--shadow-card);
     transition-timing-function: var(--ease-out);
   }
@@ -748,8 +780,16 @@
     @apply -translate-y-1;
   }
 
+  .nt-category-card__media-img {
+    @apply absolute inset-0 w-full h-full object-cover;
+  }
+
+  .nt-category-card__icon {
+    @apply absolute top-3 left-3 z-10 hidden sm:inline-flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 text-white backdrop-blur-sm ring-1 ring-white/15;
+  }
+
   .nt-category-card__overlay {
-    @apply absolute inset-0 bg-gradient-to-t from-brand-deep via-brand-deep/60 to-transparent;
+    @apply absolute inset-0 bg-gradient-to-t from-brand-deep via-brand-deep/40 to-transparent;
   }
 
   .nt-category-card__overlay::after {
@@ -766,7 +806,7 @@
   }
 
   .nt-category-card__title {
-    @apply font-semibold text-base lg:text-lg leading-tight;
+    @apply block font-semibold text-base lg:text-lg leading-tight;
   }
 
   .nt-category-card__cta {
