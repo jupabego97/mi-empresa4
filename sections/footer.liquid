@@ -2,6 +2,7 @@
   assign wa_number = settings.whatsapp_number | replace: '+', '' | replace: ' ', '' | replace: '-', ''
   assign wa_url = 'https://wa.me/' | append: wa_number
 -%}
+{%- capture offers_url -%}{% render 'offers-url' %}{%- endcapture -%}
 <footer class="nt-footer">
   <div class="absolute -left-32 -top-32 w-96 h-96 rounded-full bg-brand-electric/15 blur-3xl pointer-events-none"></div>
   <div class="absolute -right-32 bottom-0 w-96 h-96 rounded-full bg-brand-royal/15 blur-3xl pointer-events-none"></div>
@@ -101,8 +102,8 @@
         -%}
         {%- for line in footer_handles -%}
           {%- assign fh = line | strip -%}
-          {%- if fh != blank -%}
-            {%- assign fcol = collections[fh] -%}
+          {%- assign fcol = collections[fh] -%}
+          {%- if fh != blank and fcol.products_count > 0 -%}
             {%- assign flink = fcol.url -%}
             {%- if flink == blank -%}
               {%- assign flink = routes.collections_url | append: '/' | append: fh -%}
@@ -111,7 +112,9 @@
             <a href="{{ flink }}" class="nt-footer__link">{{ ftitle }}</a>
           {%- endif -%}
         {%- endfor -%}
-        <a href="{{ routes.collections_url }}/ofertas" class="nt-footer__link">{{ 'general.offers' | t }}</a>
+        {%- if offers_url != blank -%}
+          <a href="{{ offers_url }}" class="nt-footer__link">{{ 'general.offers' | t }}</a>
+        {%- endif -%}
         <a href="{{ routes.search_url }}" class="nt-footer__link">{{ 'nav.search' | t }}</a>
       </div>
 

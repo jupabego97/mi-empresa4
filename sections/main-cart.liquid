@@ -165,7 +165,10 @@
         <p class="text-ink-muted mb-8">Empieza a llenarlo con tecnología seleccionada por nuestro equipo. Si tienes dudas, te asesoramos por WhatsApp.</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
           {% render 'btn', variant: 'primary', size: 'lg', label: 'Explorar catálogo', href: routes.all_products_collection_url, icon: 'arrow-right' %}
-          {% render 'btn', variant: 'secondary', size: 'lg', label: 'Ver ofertas', href: '/collections/ofertas', icon: 'fire' %}
+          {%- capture offers_url -%}{% render 'offers-url' %}{%- endcapture -%}
+          {%- if offers_url != blank -%}
+            {% render 'btn', variant: 'secondary', size: 'lg', label: 'Ver ofertas', href: offers_url, icon: 'fire' %}
+          {%- endif -%}
         </div>
       </div>
     {%- endif -%}

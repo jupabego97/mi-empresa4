@@ -1,0 +1,13 @@
+{%- comment -%}
+  Imprime la URL de la colección de ofertas, o nada si no existe o está vacía.
+  Uso: {%- capture offers_url -%}{% render 'offers-url' %}{%- endcapture -%}
+{%- endcomment -%}
+{%- liquid
+  assign offers_col = settings.offers_collection
+  if offers_col == blank
+    assign offers_col = collections['ofertas']
+  endif
+  if offers_col != blank and offers_col.products_count > 0
+    echo offers_col.url
+  endif
+-%}

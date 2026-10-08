@@ -6,6 +6,7 @@
   assign logo_w = settings.logo_width | default: 220
   assign account_url = routes.account_url
 -%}
+{%- capture offers_url -%}{% render 'offers-url' %}{%- endcapture -%}
 
 <header
   class="nt-header"
@@ -156,13 +157,15 @@
       <a href="{{ routes.all_products_collection_url }}" class="nt-header__nav-link">
         {{ 'nav.all_products' | t }}
       </a>
-      <a
-        href="{{ routes.collections_url }}/ofertas"
-        class="nt-header__nav-link inline-flex items-center gap-1.5 text-danger hover:bg-danger-soft"
-      >
-        {% render 'icon', name: 'fire', size: 14 %}
-        {{ 'general.offers' | t }}
-      </a>
+      {%- if offers_url != blank -%}
+        <a
+          href="{{ offers_url }}"
+          class="nt-header__nav-link inline-flex items-center gap-1.5 text-danger hover:bg-danger-soft"
+        >
+          {% render 'icon', name: 'fire', size: 14 %}
+          {{ 'general.offers' | t }}
+        </a>
+      {%- endif -%}
       <a href="/pages/servicio-tecnico" class="nt-header__nav-link inline-flex items-center gap-1.5">
         {% render 'icon', name: 'tool', size: 14 %}
         {{ 'general.technical_service' | t }}
@@ -207,12 +210,11 @@
       <a href="{{ routes.all_products_collection_url }}" class="nt-header__nav-link">
         {{ 'nav.all_products' | t }}
       </a>
-      <a
-        href="{{ routes.collections_url }}/ofertas"
-        class="nt-header__nav-link text-danger inline-flex items-center gap-2"
-      >
-        {% render 'icon', name: 'fire', size: 14 %} {{ 'general.offers' | t }}
-      </a>
+      {%- if offers_url != blank -%}
+        <a href="{{ offers_url }}" class="nt-header__nav-link text-danger inline-flex items-center gap-2">
+          {% render 'icon', name: 'fire', size: 14 %} {{ 'general.offers' | t }}
+        </a>
+      {%- endif -%}
       <a href="/pages/servicio-tecnico" class="nt-header__nav-link inline-flex items-center gap-2">
         {% render 'icon', name: 'tool', size: 14 %} {{ 'general.technical_service' | t }}
       </a>

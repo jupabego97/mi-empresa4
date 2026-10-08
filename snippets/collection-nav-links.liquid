@@ -20,7 +20,7 @@
     {%- if col_url == blank -%}
       {%- assign col_url = routes.collections_url | append: '/' | append: handle -%}
     {%- endif -%}
-    {%- if col != blank or handle != blank -%}
+    {%- if col.products_count > 0 -%}
       {%- assign nav_title = col.title | default: handle | replace: '-', ' ' | capitalize -%}
       <a href="{{ col_url }}" class="{{ link_class }}">
         {%- if show_icon -%}
