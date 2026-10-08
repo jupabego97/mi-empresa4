@@ -510,9 +510,12 @@
           const rows = products.map((p) => {
             const priceCents = Math.round(parseFloat(p.price) * 100) || 0;
             const compareCents = Math.round(parseFloat(p.compare_at_price) * 100) || 0;
-            const img = p.featured_image && p.featured_image.url
-              ? `<img src="${p.featured_image.url}&width=96" alt="" width="48" height="48" loading="lazy">`
-              : '';
+            let img = '';
+            if (p.featured_image && p.featured_image.url) {
+              const src = new URL(p.featured_image.url, window.location.origin);
+              src.searchParams.set('width', '96');
+              img = `<img src="${escapeHtml(src.toString())}" alt="" width="48" height="48" loading="lazy">`;
+            }
             const compare = compareCents > priceCents ? ` <s>${formatMoney(compareCents)}</s>` : '';
             return `<a href="${p.url}" class="nt-search-results__item" role="option">
               <span class="nt-search-results__thumb">${img}</span>

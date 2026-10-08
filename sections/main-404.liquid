@@ -45,7 +45,10 @@
             {%- assign h = line | strip -%}
             {%- if h != blank -%}
               {%- assign col = collections[h] -%}
-              {%- assign url = col.url | default: routes.collections_url | append: '/' | append: h -%}
+              {%- assign url = col.url -%}
+              {%- if url == blank -%}
+                {%- assign url = routes.collections_url | append: '/' | append: h -%}
+              {%- endif -%}
               {%- assign title = col.title | default: h | replace: '-', ' ' | capitalize -%}
               <a href="{{ url }}" class="inline-flex items-center px-4 py-2 rounded-full border border-line bg-surface text-sm font-medium text-ink hover:border-brand-royal hover:text-brand-royal transition-colors">
                 {{ title }}
