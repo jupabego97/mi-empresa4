@@ -64,7 +64,7 @@
           {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: section.settings.heading }}
         </div>
       {%- else -%}
-        <div class="relative z-10 rounded-xl bg-white/5 border border-white/10 aspect-[4/3] lg:aspect-square flex items-center justify-center">
+        <div class="relative z-10 rounded-xl bg-white/5 border border-white/10 aspect-square hidden lg:flex items-center justify-center">
           {% render 'icon', name: 'tool', size: 80, class: 'text-white/40' %}
         </div>
       {%- endif -%}

@@ -661,8 +661,9 @@
   }
 
   /* ─── WhatsApp FAB ─── */
+  /* En móvil WhatsApp ya está en la barra inferior (o en la barra fija de la PDP). */
   .nt-whatsapp-fab {
-    @apply fixed bottom-20 right-5 lg:bottom-5 z-40 flex items-center justify-center w-14 h-14 rounded-full text-white transition-transform duration-150;
+    @apply fixed bottom-5 right-5 z-40 hidden lg:flex items-center justify-center w-14 h-14 rounded-full text-white transition-transform duration-150;
     background: #25d366;
     box-shadow: 0 6px 18px rgb(37 211 102 / 40%), 0 2px 6px rgb(37 211 102 / 25%);
     transition-timing-function: var(--ease-out);
