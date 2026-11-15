@@ -153,7 +153,7 @@
         "type": "text",
         "id": "metric_rating_value",
         "label": "Métrica 2 — valor",
-        "default": "4.3★"
+        "default": "4.2★"
       },
       {
         "type": "text",
@@ -271,6 +271,12 @@
         "id": "google_maps_place_url",
         "label": "URL ficha Google Maps (opcional)",
         "info": "Pega el enlace Compartir de Google Maps (maps.app.goo.gl o google.com/maps/place/...)."
+      },
+      {
+        "type": "text",
+        "id": "google_place_id",
+        "label": "Place ID de Google (opcional)",
+        "info": "Empieza por ChIJ. Activa el botón «Escribir una reseña», que abre directamente el formulario de reseña de tu ficha en Google."
       },
       {
         "type": "text",
@@ -466,7 +472,7 @@
         "type": "textarea",
         "id": "meta_description_default",
         "label": "Meta descripción por defecto",
-        "default": "NANOTRONICS — Tienda y servicio técnico desde 2005 en el Parque Principal de El Carmen de Viboral. Tecnología, accesorios, audio y más. 4.3★ en Google."
+        "default": "NANOTRONICS — Tienda y servicio técnico desde 2005 en el Parque Principal de El Carmen de Viboral. Tecnología, accesorios, audio y más."
       }
     ]
   }

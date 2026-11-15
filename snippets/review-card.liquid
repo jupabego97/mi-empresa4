@@ -10,10 +10,10 @@
     </span>
   </div>
   <p class="text-sm text-ink flex-1 mb-4 leading-relaxed">"{{ quote }}"</p>
-  {%- if product != blank -%}
+  {%- if product_label != blank -%}
     <p class="text-xs text-ink-muted mb-3 inline-flex items-center gap-1.5">
       {% render 'icon', name: 'package', size: 12 %}
-      <span>{{ product }}</span>
+      <span>{{ product_label }}</span>
     </p>
   {%- endif -%}
   <div class="flex items-center gap-3 mt-auto pt-3 border-t border-line">

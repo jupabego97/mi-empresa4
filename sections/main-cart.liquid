@@ -74,7 +74,7 @@
             <h2 class="font-semibold text-lg">{{ 'cart.summary' | t }}</h2>
             <div class="flex justify-between text-sm">
               <span class="text-ink-muted">{{ 'cart.subtotal' | t }} ({{ cart.item_count }})</span>
-              <span class="font-medium">{{ cart.total_price | money }}</span>
+              <span class="font-medium">{{ cart.total_price | money_without_trailing_zeros }}</span>
             </div>
             <div class="flex justify-between text-sm">
               <span class="text-ink-muted">Envío</span>
@@ -83,12 +83,12 @@
             {%- if cart.total_discount > 0 -%}
               <div class="flex justify-between text-sm">
                 <span class="text-ink-muted">Descuentos</span>
-                <span class="font-medium text-success">-{{ cart.total_discount | money }}</span>
+                <span class="font-medium text-success">-{{ cart.total_discount | money_without_trailing_zeros }}</span>
               </div>
             {%- endif -%}
             <div class="border-t border-line pt-3 flex justify-between items-baseline">
               <span class="font-semibold">Total</span>
-              <span class="text-xl font-bold text-ink">{{ cart.total_price | money }}</span>
+              <span class="text-xl font-bold text-ink">{{ cart.total_price | money_without_trailing_zeros }}</span>
             </div>
             <p class="text-xs text-ink-muted">{{ 'cart.shipping_note' | t }}</p>
 

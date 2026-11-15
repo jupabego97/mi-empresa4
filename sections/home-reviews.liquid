@@ -1,5 +1,5 @@
 {%- liquid
-  assign rating_text = settings.metric_rating_value | default: '4.3★'
+  assign rating_text = settings.metric_rating_value | strip
   assign rating_num = rating_text | remove: '★' | replace: ',', '.' | strip | plus: 0
   assign rating_full = rating_num | floor
   if rating_full > 5
@@ -8,12 +8,15 @@
   assign rating_empty = 5 | minus: rating_full
 -%}
 {%- capture reviews_href -%}{% render 'google-maps-href', kind: 'place' %}{%- endcapture -%}
+{%- capture write_review -%}{% render 'google-maps-href', kind: 'review' %}{%- endcapture -%}
+{%- assign write_review_href = write_review | strip -%}
 <section class="nt-section">
   <div class="nt-container">
     <div class="text-center max-w-2xl mx-auto mb-10">
       <p class="nt-eyebrow mb-2">{{ section.settings.eyebrow | default: 'Opiniones en Google' }}</p>
       <h2 class="nt-section-title text-center mb-2">{{ section.settings.title }}</h2>
       <p class="text-ink-muted">{{ section.settings.description }}</p>
+      {%- if rating_num > 0 -%}
       <div class="inline-flex items-center gap-2 mt-4">
         <span class="inline-flex items-center gap-0.5" aria-hidden="true">
           {%- for i in (1..rating_full) -%}
@@ -30,12 +33,21 @@
           <span class="text-sm text-ink-muted">· {{ section.settings.review_count }}</span>
         {%- endif -%}
       </div>
+      {%- endif -%}
       {%- if section.blocks.size == 0 -%}
-        <div class="mt-6">
+        <div class="mt-6 flex flex-wrap justify-center gap-3">
           {% render 'btn', variant: 'secondary', size: 'lg', label: section.settings.cta_label, href: reviews_href, icon: 'arrow-right', target: '_blank', rel: 'noopener' %}
+          {%- if write_review_href != blank -%}
+            {% render 'btn', variant: 'primary', size: 'lg', label: section.settings.write_label, href: write_review_href, icon: 'star', target: '_blank', rel: 'noopener' %}
+          {%- endif -%}
         </div>
       {%- else -%}
-        <a href="{{ reviews_href }}" target="_blank" rel="noopener" class="inline-block mt-3 text-sm text-brand-royal hover:underline">{{ section.settings.cta_label }}</a>
+        <div class="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
+          <a href="{{ reviews_href }}" target="_blank" rel="noopener" class="text-brand-royal hover:underline">{{ section.settings.cta_label }}</a>
+          {%- if write_review_href != blank -%}
+            <a href="{{ write_review_href }}" target="_blank" rel="noopener" class="text-brand-royal font-medium hover:underline">{{ section.settings.write_label }}</a>
+          {%- endif -%}
+        </div>
       {%- endif -%}
     </div>
     {%- if section.blocks.size > 0 -%}
@@ -48,7 +60,7 @@
             location: block.settings.location,
             rating: block.settings.rating,
             avatar: block.settings.avatar,
-            product: block.settings.product
+            product_label: block.settings.product
           %}
         </div>
       {%- endfor -%}
@@ -63,9 +75,10 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Opiniones en Google" },
     { "type": "text", "id": "title", "label": "Título", "default": "Lo que dicen en Google" },
-    { "type": "textarea", "id": "description", "label": "Descripción", "default": "4.3★ de calificación promedio. Confianza construida desde 2005 en el oriente antioqueño." },
+    { "type": "textarea", "id": "description", "label": "Descripción", "default": "Calificación promedio de nuestra tienda física en Google Maps. Confianza construida desde 2005 en el oriente antioqueño." },
     { "type": "text", "id": "review_count", "label": "Total reseñas (ej. 120 reseñas)" },
     { "type": "text", "id": "cta_label", "label": "Texto del enlace a Google", "default": "Leer reseñas en Google" },
+    { "type": "text", "id": "write_label", "label": "Texto del botón para dejar reseña", "default": "Escribir una reseña", "info": "Se muestra si en Configuración del tema hay un Place ID de Google." },
     { "type": "paragraph", "content": "Añade como bloques solo reseñas reales copiadas de Google, con el nombre que aparece allí. Sin bloques se muestra la calificación y el enlace a Google." }
   ],
   "blocks": [

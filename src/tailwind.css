@@ -24,7 +24,7 @@
   --color-line-strong: #cdd4e0;
 
   /* Semantic */
-  --color-success: #0e9f6e;
+  --color-success: #047857;
   --color-success-soft: #e7f8f0;
   --color-danger: #dc2626;
   --color-danger-soft: #fef2f2;
@@ -172,7 +172,7 @@
   }
 
   .nt-eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.12em] text-brand-electric;
+    @apply text-xs font-semibold uppercase tracking-[0.12em] text-brand-royal;
   }
 
   .nt-sr-only {
@@ -271,7 +271,7 @@
 
   .nt-btn--whatsapp {
     background: #25d366;
-    @apply text-white;
+    @apply text-ink;
     box-shadow: 0 2px 8px rgb(37 211 102 / 35%);
   }
 
@@ -460,7 +460,7 @@
   }
 
   .nt-product-card__brand {
-    @apply text-[10px] font-bold uppercase tracking-wider text-brand-electric;
+    @apply text-[10px] font-bold uppercase tracking-wider text-brand-royal;
   }
 
   .nt-product-card__title {
@@ -495,7 +495,7 @@
   }
 
   .nt-price__discount {
-    @apply text-xs font-bold text-danger bg-danger-soft px-1.5 py-0.5 rounded;
+    @apply text-xs font-bold text-[#b91c1c] bg-danger-soft px-1.5 py-0.5 rounded;
     letter-spacing: 0.02em;
   }
 
@@ -661,8 +661,9 @@
   }
 
   /* ─── WhatsApp FAB ─── */
+  /* En móvil WhatsApp ya está en la barra inferior (o en la barra fija de la PDP). */
   .nt-whatsapp-fab {
-    @apply fixed bottom-20 right-5 lg:bottom-5 z-40 flex items-center justify-center w-14 h-14 rounded-full text-white transition-transform duration-150;
+    @apply fixed bottom-5 right-5 z-40 hidden lg:flex items-center justify-center w-14 h-14 rounded-full text-white transition-transform duration-150;
     background: #25d366;
     box-shadow: 0 6px 18px rgb(37 211 102 / 40%), 0 2px 6px rgb(37 211 102 / 25%);
     transition-timing-function: var(--ease-out);
@@ -950,9 +951,15 @@
     @apply text-xs font-medium text-brand-royal inline-flex items-center gap-1;
   }
 
+  /* Sin fade: el h1 es el LCP en móvil y opacity:0 retrasa su pintado. */
   .nt-hero__copy {
     @apply max-w-2xl flex flex-col gap-5;
-    animation: nt-hero-rise 0.7s ease-out both;
+    animation: nt-hero-lift 0.7s ease-out both;
+  }
+
+  @keyframes nt-hero-lift {
+    from { transform: translateY(18px); }
+    to { transform: translateY(0); }
   }
 
   @keyframes nt-hero-rise {

@@ -15,7 +15,7 @@
 | WhatsApp | +57 323 682 6910 | CONFIRMADO |
 | Email | contacto@nanotronics.com.co | CONFIRMADO |
 | NIT | 1036402484 | CONFIRMADO |
-| Rating Google | 4.3★ | CONFIRMADO |
+| Rating Google | 4.2★ (Google Maps, nov. 2026) | CONFIRMADO |
 
 ## Origen y historia
 
@@ -60,7 +60,7 @@
 | Métrica | Valor en web | Estado |
 |---------|--------------|--------|
 | Experiencia | Desde 2005 (21+ años) | CONFIRMADO |
-| Calificación | 4.3★ en Google | CONFIRMADO |
+| Calificación | 4.2★ en Google (nov. 2026) | CONFIRMADO |
 | Ciudad principal | El Carmen de Viboral | CONFIRMADO |
 | Respuesta WhatsApp | ~5 min en horario hábil | CONFIRMADO (Fase 3) |
 | Clientes totales | No publicar cifra hasta tener dato | — |

@@ -1,5 +1,6 @@
 {%- comment -%}
   {% render 'product-card', product: product %}
+  priority: true en las primeras tarjetas visibles (carga inmediata, mejora el LCP).
   Demo: {% render 'product-card', demo: true, title: '...', price: 2999000, ... %}
 {%- endcomment -%}
 {%- liquid
@@ -29,6 +30,13 @@
     endif
     assign card_image = card_product.featured_image
     assign card_installments = ''
+  endif
+
+  assign img_loading = 'lazy'
+  assign img_priority = 'auto'
+  if priority
+    assign img_loading = 'eager'
+    assign img_priority = 'high'
   endif
 
   assign threshold_cop = settings.free_shipping_threshold | default: 200000
@@ -91,8 +99,9 @@
         card_image
         | image_url: width: 700
         | image_tag:
-          loading: 'lazy',
-          widths: '300,500,700',
+          loading: img_loading,
+          fetchpriority: img_priority,
+          widths: '200,300,400,500,700',
           sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw',
           class: 'absolute inset-0 w-full h-full object-contain p-3 transition-transform duration-300 group-hover:scale-105',
           alt: card_title
@@ -103,7 +112,7 @@
           | image_url: width: 700
           | image_tag:
             loading: 'lazy',
-            widths: '300,500,700',
+            widths: '200,300,400,500,700',
             sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw',
             class: 'nt-product-card__img-alt absolute inset-0 w-full h-full object-contain p-3',
             alt: ''

@@ -114,7 +114,7 @@
             <li class="flex gap-2">
               {% render 'icon', name: 'truck', size: 16, class: 'text-brand-royal shrink-0 mt-0.5' %}
               {%- if settings.publish_shipping_claims -%}
-                <span>Envío gratis desde {{ threshold_cents | money }} · Medellín {{ settings.shipping_medellin }} · Nacional {{ settings.shipping_national }}</span>
+                <span>Envío gratis desde {{ threshold_cents | money_without_trailing_zeros }} · Medellín {{ settings.shipping_medellin }} · Nacional {{ settings.shipping_national }}</span>
               {%- else -%}
                 <span>Envío a Colombia — costo y tiempos en checkout · recogida en tienda sin costo</span>
               {%- endif -%}

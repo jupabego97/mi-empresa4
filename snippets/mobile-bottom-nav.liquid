@@ -41,9 +41,9 @@
     </button>
     {%- unless on_product -%}
       {%- if wa_url != blank -%}
-        <a href="{{ wa_url }}" class="nt-mobile-nav__link text-[#25D366]" target="_blank" rel="noopener">
+        <a href="{{ wa_url }}" class="nt-mobile-nav__link text-[#047857]" target="_blank" rel="noopener">
           {% render 'icon', name: 'whatsapp', size: 20 %}
-          <span>WA</span>
+          <span>WhatsApp</span>
         </a>
       {%- else -%}
         <a href="/pages/soporte" class="nt-mobile-nav__link{% if template.name == 'page' and page.handle == 'soporte' %} is-active{% endif %}">

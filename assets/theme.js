@@ -294,13 +294,15 @@
 
   function formatMoney(cents) {
     if (typeof Shopify !== 'undefined' && Shopify.formatMoney && window.theme?.moneyFormat) {
-      return Shopify.formatMoney(cents, window.theme.moneyFormat);
+      return Shopify.formatMoney(cents, window.theme.moneyFormat).replace(/[.,]00(?=\D*$)/, '');
     }
     return new Intl.NumberFormat('es-CO', {
       style: 'currency',
       currency: 'COP',
       maximumFractionDigits: 0,
-    }).format(cents / 100);
+    })
+      .format(cents / 100)
+      .replace(/\s/g, '');
   }
 
   function renderPrice(variant) {

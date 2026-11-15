@@ -1,15 +1,21 @@
 {%- comment -%}
   Genera URL de Google Maps. Uso:
   {% render 'google-maps-href', kind: 'directions' %}
-  kind: directions | search | embed | place
+  kind: directions | search | embed | place | review
+  review devuelve el formulario «Escribir reseña» o vacío si no hay Place ID.
 {%- endcomment -%}
 {%- liquid
   assign map_dest = settings.google_maps_destination | default: settings.store_address | default: 'NANOTRONICS, Calle 30 # 30-31, Parque Principal, El Carmen de Viboral, Antioquia, Colombia'
   assign map_kind = kind | default: 'search'
   assign place_url = settings.google_maps_place_url | strip
+  assign place_id = settings.google_place_id | strip
   assign encoded_dest = map_dest | url_encode
 
-  if place_url != blank
+  if map_kind == 'review'
+    if place_id != blank
+      echo 'https://search.google.com/local/writereview?placeid=' | append: place_id
+    endif
+  elsif place_url != blank
     if map_kind == 'directions' or map_kind == 'place' or map_kind == 'search'
       echo place_url
     elsif map_kind == 'embed'
