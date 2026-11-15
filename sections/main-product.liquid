@@ -70,7 +70,7 @@
         </div>
 
         <div class="py-2" id="product-price-block">
-          {% render 'price', product: product, size: 'lg' %}
+          {% render 'price', price: current_variant.price, compare_at: current_variant.compare_at_price, size: 'lg' %}
           <p class="text-xs text-ink-muted mt-1 inline-flex items-center gap-1">
             {% render 'icon', name: 'credit-card', size: 12 %}
             Mercado Pago · Transferencia · Efectivo en tienda
