@@ -39,10 +39,11 @@
               class="nt-input w-auto min-h-9 text-sm"
               form="collection-filters-form"
               onchange="this.form.submit()"
+              aria-label="{{ 'collection.sort' | t }}"
             >
               {%- for option in collection.sort_options -%}
                 <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>
-                  {{ option.name }}
+                  {%- if option.value == 'manual' -%}Destacados{%- else -%}{{ option.name }}{%- endif -%}
                 </option>
               {%- endfor -%}
             </select>

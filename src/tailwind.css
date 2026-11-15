@@ -24,7 +24,7 @@
   --color-line-strong: #cdd4e0;
 
   /* Semantic */
-  --color-success: #0e9f6e;
+  --color-success: #047857;
   --color-success-soft: #e7f8f0;
   --color-danger: #dc2626;
   --color-danger-soft: #fef2f2;
@@ -172,7 +172,7 @@
   }
 
   .nt-eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.12em] text-brand-electric;
+    @apply text-xs font-semibold uppercase tracking-[0.12em] text-brand-royal;
   }
 
   .nt-sr-only {
@@ -271,7 +271,7 @@
 
   .nt-btn--whatsapp {
     background: #25d366;
-    @apply text-white;
+    @apply text-ink;
     box-shadow: 0 2px 8px rgb(37 211 102 / 35%);
   }
 
@@ -460,7 +460,7 @@
   }
 
   .nt-product-card__brand {
-    @apply text-[10px] font-bold uppercase tracking-wider text-brand-electric;
+    @apply text-[10px] font-bold uppercase tracking-wider text-brand-royal;
   }
 
   .nt-product-card__title {
@@ -495,7 +495,7 @@
   }
 
   .nt-price__discount {
-    @apply text-xs font-bold text-danger bg-danger-soft px-1.5 py-0.5 rounded;
+    @apply text-xs font-bold text-[#b91c1c] bg-danger-soft px-1.5 py-0.5 rounded;
     letter-spacing: 0.02em;
   }
 
