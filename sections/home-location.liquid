@@ -8,6 +8,8 @@
 {%- assign maps_reviews_url = maps_reviews | strip -%}
 {%- capture maps_directions -%}{% render 'google-maps-href', kind: 'directions' %}{%- endcapture -%}
 {%- assign maps_directions_url = maps_directions | strip -%}
+{%- capture write_review -%}{% render 'google-maps-href', kind: 'review' %}{%- endcapture -%}
+{%- assign write_review_url = write_review | strip -%}
 
 <section class="nt-section bg-surface-2">
   <div class="nt-container">
@@ -51,12 +53,13 @@
           </div>
         </div>
 
+        {%- if settings.metric_rating_value != blank -%}
         <div class="nt-card p-5 mb-6">
           <p class="text-sm font-semibold text-ink mb-2 inline-flex items-center gap-2">
             {% render 'icon', name: 'star', size: 16, class: 'text-warning fill-warning' %}
             Calificación en Google
           </p>
-          <p class="text-2xl font-bold text-ink mb-1">{{ settings.metric_rating_value | default: '4.3★' }}</p>
+          <p class="text-2xl font-bold text-ink mb-1">{{ settings.metric_rating_value }}</p>
           <p class="text-sm text-ink-muted mb-4">
             Promedio público en Google Maps. Las opiniones las lees directamente en Google — no inventamos testimonios en la web.
           </p>
@@ -69,7 +72,19 @@
             Ver ficha y reseñas en Google Maps
             {% render 'icon', name: 'arrow-right', size: 14 %}
           </a>
+          {%- if write_review_url != blank -%}
+            <a
+              href="{{ write_review_url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-2 text-sm font-medium text-brand-royal hover:underline flex items-center gap-1"
+            >
+              ¿Ya nos visitaste? Déjanos tu reseña
+              {% render 'icon', name: 'arrow-right', size: 14 %}
+            </a>
+          {%- endif -%}
         </div>
+        {%- endif -%}
 
         <div class="flex flex-wrap gap-3">
           {%- if place_url != blank -%}
@@ -85,7 +100,7 @@
       </div>
 
       <div>
-        {% render 'store-map', height: 420, show_links: true, title: section.settings.title %}
+        {% render 'store-map', height: 420, title: section.settings.title %}
       </div>
     </div>
   </div>

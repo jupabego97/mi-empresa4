@@ -38,6 +38,7 @@
           {{ product.title }}
         </h1>
 
+        {%- if settings.metric_rating_value != blank -%}
         <div class="flex items-center gap-3 flex-wrap">
           <a
             href="{% render 'google-maps-href', kind: 'search' %}"
@@ -51,10 +52,11 @@
               {%- endfor -%}
               {% render 'icon', name: 'star', size: 14, class: 'text-warning/35' %}
             </span>
-            <span class="font-medium text-ink">{{ settings.metric_rating_value | default: '4.3★' }}</span>
+            <span class="font-medium text-ink">{{ settings.metric_rating_value }}</span>
             <span class="text-ink-muted">en Google · tienda física</span>
           </a>
         </div>
+        {%- endif -%}
 
         <div class="flex flex-wrap items-center gap-2">
           {%- if product.compare_at_price > product.price -%}
@@ -262,7 +264,7 @@
           </button>
           <div class="nt-accordion__content" id="pdp-acc-5" x-show="open === 5" x-cloak>
             <p class="text-ink-muted mb-3">
-              Promedio {{ settings.metric_rating_value | default: '4.3★' }} en Google Maps (tienda física).
+              {% if settings.metric_rating_value != blank %}Promedio {{ settings.metric_rating_value }} en Google Maps (tienda física).{% endif %}
               Las reseñas las consultas directamente en Google — no publicamos testimonios inventados en este sitio.
             </p>
             <a

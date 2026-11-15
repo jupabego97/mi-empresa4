@@ -6,7 +6,7 @@
 
 1. **Seria** — Información precisa, sin exageraciones.
 2. **Clara** — Beneficio concreto antes que adjetivos vacíos.
-3. **Confiable** — Años en el mercado, tienda física, rating real (4.3★ Google).
+3. **Confiable** — Años en el mercado, tienda física, rating real (4.2★ Google).
 4. **Directa** — Frases cortas; sin slang forzado ni humor exagerado.
 
 ## Tono: sí / no
@@ -14,7 +14,7 @@
 | Sí | No |
 |----|-----|
 | "Desde 2005 en El Carmen de Viboral" | "¡La mejor tienda del universo!" |
-| "4.3★ en Google" | "4.9★" sin respaldo |
+| "4.2★ en Google" | "4.9★" sin respaldo |
 | "Amplia variedad de productos" | Listas interminables de emojis |
 | "Respuesta en ~5 minutos" (horario hábil) | "24/7 instantáneo" |
 | "Buen precio" como promesa honesta | "Los precios más bajos de Colombia" |
