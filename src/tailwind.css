@@ -950,9 +950,15 @@
     @apply text-xs font-medium text-brand-royal inline-flex items-center gap-1;
   }
 
+  /* Sin fade: el h1 es el LCP en móvil y opacity:0 retrasa su pintado. */
   .nt-hero__copy {
     @apply max-w-2xl flex flex-col gap-5;
-    animation: nt-hero-rise 0.7s ease-out both;
+    animation: nt-hero-lift 0.7s ease-out both;
+  }
+
+  @keyframes nt-hero-lift {
+    from { transform: translateY(18px); }
+    to { transform: translateY(0); }
   }
 
   @keyframes nt-hero-rise {

@@ -51,7 +51,11 @@
 
           <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {%- for product in collection.products -%}
-              {% render 'product-card', product: product %}
+              {%- assign card_priority = false -%}
+              {%- if forloop.index <= 2 -%}
+                {%- assign card_priority = true -%}
+              {%- endif -%}
+              {% render 'product-card', product: product, priority: card_priority %}
             {%- else -%}
               <p class="col-span-full text-center py-16 text-ink-muted">{{ 'collection.empty' | t }}</p>
             {%- endfor -%}
