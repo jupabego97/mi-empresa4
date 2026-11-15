@@ -25,9 +25,9 @@
       </p>
     {%- else -%}
       <p class="text-ink">
-        Súmale <strong class="text-brand-royal">{{ remaining | money }}</strong> para que tu
+        Súmale <strong class="text-brand-royal">{{ remaining | money_without_trailing_zeros }}</strong> para que tu
         <strong>envío sea gratis</strong>
-        <span class="text-ink-muted text-xs">(compras desde {{ threshold_display | money }})</span>
+        <span class="text-ink-muted text-xs">(compras desde {{ threshold_display | money_without_trailing_zeros }})</span>
       </p>
     {%- endif -%}
     <div class="nt-shipping-bar__track">

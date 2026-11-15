@@ -41,9 +41,9 @@
         >+</a>
       </div>
       <div class="text-right">
-        <p class="text-sm font-bold text-ink">{{ item.final_line_price | money }}</p>
+        <p class="text-sm font-bold text-ink">{{ item.final_line_price | money_without_trailing_zeros }}</p>
         {%- if item.original_line_price > item.final_line_price -%}
-          <p class="text-xs text-ink-muted line-through">{{ item.original_line_price | money }}</p>
+          <p class="text-xs text-ink-muted line-through">{{ item.original_line_price | money_without_trailing_zeros }}</p>
         {%- endif -%}
         <a
           href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0"

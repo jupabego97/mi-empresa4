@@ -357,7 +357,7 @@
 <div class="nt-sticky-bar lg:hidden">
   <div class="flex gap-2 max-w-lg mx-auto items-center">
     <div class="text-xs" id="sticky-product-price">
-      <p class="font-bold text-ink" data-price-current>{{ current_variant.price | money }}</p>
+      <p class="font-bold text-ink" data-price-current>{{ current_variant.price | money_without_trailing_zeros }}</p>
       {%- if current_variant.compare_at_price > current_variant.price -%}
         <p class="text-[10px] text-danger font-semibold">Oferta</p>
       {%- endif -%}

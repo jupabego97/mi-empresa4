@@ -22,9 +22,9 @@
 
 <div class="{{ price_class }}">
   <div class="nt-price__row">
-    <span class="nt-price__current">{{ current_price | money }}</span>
+    <span class="nt-price__current">{{ current_price | money_without_trailing_zeros }}</span>
     {%- if compare_price > current_price -%}
-      <span class="nt-price__compare">{{ compare_price | money }}</span>
+      <span class="nt-price__compare">{{ compare_price | money_without_trailing_zeros }}</span>
       <span class="nt-price__discount">-{{ discount_pct }}%</span>
     {%- endif -%}
   </div>
