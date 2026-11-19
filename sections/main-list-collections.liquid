@@ -1,7 +1,7 @@
-<section class="nt-section">
-  <div class="nt-container">
-    {% render 'breadcrumbs' %}
+{% render 'breadcrumbs' %}
 
+<section class="nt-section pt-0">
+  <div class="nt-container">
     <div class="mb-10">
       <p class="nt-eyebrow mb-2">{{ section.settings.eyebrow | default: 'Catálogo NANOTRONICS' }}</p>
       <h1 style="font-size: var(--text-h1)" class="font-bold tracking-tight text-ink mb-2">{{ section.settings.title }}</h1>
@@ -25,21 +25,22 @@
       {%- assign used_image_ids = ',' -%}
       {%- for line in handles_lines -%}
         {%- assign handle = line | strip -%}
-        {%- if handle != blank and handle != 'frontpage' -%}
-          {%- assign col = collections[handle] -%}
+        {%- assign col = collections[handle] -%}
+        {%- if handle != blank and handle != 'frontpage' and col.products_count > 0 -%}
           {%- assign card_url = col.url -%}
           {%- assign card_title = col.title -%}
           {%- assign card_image = col.image -%}
           {%- if card_url == blank -%}
             {%- assign card_url = routes.collections_url | append: '/' | append: handle -%}
           {%- endif -%}
-          {%- if card_title == blank -%}
-            {%- assign card_title = handle | replace: '-', ' ' | capitalize -%}
+          {%- assign title_upper = card_title | upcase -%}
+          {%- if card_title == title_upper -%}
+            {%- assign card_title = card_title | capitalize -%}
           {%- endif -%}
-          {%- if col != blank and col.products_count > 0 -%}
-            {%- assign eyebrow_text = col.products_count | append: ' productos' -%}
+          {%- if col.products_count == 1 -%}
+            {%- assign eyebrow_text = '1 producto' -%}
           {%- else -%}
-            {%- assign eyebrow_text = '' -%}
+            {%- assign eyebrow_text = col.products_count | append: ' productos' -%}
           {%- endif -%}
           {%- capture theme_data -%}{% render 'category-theme', handle: handle, title: card_title, icon: 'grid' %}{%- endcapture -%}
           {%- assign theme_parts = theme_data | strip | split: '|' -%}
@@ -116,7 +117,7 @@
       "type": "textarea",
       "id": "description",
       "label": "Descripción",
-      "default": "Accesorios, audio, cables, belleza y más. Compra online o recoge en el Parque Principal de El Carmen de Viboral."
+      "default": "Audio, power banks, accesorios y más. Compra online o recoge en el Parque Principal de El Carmen de Viboral."
     }
   ]
 }
