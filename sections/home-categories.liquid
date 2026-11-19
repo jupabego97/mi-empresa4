@@ -11,6 +11,7 @@
       </a>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-3 lg:gap-4">
+      {%- assign used_image_ids = ',' -%}
       {%- for block in section.blocks -%}
         {%- liquid
           assign col = collections[block.settings.collection]
@@ -53,11 +54,42 @@
           if card_image_asset == blank
             assign card_image_asset = ''
           endif
+          assign card_tint = card_image_asset | remove: 'category-' | remove: '.svg'
           if card_theme_icon != blank
             assign card_icon = card_theme_icon
           endif
           if card_image != blank
             assign card_image_asset = ''
+          endif
+
+          assign card_product_image = ''
+          assign fallback_image = ''
+          if card_image == blank and col != blank
+            for p in col.products limit: 8
+              if p.featured_image == blank
+                continue
+              endif
+              if fallback_image == blank
+                assign fallback_image = p.featured_image
+              endif
+              assign image_key = ',' | append: p.featured_image.id | append: ','
+              if used_image_ids contains image_key
+                continue
+              endif
+              if card_product_image == blank
+                assign card_product_image = p.featured_image
+              endif
+              if p.available
+                assign card_product_image = p.featured_image
+                break
+              endif
+            endfor
+            if card_product_image == blank
+              assign card_product_image = fallback_image
+            endif
+            if card_product_image != blank
+              assign used_image_ids = used_image_ids | append: card_product_image.id | append: ','
+            endif
           endif
         -%}
         {%- liquid
@@ -74,6 +106,8 @@
               title: card_title,
               url: card_url,
               image: card_image,
+              product_image: card_product_image,
+              tint: card_tint,
               image_asset: card_image_asset,
               icon: card_icon,
               eyebrow: card_eyebrow
@@ -106,7 +140,7 @@
         { "type": "text", "id": "eyebrow", "label": "Eyebrow (opcional)", "default": "—", "info": "Usa «—» para ocultar el eyebrow." },
         { "type": "text", "id": "title", "label": "Nombre (opcional si hay colección)", "default": "Categoría", "info": "Déjalo en «Categoría» para usar el título de la colección." },
         { "type": "url", "id": "url", "label": "Enlace (opcional si hay colección)" },
-        { "type": "image_picker", "id": "image", "label": "Imagen" },
+        { "type": "image_picker", "id": "image", "label": "Imagen", "info": "Opcional. Sin imagen se muestra la foto del primer producto disponible de la colección." },
         { "type": "select", "id": "icon", "label": "Ícono fallback", "default": "grid", "options": [
           { "value": "plug", "label": "Accesorios" },
           { "value": "cable", "label": "Cables" },

@@ -818,6 +818,49 @@
     @apply translate-x-1 text-white;
   }
 
+  .nt-category-card__eyebrow {
+    @apply block text-[10px] font-bold uppercase tracking-wider text-white/70 mb-1;
+  }
+
+  /* Las fotos de producto traen fondo blanco: multiply lo funde con el tinte. */
+  .nt-category-card--photo {
+    @apply border border-line aspect-[4/5];
+    background: linear-gradient(170deg, var(--nt-cat-tint, var(--color-surface-2)) 0%, #fff 88%);
+  }
+
+  .nt-category-card--photo[data-tint='accesorios'] { --nt-cat-tint: #e6e8ff; }
+  .nt-category-card--photo[data-tint='power-bank'] { --nt-cat-tint: #d9f2e4; }
+  .nt-category-card--photo[data-tint='parlantes'] { --nt-cat-tint: #dce8ff; }
+  .nt-category-card--photo[data-tint='diademas'] { --nt-cat-tint: #ebe4ff; }
+  .nt-category-card--photo[data-tint='cables'] { --nt-cat-tint: #ffedd2; }
+  .nt-category-card--photo[data-tint='belleza'] { --nt-cat-tint: #fde0ee; }
+  .nt-category-card--photo[data-tint='destacados'] { --nt-cat-tint: #fff0c2; }
+
+  .nt-category-card__stage {
+    @apply relative flex-1 min-h-0;
+  }
+
+  .nt-category-card__product-img {
+    @apply absolute inset-0 w-full h-full object-contain p-3 sm:p-4 lg:p-5 mix-blend-multiply transition-transform duration-500;
+  }
+
+  .nt-category-card--photo:hover .nt-category-card__product-img {
+    @apply scale-105;
+  }
+
+  .nt-category-card--photo .nt-category-card__content {
+    @apply text-ink pt-0;
+  }
+
+  .nt-category-card--photo .nt-category-card__eyebrow {
+    @apply text-ink-muted;
+  }
+
+  .nt-category-card--photo .nt-category-card__cta,
+  .nt-category-card--photo:hover .nt-category-card__cta {
+    @apply text-brand-royal;
+  }
+
   /* ─── Hero (full-bleed brand composition) ─── */
   .nt-hero {
     @apply relative overflow-hidden bg-brand-deep text-white;
