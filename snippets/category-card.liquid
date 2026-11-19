@@ -1,44 +1,72 @@
-<a href="{{ url | default: '#' }}" class="nt-category-card group">
-  <span class="nt-category-card__halo" aria-hidden="true"></span>
-  {%- if image != blank -%}
-    {{
-      image
-      | image_url: width: 700
-      | image_tag:
-        loading: 'lazy',
-        class: 'nt-category-card__media-img transition-transform duration-500 group-hover:scale-105',
-        alt: title,
-        widths: '300,500,700',
-        sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw'
-    }}
-  {%- elsif image_asset != blank -%}
-    <img
-      src="{{ image_asset | asset_url }}"
-      alt=""
-      class="nt-category-card__media-img nt-category-card__media-img--asset transition-transform duration-500 group-hover:scale-105"
-      loading="lazy"
-      width="400"
-      height="500"
-    >
-  {%- else -%}
-    <div class="absolute inset-0 bg-gradient-to-br from-brand-royal via-brand-electric to-brand-deep"></div>
-    <div class="absolute inset-0 nt-tech-grid opacity-30"></div>
-    {%- if icon != blank -%}
-      <div class="absolute inset-0 flex items-center justify-center text-white/20">
-        {% render 'icon', name: icon, size: 96 %}
-      </div>
-    {%- endif -%}
-  {%- endif -%}
-  {%- if icon != blank -%}
-    <span class="nt-category-card__icon" aria-hidden="true">
-      {% render 'icon', name: icon, size: 24 %}
+{%- comment -%}
+  image: foto que cubre toda la tarjeta (imagen de la colección o del bloque).
+  product_image: foto de producto con fondo blanco; se muestra completa sobre el
+  tinte claro de la categoría (tint: accesorios, parlantes, diademas, ...).
+{%- endcomment -%}
+{%- liquid
+  assign photo_mode = false
+  assign card_class = 'nt-category-card group'
+  if image == blank and product_image != blank
+    assign photo_mode = true
+    assign card_class = 'nt-category-card nt-category-card--photo group'
+  endif
+  assign eyebrow_clean = eyebrow | strip
+-%}
+<a href="{{ url | default: '#' }}" class="{{ card_class }}"{% if photo_mode %} data-tint="{{ tint | default: 'default' }}"{% endif %}>
+  {%- if photo_mode -%}
+    <span class="nt-category-card__stage" aria-hidden="true">
+      {{
+        product_image
+        | image_url: width: 600
+        | image_tag:
+          loading: 'lazy',
+          class: 'nt-category-card__product-img',
+          alt: '',
+          widths: '240,360,480,600',
+          sizes: '(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 20vw'
+      }}
     </span>
+  {%- else -%}
+    <span class="nt-category-card__halo" aria-hidden="true"></span>
+    {%- if image != blank -%}
+      {{
+        image
+        | image_url: width: 700
+        | image_tag:
+          loading: 'lazy',
+          class: 'nt-category-card__media-img transition-transform duration-500 group-hover:scale-105',
+          alt: title,
+          widths: '300,500,700',
+          sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw'
+      }}
+    {%- elsif image_asset != blank -%}
+      <img
+        src="{{ image_asset | asset_url }}"
+        alt=""
+        class="nt-category-card__media-img nt-category-card__media-img--asset transition-transform duration-500 group-hover:scale-105"
+        loading="lazy"
+        width="400"
+        height="500"
+      >
+    {%- else -%}
+      <div class="absolute inset-0 bg-gradient-to-br from-brand-royal via-brand-electric to-brand-deep"></div>
+      <div class="absolute inset-0 nt-tech-grid opacity-30"></div>
+      {%- if icon != blank -%}
+        <div class="absolute inset-0 flex items-center justify-center text-white/20">
+          {% render 'icon', name: icon, size: 96 %}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+    {%- if icon != blank -%}
+      <span class="nt-category-card__icon" aria-hidden="true">
+        {% render 'icon', name: icon, size: 24 %}
+      </span>
+    {%- endif -%}
+    <span class="nt-category-card__overlay" aria-hidden="true"></span>
   {%- endif -%}
-  <span class="nt-category-card__overlay" aria-hidden="true"></span>
   <div class="nt-category-card__content">
-    {%- assign eyebrow_clean = eyebrow | strip -%}
     {%- if eyebrow_clean != blank -%}
-      <span class="block text-[10px] font-bold uppercase tracking-wider text-white/70 mb-1">{{ eyebrow_clean }}</span>
+      <span class="nt-category-card__eyebrow">{{ eyebrow_clean }}</span>
     {%- endif -%}
     <span class="nt-category-card__title">{{ title }}</span>
     <span class="nt-category-card__cta">
